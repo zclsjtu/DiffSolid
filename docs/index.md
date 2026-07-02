@@ -161,15 +161,4 @@ Jacobians.
 - **Differentiate and calibrate** — JAX-native assembly supports gradient-based inverse problems and parameter identification.
 - **Post-process and export** — VTK output, checkpoints, diagnostics, and built-in post-processing hooks.
 
-## Architecture
-
-```mermaid
-flowchart LR
-  api[User API] --> sched[Scheduler]
-  sched --> eq[Weak forms]
-  sched --> mat[Materials]
-  sched --> sol[Solvers]
-  sol --> gpu[GPU backends]
-```
-
-Specific problem setups and advanced physics options are documented in the [API reference](api/index.md) and [theory](theory/formulations.md) sections.
+Problem setups and advanced options: [API reference](api/index.md) · [Theory](theory/formulations.md).
