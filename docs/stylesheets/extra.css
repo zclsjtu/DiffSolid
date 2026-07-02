@@ -324,13 +324,19 @@
 .ds-home__hero {
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
-  padding: 0.95rem 1rem 0.85rem;
-  background: var(--ds-surface);
-  border: 1px solid var(--ds-line);
-  border-left: 3px solid var(--ds-accent);
-  border-radius: 2px;
-  margin-bottom: 0.65rem;
+  gap: 0.5rem;
+  padding: 0.15rem 0 0.75rem;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  margin-bottom: 0.55rem;
+}
+
+.ds-home__hero::before,
+.ds-home__hero::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
 }
 
 .ds-home__hero-main {
@@ -413,12 +419,13 @@
 
 .ds-home__meta {
   margin: 0;
-  padding-top: 0.45rem;
+  padding-top: 0.4rem;
   border-top: 1px solid var(--ds-line);
   font-family: "IBM Plex Mono", monospace;
   font-size: var(--ds-text-2xs);
   letter-spacing: 0.01em;
   color: var(--ds-muted);
+  background: transparent;
 }
 
 .ds-home__tags {
