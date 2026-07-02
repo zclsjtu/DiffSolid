@@ -450,10 +450,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#architecture" class="md-nav__link">
+  <a href="#what-you-can-do" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Architecture
+        What you can do
       
     </span>
   </a>
@@ -461,10 +461,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#phase-field-strategies-s1s7" class="md-nav__link">
+  <a href="#architecture" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Phase-field strategies (S1–S7)
+        Architecture
       
     </span>
   </a>
@@ -731,10 +731,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#architecture" class="md-nav__link">
+  <a href="#what-you-can-do" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Architecture
+        What you can do
       
     </span>
   </a>
@@ -742,10 +742,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#phase-field-strategies-s1s7" class="md-nav__link">
+  <a href="#architecture" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Phase-field strategies (S1–S7)
+        Architecture
       
     </span>
   </a>
@@ -774,11 +774,11 @@
 
 <div class="ds-home">
 <section class="ds-home__hero">
-<p class="ds-home__kicker">Differentiable Solid Mechanics</p>
+<p class="ds-home__kicker">Simulation Platform</p>
 <h1 class="ds-home__title" id="diffsolid">DiffSolid<a class="headerlink" href="#diffsolid" title="Permanent link">&para;</a></h1>
 <p class="ds-home__lead">
-JAX-native finite element framework for nonlinear mechanics, GPU sparse solvers,
-and validated phase-field fracture workflows.
+A JAX-native finite element environment for building, running, and differentiating
+nonlinear solid mechanics simulations on CPU and GPU.
 </p>
 <div class="ds-home__actions">
   <a href="quickstart/">Quick Start</a>
@@ -786,10 +786,10 @@ and validated phase-field fracture workflows.
   <a href="api/">API</a>
 </div>
 <ul class="ds-home__tags">
-<li>JAX · AD</li>
-<li>FEM</li>
-<li>Phase-field S1–S7</li>
-<li>AMGCL · cuDSS</li>
+<li>Nonlinear FEM</li>
+<li>Automatic differentiation</li>
+<li>GPU solvers</li>
+<li>Multi-physics workflows</li>
 </ul>
 </section>
 <div class="ds-home__grid">
@@ -797,25 +797,25 @@ and validated phase-field fracture workflows.
 <a class="ds-tile" href="quickstart/">
   <span class="ds-tile__label">Examples</span>
   <span class="ds-tile__title">Quick Start</span>
-  <span class="ds-tile__desc">S1 quasi-static and S3 explicit dynamics.</span>
+  <span class="ds-tile__desc">Minimal scripts to set up and run a simulation.</span>
 </a>
 
 <a class="ds-tile" href="api/">
   <span class="ds-tile__label">Reference</span>
   <span class="ds-tile__title">API</span>
-  <span class="ds-tile__desc">Simulation, steps, materials, solvers.</span>
+  <span class="ds-tile__desc">Simulation setup, materials, solvers, and output.</span>
 </a>
 
 <a class="ds-tile" href="install/">
   <span class="ds-tile__label">Setup</span>
   <span class="ds-tile__title">Installation</span>
-  <span class="ds-tile__desc">Wheel, JAX GPU, AMGCL, cuDSS.</span>
+  <span class="ds-tile__desc">Package install and optional GPU backends.</span>
 </a>
 
 <a class="ds-tile" href="theory/formulations/">
   <span class="ds-tile__label">Theory</span>
   <span class="ds-tile__title">Formulations</span>
-  <span class="ds-tile__desc">FE weak forms, constitutive models, solvers.</span>
+  <span class="ds-tile__desc">Finite element and constitutive theory reference.</span>
 </a>
 
 </div>
@@ -824,78 +824,24 @@ and validated phase-field fracture workflows.
 <p class="admonition-title">Documentation only</p>
 <p>Public docs and examples. Solver binaries ship via GitHub Releases under a proprietary license.</p>
 </div>
+<h2 id="what-you-can-do">What you can do<a class="headerlink" href="#what-you-can-do" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Build FE models</strong> — load meshes, assign elements, boundary conditions, and loading steps through a unified Python API.</li>
+<li><strong>Run nonlinear mechanics</strong> — quasi-static and dynamic analysis with a library of constitutive models and element formulations.</li>
+<li><strong>Couple multiple physics</strong> — staggered and monolithic multi-field workflows from a single simulation manager.</li>
+<li><strong>Scale on GPU</strong> — optional sparse linear algebra backends for large 3D problems.</li>
+<li><strong>Differentiate and calibrate</strong> — JAX-native assembly supports gradient-based inverse problems and parameter identification.</li>
+<li><strong>Post-process and export</strong> — VTK output, checkpoints, and built-in post-processing hooks.</li>
+</ul>
 <h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>flowchart LR
-  api[API] --&gt; sched[Scheduler]
+  api[User API] --&gt; sched[Scheduler]
   sched --&gt; eq[Weak forms]
   sched --&gt; mat[Materials]
   sched --&gt; sol[Solvers]
   sol --&gt; gpu[GPU backends]
 </code></pre></div>
-<h2 id="phase-field-strategies-s1s7">Phase-field strategies (S1–S7)<a class="headerlink" href="#phase-field-strategies-s1s7" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>ID</th>
-<th>Mechanics</th>
-<th>Damage PDE</th>
-<th>Integrator</th>
-<th>Coupling</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>S1</td>
-<td>quasi_static</td>
-<td>elliptic</td>
-<td>implicit</td>
-<td>stagger</td>
-</tr>
-<tr>
-<td>S2</td>
-<td>explicit CD</td>
-<td>elliptic</td>
-<td>implicit</td>
-<td>one_pass</td>
-</tr>
-<tr>
-<td>S3</td>
-<td>explicit CD</td>
-<td>parabolic</td>
-<td>explicit</td>
-<td>one_pass</td>
-</tr>
-<tr>
-<td>S4</td>
-<td>explicit CD</td>
-<td>inertial</td>
-<td>verlet</td>
-<td>one_pass</td>
-</tr>
-<tr>
-<td>S5</td>
-<td>quasi_static</td>
-<td>parabolic</td>
-<td>implicit</td>
-<td>stagger</td>
-</tr>
-<tr>
-<td>S6</td>
-<td>quasi_static</td>
-<td>pseudo_par</td>
-<td>implicit</td>
-<td>stagger</td>
-</tr>
-<tr>
-<td>S7</td>
-<td>explicit CD</td>
-<td>pseudo_par</td>
-<td>explicit</td>
-<td>one_pass</td>
-</tr>
-</tbody>
-</table>
-<p>Details: <a href="api/#4-phase-field-fracture-strategies-s1s7">API §4</a>.</p>
+<p>Specific problem setups and advanced physics options are documented in the <a href="api/">API reference</a> and <a href="theory/formulations/">theory</a> sections.</p>
 
 
 
