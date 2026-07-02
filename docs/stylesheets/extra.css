@@ -170,7 +170,8 @@
   box-shadow: none;
 }
 
-.md-content__inner > article:has(.ds-home__grid):not(:has(.ds-home)) {
+.md-content__inner > article:has(.ds-home__grid):not(:has(.ds-home)),
+.md-content__inner > article:has(.ds-gallery-index) {
   padding: 0.85rem 1rem 1.1rem;
 }
 
@@ -807,4 +808,91 @@
 
 .ds-gallery__pair .ds-gallery__item {
   margin: 0;
+}
+
+/* Gallery index — preview cards */
+
+.ds-gallery-index__lead {
+  margin: 0 0 0.65rem;
+  max-width: 42rem;
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  font-size: var(--ds-text-sm);
+  line-height: 1.45;
+  color: var(--ds-ink-soft);
+}
+
+.ds-gallery-index__note {
+  margin: 0.75rem 0 0;
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  font-size: var(--ds-text-2xs);
+  line-height: 1.4;
+  color: var(--ds-muted);
+}
+
+.ds-gallery-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+@media (max-width: 720px) {
+  .ds-gallery-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ds-gallery-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-line);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ds-gallery-card:hover {
+  border-color: var(--ds-accent);
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--ds-accent) 12%, transparent);
+}
+
+.ds-gallery-card__media {
+  display: block;
+  line-height: 0;
+  background: var(--ds-code-bg);
+  border-bottom: 1px solid var(--ds-line);
+  max-height: 9.5rem;
+  overflow: hidden;
+}
+
+.ds-gallery-card__media img {
+  width: 100%;
+  height: 9.5rem;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.ds-gallery-card__body {
+  display: block;
+  padding: 0.5rem 0.55rem 0.55rem;
+}
+
+.ds-gallery-card__title {
+  display: block;
+  font-family: "Libre Baskerville", Georgia, serif;
+  font-size: var(--ds-text-sm);
+  font-weight: 700;
+  color: var(--ds-ink);
+  margin-bottom: 0.2rem;
+}
+
+.ds-gallery-card__desc {
+  display: block;
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  font-size: var(--ds-text-2xs);
+  line-height: 1.35;
+  color: var(--ds-muted);
 }

@@ -83,7 +83,7 @@ nav:
       - Dynamic mechanics: theory/dynamic-mechanics.md
       - Phase-field fracture: theory/phase-field-fracture.md
   - Gallery:
-      - Overview: gallery/index.md
+      - gallery/index.md
       - Dynamic fracture: gallery/dynamic-fracture.md
       - Quasi-static phase-field fracture: gallery/quasi-static-pf-fracture.md
       - Volumetric locking: gallery/volumetric-locking.md
