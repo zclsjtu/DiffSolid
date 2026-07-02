@@ -61,7 +61,7 @@ $$
 \mathbf{u}(\boldsymbol{\xi}) = \sum_{n=1}^{n_\text{en}} N_n(\boldsymbol{\xi})\, \mathbf{u}_n.
 $$
 
-Shape function values and reference-coordinate gradients are precomputed by the `basix` library (FEniCS) and stored as arrays `shape_vals[q, n]` and `shape_grads_ref[q, n, i]` (`core/basis.py`).
+Shape function values and reference-coordinate gradients are precomputed by the `basix` library (FEniCS) and stored as arrays `shape_vals[q, n]` and `shape_grads_ref[q, n, i]`.
 
 ### 3.2 Isoparametric Mapping and Quadrature
 
@@ -77,7 +77,7 @@ $$
 \text{JxW}_q = \det(\mathbf{j}_q)\, w_q.
 $$
 
-Physical shape-function gradients are obtained by the chain rule (`[internal]`):
+Physical shape-function gradients are obtained by the chain rule:
 
 $$
 \frac{\partial N_n}{\partial x^i} = \sum_j \frac{\partial N_n}{\partial \xi^j}\, (j^{-1})_{ji},
@@ -85,7 +85,7 @@ $$
 \texttt{shape\_grads} = \texttt{shape\_grads\_ref} \cdot \mathbf{j}^{-1}.
 $$
 
-Default Gauss quadrature orders (`core/basis.py`):
+Default Gauss quadrature orders:
 
 | Element type | Quadrature points |
 |---|---|
@@ -102,13 +102,13 @@ $$
 (u_\text{grad})_{q,i,j} = \sum_{n=1}^{n_\text{en}} u_n^i \frac{\partial N_n}{\partial x^j}\bigg|_q,
 $$
 
-implemented via the einsum `cni,cqnj->cqij` over cells $c$, nodes $n$, and spatial indices $i,j$ (`[internal]`).
+implemented via the einsum `cni,cqnj->cqij` over cells $c$, nodes $n$, and spatial indices $i,j$.
 
 ---
 
 ## 4. Three-Dimensional Formulations
 
-### 4.1 Small-Strain Mechanics (`[internal]` — `MechanicsEquation`)
+### 4.1 Small-Strain Mechanics (`equations/mechanics.py` — `MechanicsEquation`)
 
 Under the small-strain assumption the linearised strain tensor is
 
@@ -128,9 +128,9 @@ $$
 R_a^i = \sum_{q=1}^{n_q} \sigma^{ij}(q)\, \frac{\partial N_a}{\partial x^j}\bigg|_q \text{JxW}_q.
 $$
 
-This is implemented via the einsum `qij,qnj,q->ni` (`[internal]`).
+This is implemented via the einsum `qij,qnj,q->ni`.
 
-### 4.2 Finite-Strain Hyperelasticity (`[internal]` — `HyperElasticEquation`)
+### 4.2 Finite-Strain Hyperelasticity (`equations/mechanics.py` — `HyperElasticEquation`)
 
 The deformation gradient is
 
@@ -156,7 +156,7 @@ $$
 R_a^i = \sum_{q=1}^{n_q} P^{iJ}(q)\, \frac{\partial N_a}{\partial X^J}\bigg|_q \text{JxW}_q.
 $$
 
-### 4.3 F-bar Volumetric Anti-Locking — 3D (`[internal]` — `Fbar3DMechanicsEquation`)
+### 4.3 F-bar Volumetric Anti-Locking — 3D (`equations/fbar.py` — `Fbar3DMechanicsEquation`)
 
 Low-order elements (HEX8, TET4) suffer from volumetric locking when the material is nearly incompressible. The F-bar method (de Souza Neto, Perić & Owen 1996) replaces the local Jacobian with an element-averaged value while preserving the isochoric part of the deformation gradient.
 
@@ -186,7 +186,7 @@ $$
 
 The residual has the same form as in Section 4.2 with $\mathbf{P}$ evaluated at $\bar{\mathbf{F}}$.
 
-### 4.4 B-bar Mean-Dilatation — 3D (`[internal]` — `BbarMechanicsEquation`)
+### 4.4 B-bar Mean-Dilatation — 3D (`equations/bbar.py` — `BbarMechanicsEquation`)
 
 The B-bar method (Hughes 1980; Simo & Hughes §4.4) modifies the strain operator to use an element-averaged volumetric part, preventing locking in the small-strain setting.
 
@@ -218,7 +218,7 @@ $$
 
 ## 5. Two-Dimensional Formulations
 
-### 5.1 Plane Strain — Finite Strain with F-bar (`[internal]` — `PlaneStrainFbarMechanicsEquation`)
+### 5.1 Plane Strain — Finite Strain with F-bar (`equations/fbar.py` — `PlaneStrainFbarMechanicsEquation`)
 
 Under the plane-strain constraint the out-of-plane stretch is identically unity, $F_{33} = 1$. The 2D mesh carries DOFs $(u_x, u_y)$; the full 3D deformation gradient is reconstructed as
 
@@ -270,7 +270,7 @@ The 2D mesh lies in the $r$–$z$ plane (code convention: $x \equiv r$, $y \equi
 
 ### 6.1 Kinematics: Deformation Gradient and Strain
 
-#### 6.1.1 Finite-Strain Axisymmetric (`[internal]`)
+#### 6.1.1 Finite-Strain Axisymmetric
 
 The full 3D deformation gradient in the $r$–$\theta$–$z$ ordering is
 
@@ -306,7 +306,7 @@ $$
 
 To avoid a singularity on the axis of symmetry, the code uses $r_\text{safe} = \max(r,\, 10^{-14})$ when evaluating $F_{\theta\theta}$.
 
-#### 6.1.2 Small-Strain Axisymmetric (`[internal]`)
+#### 6.1.2 Small-Strain Axisymmetric
 
 The 3D strain tensor in the $r$–$\theta$–$z$ ordering is
 
@@ -345,14 +345,14 @@ The virtual work $\delta W = \int_{\Omega_0} P_{iJ}\,\delta F_{iJ}\,dV$ yields t
 
 $$
 R_I^r = \sum_q \left[
-  \left(P_{rR}\,\frac{\partial N_I}{\partial R} + P_{rZ}\,\frac{\partial N_I}{\partial Z}\right) R_q
-  + P_{\theta\Theta}\, N_I
+ \left(P_{rR}\,\frac{\partial N_I}{\partial R} + P_{rZ}\,\frac{\partial N_I}{\partial Z}\right) R_q
+ + P_{\theta\Theta}\, N_I
 \right] \text{JxW}_q,
 $$
 
 $$
 R_I^z = \sum_q \left[
-  P_{zR}\,\frac{\partial N_I}{\partial R} + P_{zZ}\,\frac{\partial N_I}{\partial Z}
+ P_{zR}\,\frac{\partial N_I}{\partial R} + P_{zZ}\,\frac{\partial N_I}{\partial Z}
 \right] R_q\, \text{JxW}_q.
 $$
 
@@ -364,18 +364,18 @@ The analogous residuals for the small-strain case are
 
 $$
 R_I^r = \sum_q \left[
-  \left(\sigma_{rr}\,\frac{\partial N_I}{\partial r} + \sigma_{rz}\,\frac{\partial N_I}{\partial z}\right) r_q
-  + \sigma_{\theta\theta}\, N_I
+ \left(\sigma_{rr}\,\frac{\partial N_I}{\partial r} + \sigma_{rz}\,\frac{\partial N_I}{\partial z}\right) r_q
+ + \sigma_{\theta\theta}\, N_I
 \right] \text{JxW}_q,
 $$
 
 $$
 R_I^z = \sum_q \left[
-  \sigma_{zr}\,\frac{\partial N_I}{\partial r} + \sigma_{zz}\,\frac{\partial N_I}{\partial z}
+ \sigma_{zr}\,\frac{\partial N_I}{\partial r} + \sigma_{zz}\,\frac{\partial N_I}{\partial z}
 \right] r_q\, \text{JxW}_q.
 $$
 
-### 6.3 F-bar for Axisymmetric Problems (`[internal]` — `AxisymmetricFbarKinematicMechanicsEquation`)
+### 6.3 F-bar for Axisymmetric Problems (`equations/axisymmetric.py` — `AxisymmetricFbarKinematicMechanicsEquation`)
 
 Because the axisymmetric problem is physically three-dimensional, the F-bar exponent is $\tfrac{1}{3}$.
 
@@ -409,7 +409,7 @@ $$
 
 The weak form and residual assembly are identical to Section 6.2.1 with $\mathbf{P}$ evaluated at $\bar{\mathbf{F}}$.
 
-### 6.4 B-bar for Axisymmetric Small-Strain (`[internal]`)
+### 6.4 B-bar for Axisymmetric Small-Strain
 
 The volumetric strain at a quadrature point is
 
@@ -512,7 +512,7 @@ Solution fields and post-processed quantities are written to VTK format via the 
 
 ---
 
-## 10. Plane-Stress Formulation (`[internal]`)
+## 10. Plane-Stress Formulation
 
 ### 10.1 Kinematic Constraint
 
@@ -603,7 +603,7 @@ Periodic node pairs are identified geometrically: for each node on the $-x$ face
 
 ---
 
-## 12. Enhanced Assumed Strain (EAS) Method (`[internal]`)
+## 12. Enhanced Assumed Strain (EAS) Method
 
 ### 12.1 Motivation
 
@@ -674,7 +674,7 @@ The condensed stiffness $\tilde{\mathbf{K}}_{uu}$ and residual $\tilde{\mathbf{f
 
 ---
 
-## 13. F-bar Patch Method (`[internal]`)
+## 13. F-bar Patch Method
 
 ### 13.1 Motivation
 
@@ -739,7 +739,7 @@ The coupling blocks are assembled as sparse COO entries and added to the global 
 
 ## 14. Constitutive Models (`materials/`)
 
-All constitutive models implement one of two interfaces defined in `[internal]`:
+All constitutive models implement one of two interfaces defined in `materials/umat.py`:
 
 - **`UserPotential`** — path-independent materials expressible as a scalar strain-energy density $\Psi$. The user implements `upot(x) -> scalar`; stress and tangent are derived automatically via `jax.grad` and `jax.jvp`.
 - **`UserMaterial`** — path-dependent materials (plasticity, viscoelasticity, crystal plasticity). The user implements `umat(F_or_eps, state: dict, dt) -> (stress, new_state)` and declares `state_fields` specifying the names and shapes of internal variables. The framework handles packing/unpacking of the flat state array.
@@ -1075,7 +1075,7 @@ The GND update is a mesh-level operation performed via a `post_step` hook regist
 
 **State fields:** same as HCP plus `rho_GND` (array of 24). Total: 114 scalars per quadrature point.
 
-### 14.6 Phase-Field Fracture Coupling (`[internal]`)
+### 14.6 Phase-Field Fracture Coupling
 
 Phase-field fracture models couple the mechanics problem to a scalar damage field $d \in [0,1]$ through a degradation function $g(d)$.
 
@@ -1121,7 +1121,7 @@ $$
 
 ## 15. Nonlinear Solvers (`solvers/`)
 
-### 15.1 Newton–Raphson Method (`[internal]`)
+### 15.1 Newton–Raphson Method
 
 The quasi-static equilibrium problem $\mathbf{R}(\mathbf{u}) = \mathbf{0}$ is solved by the Newton–Raphson iteration:
 
@@ -1168,7 +1168,7 @@ $$
 
 with default $\alpha_\text{stab} = 2 \times 10^{-4}$. A warning is issued if the stabilization energy exceeds 5% of the elastic strain energy.
 
-### 15.4 Arc-Length Method (`[internal]`)
+### 15.4 Arc-Length Method
 
 The arc-length method (Crisfield 1981) extends Newton–Raphson to trace equilibrium paths through limit points and snap-through/snap-back behaviour by treating the load parameter $\lambda$ as an additional unknown.
 
@@ -1202,7 +1202,7 @@ Two variants are implemented:
 
 ---
 
-## 16. Linear Solvers (`[internal]`)
+## 16. Linear Solvers
 
 ### 16.1 Overview
 
@@ -1218,7 +1218,7 @@ The global tangent stiffness matrix $\mathbf{K}$ is stored in CSR (Compressed Sp
 | `cudss_solver` | CSR | GPU | NVIDIA cuDSS direct solver |
 | `amgx_solver` | CSR | GPU | NVIDIA AmgX AMG |
 
-### 16.2 JAX-Native Iterative Solvers (`[internal]`)
+### 16.2 JAX-Native Iterative Solvers
 
 #### 16.2.1 BiCGSTAB
 

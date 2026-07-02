@@ -3,6 +3,10 @@
 Welcome to **DiffSolid** — a JAX-native finite element framework for nonlinear
 solid mechanics, phase-field fracture, and GPU-accelerated simulation.
 
+!!! info "Public documentation"
+    This site documents the user API, installation, and theory. The solver
+    implementation is distributed as a proprietary package via GitHub Releases.
+
 <div class="grid cards" markdown>
 
 -   :material-rocket-launch:{ .lg .middle } **Quick Start**
