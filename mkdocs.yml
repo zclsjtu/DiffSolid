@@ -84,13 +84,10 @@ nav:
       - Phase-field fracture: theory/phase-field-fracture.md
   - Gallery:
       - Overview: gallery/index.md
-      - "Story: Borden → Kalthoff GPU": gallery/kalthoff-borden-gpu.md
-      - "Story: Quasi-static PF fracture": gallery/quasi-static-pf-fracture.md
-      - "Story: Volumetric locking": gallery/volumetric-locking.md
-      - "Story: Solver efficiency": gallery/solver-efficiency.md
-      - Phase-field fracture: gallery/phase-field-fracture.md
-      - Solid mechanics: gallery/solid-mechanics.md
-      - GPU solvers: gallery/gpu-solvers.md
+      - Dynamic fracture: gallery/dynamic-fracture.md
+      - Quasi-static phase-field fracture: gallery/quasi-static-pf-fracture.md
+      - Volumetric locking: gallery/volumetric-locking.md
+      - Solver efficiency: gallery/solver-efficiency.md
   - Legal:
       - License: legal/license.md
       - Third-Party Notices: legal/third-party.md

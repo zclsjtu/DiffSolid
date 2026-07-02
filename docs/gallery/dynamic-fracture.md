@@ -1,4 +1,4 @@
-# Borden branching → Kalthoff impact on GPU
+# Dynamic fracture
 
 A end-to-end case study on the same phase-field stack: quasi-static branching on an elliptic
 plate, dynamic Kalthoff-type impact with dense mesh closure, staggered **S3** coupling

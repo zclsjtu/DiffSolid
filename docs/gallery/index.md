@@ -1,58 +1,27 @@
 # Gallery
 
-Benchmark figures from DiffSolid validation and performance studies. Each **story** is a
-curated figure sequence; click any panel for full resolution.
-
-## Featured stories
+Benchmark figures from DiffSolid validation and performance studies. Click any panel for full resolution.
 
 <div class="ds-home__grid" markdown="1">
 
-<a class="ds-tile" href="kalthoff-borden-gpu/">
- <span class="ds-tile__label">Story · Phase-field + GPU</span>
- <span class="ds-tile__title">Borden → Kalthoff on GPU</span>
+<a class="ds-tile" href="dynamic-fracture/">
+ <span class="ds-tile__title">Dynamic fracture</span>
  <span class="ds-tile__desc">Damage evolution, Kalthoff morphology &amp; S3 velocity, explicit GPU scaling (4 panels).</span>
 </a>
 
 <a class="ds-tile" href="quasi-static-pf-fracture/">
- <span class="ds-tile__label">Story · Quasi-static PF</span>
  <span class="ds-tile__title">Quasi-static phase-field fracture</span>
  <span class="ds-tile__desc">L-panel cohesive fracture — Miehe vs hybrid stress split, VI-Newton; PBC cells with one or two holes.</span>
 </a>
 
 <a class="ds-tile" href="volumetric-locking/">
- <span class="ds-tile__label">Story · Solid mechanics</span>
  <span class="ds-tile__title">Volumetric locking</span>
  <span class="ds-tile__desc">Cook's membrane convergence; axisymmetric necking — F-bar, F-bar-Patch, EAS vs standard elements.</span>
 </a>
 
 <a class="ds-tile" href="solver-efficiency/">
- <span class="ds-tile__label">Story · Performance</span>
  <span class="ds-tile__title">Solver efficiency</span>
  <span class="ds-tile__desc">DiffSolid H200 vs FEniCSx CPU×64 implicit scaling; explicit GPU efficiency on Kalthoff benchmarks.</span>
-</a>
-
-</div>
-
-## By topic
-
-<div class="ds-home__grid" markdown="1">
-
-<a class="ds-tile" href="phase-field-fracture/">
- <span class="ds-tile__label">Multi-physics</span>
- <span class="ds-tile__title">Phase-field fracture</span>
- <span class="ds-tile__desc">Additional branching, Kalthoff, and Miehe–Amor benchmark figures.</span>
-</a>
-
-<a class="ds-tile" href="solid-mechanics/">
- <span class="ds-tile__label">Solid mechanics</span>
- <span class="ds-tile__title">Nonlinear mechanics</span>
- <span class="ds-tile__desc">3D necking with F-bar and EAS, axisymmetric patches, periodic inclusion tests.</span>
-</a>
-
-<a class="ds-tile" href="gpu-solvers/">
- <span class="ds-tile__label">Performance</span>
- <span class="ds-tile__title">GPU solvers</span>
- <span class="ds-tile__desc">Implicit scaling on CPU/GPU, explicit dynamics efficiency, AMGCL vs cuDSS.</span>
 </a>
 
 </div>
