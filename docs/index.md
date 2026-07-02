@@ -126,7 +126,7 @@ Jacobians.
 </div>
 
 !!! info "Documentation only"
-    Public docs and examples. Solver binaries ship via GitHub Releases under a proprietary license.
+    Public docs and examples. Install the Python package by [requesting wheel access](install/#request-access) — wheels are not publicly linked.
 
 ## Platform
 

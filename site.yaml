@@ -4,3 +4,12 @@ public_repo: DiffSolid
 private_repo: DiffSolid-core
 public_site_url: https://zclsjtu.github.io/DiffSolid/
 preview_wheel_version: v0.1.0-dev.1
+
+# Wheel distribution (public docs only — wheels stay off the open web)
+wheel_distribution:
+  # Email shown on install page for access requests (leave empty to use GitHub Issues)
+  contact_email: "ChenlongZhao@sjtu.edu.cn"
+  # Optional Google Form / Typeform for structured requests
+  request_form_url: ""
+  # After deploying dist-gate Cloudflare Worker (see DiffSolid-dev/dist-gate/)
+  download_portal_url: ""

@@ -102,32 +102,47 @@ pip install jax-cuda12-plugin jax-cuda12-pjrt
 
 ## 4. Installing DiffSolid
 
-### Installing from GitHub Releases
+DiffSolid is **not** published on PyPI. Preview wheels are distributed on request
+only — they are not linked from this site and are not publicly downloadable.
 
-Preview wheels are published on the private release channel:
+### Request access
+
+Send an email to **[ChenlongZhao@sjtu.edu.cn](mailto:ChenlongZhao@sjtu.edu.cn)** with:
+- Your name and affiliation
+- Intended use (research, evaluation, collaboration, …)
+- Python version and OS
+
+We typically respond within a few business days. Approved users receive install
+instructions by email (direct download link or portal password).
+
+> **Preview wheels** may contain plain Python source inside the package. Do not
+> redistribute wheels or credentials. Compiled wheels without source will follow
+> when the API stabilises.
+
+
+### Install after approval
+
+Once you receive credentials, install from the link or portal we send you:
 
 ```bash
-pip install "https://github.com/zclsjtu/DiffSolid-core/releases/download/v0.1.0-dev.1/diffsolid-0.1.0.dev1-py3-none-any.whl"
+pip install "<wheel-url-from-your-email>"
 python -c "import diffsolid as ds; print('DiffSolid OK')"
 ```
 
-> **Note:** Preview wheels may include plain Python source inside the wheel package.
-> Compiled wheels without source will be published when the API stabilises.
-
-Optional extras (after core install):
+Optional extras (after the core wheel is installed):
 
 ```bash
-pip install "diffsolid[gpu] @ https://github.com/zclsjtu/DiffSolid-core/releases/download/v0.1.0-dev.1/diffsolid-0.1.0.dev1-py3-none-any.whl"
-pip install diffsolid[viz]
+pip install diffsolid[gpu]    # CuPy, nvmath, cuDSS
+pip install diffsolid[viz]    # PyVista, VTK
 pip install diffsolid[mesh]   # gmsh mesh generation helpers
 ```
 
-### Developer editable install (source access only)
+### Developer editable install (source licensees only)
 
-If you have access to the private source repository:
+If you have been granted access to the private source repository:
 
 ```bash
-cd /path/to/DiffSolid-core-core
+cd /path/to/DiffSolid-core
 pip install -e .
 python scripts/check_install.py
 ```
