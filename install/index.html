@@ -1,0 +1,2061 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="JAX-native differentiable solid mechanics and phase-field fracture">
+      
+      
+      
+        <link rel="canonical" href="https://zclsjtu.github.io/DiffSolid/install/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../quickstart/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Install - DiffSolid</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#diffsolid-installation-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="DiffSolid" class="md-header__button md-logo" aria-label="DiffSolid" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DiffSolid
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Install
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/zclsjtu/DiffSolid" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    DiffSolid
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quick Start
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../api/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  API Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../theory/formulations/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Theory
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../legal/license/" class="md-tabs__link">
+          
+  
+  
+  Legal
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="DiffSolid" class="md-nav__button md-logo" aria-label="DiffSolid" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    DiffSolid
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/zclsjtu/DiffSolid" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    DiffSolid
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-system-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. System Requirements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-package-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Package Layout
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-python-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Python Environment
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Python Environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-a-minimal-pip-install-cpu-or-gpu-jax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option A — Minimal pip install (CPU or GPU JAX)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-b-conda-environment-recommended-for-gpu-hpc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option B — Conda environment (recommended for GPU HPC)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jax-gpu-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JAX GPU support
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-installing-diffsolid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Installing DiffSolid
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Installing DiffSolid">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-from-github-releases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installing from GitHub Releases
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#developer-editable-install-source-access-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Developer editable install (source access only)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-amgcl-header-dependency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. AMGCL Header Dependency
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-building-the-amgcl-cuda-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Building the AMGCL CUDA Extension
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Building the AMGCL CUDA Extension">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cuda-architecture-flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CUDA architecture flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-build-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common build failures
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-optional-backends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Optional Backends
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Optional Backends">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cudss-direct-gpu-sparse-solver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cuDSS (direct GPU sparse solver)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#petsc-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PETSc (optional)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nvidia-amgx-pyamgx-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NVIDIA AmgX / pyamgx (optional)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Verification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Verification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#package-import" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Package import
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linear-solver-smoke-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linear solver smoke test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regression-tests-development-workspace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regression tests (development workspace)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#amgcl_cuda_available-false" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AMGCL_CUDA_AVAILABLE = False
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cupy-import-failure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CuPy import failure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jax-sees-only-cpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JAX sees only CPU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cudss-nvmath-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cuDSS / nvmath errors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#double-precision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Double-precision
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-dependency-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Dependency Reference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Dependency Reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-python-packages-pip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Python packages (pip)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gpu-solver-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GPU solver packages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#third-party-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Third-party source
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../theory/formulations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Legal
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Legal
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../legal/license/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../legal/third-party/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Third-Party Notices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-system-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. System Requirements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-package-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Package Layout
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-python-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Python Environment
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Python Environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-a-minimal-pip-install-cpu-or-gpu-jax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option A — Minimal pip install (CPU or GPU JAX)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-b-conda-environment-recommended-for-gpu-hpc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option B — Conda environment (recommended for GPU HPC)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jax-gpu-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JAX GPU support
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-installing-diffsolid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Installing DiffSolid
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Installing DiffSolid">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-from-github-releases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installing from GitHub Releases
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#developer-editable-install-source-access-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Developer editable install (source access only)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-amgcl-header-dependency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. AMGCL Header Dependency
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-building-the-amgcl-cuda-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Building the AMGCL CUDA Extension
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Building the AMGCL CUDA Extension">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cuda-architecture-flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CUDA architecture flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-build-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common build failures
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-optional-backends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Optional Backends
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Optional Backends">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cudss-direct-gpu-sparse-solver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cuDSS (direct GPU sparse solver)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#petsc-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PETSc (optional)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nvidia-amgx-pyamgx-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NVIDIA AmgX / pyamgx (optional)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Verification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Verification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#package-import" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Package import
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linear-solver-smoke-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linear solver smoke test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regression-tests-development-workspace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regression tests (development workspace)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#amgcl_cuda_available-false" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AMGCL_CUDA_AVAILABLE = False
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cupy-import-failure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CuPy import failure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jax-sees-only-cpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JAX sees only CPU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cudss-nvmath-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cuDSS / nvmath errors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#double-precision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Double-precision
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-dependency-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Dependency Reference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Dependency Reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-python-packages-pip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Python packages (pip)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gpu-solver-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GPU solver packages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#third-party-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Third-party source
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="diffsolid-installation-guide">DiffSolid Installation Guide<a class="headerlink" href="#diffsolid-installation-guide" title="Permanent link">&para;</a></h1>
+<p>This document describes how to install DiffSolid, configure JAX on NVIDIA GPUs, build
+the optional AMGCL CUDA extension, and verify linear solver backends.</p>
+<hr />
+<h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
+<ol>
+<li><a href="#1-system-requirements">System Requirements</a></li>
+<li><a href="#2-package-layout">Package Layout</a></li>
+<li><a href="#3-python-environment">Python Environment</a></li>
+<li><a href="#4-installing-diffsolid">Installing DiffSolid</a></li>
+<li><a href="#5-amgcl-header-dependency">AMGCL Header Dependency</a></li>
+<li><a href="#6-building-the-amgcl-cuda-extension">Building the AMGCL CUDA Extension</a></li>
+<li><a href="#7-optional-backends">Optional Backends</a></li>
+<li><a href="#8-verification">Verification</a></li>
+<li><a href="#9-troubleshooting">Troubleshooting</a></li>
+<li><a href="#10-dependency-reference">Dependency Reference</a></li>
+</ol>
+<hr />
+<h2 id="1-system-requirements">1. System Requirements<a class="headerlink" href="#1-system-requirements" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Minimum</th>
+<th>Recommended</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GPU</td>
+<td>NVIDIA Turing (compute capability ≥ 7.5)</td>
+<td>Ampere, Ada, or Hopper class</td>
+</tr>
+<tr>
+<td>GPU memory</td>
+<td>16 GB</td>
+<td>32 GB or more for large 3D problems</td>
+</tr>
+<tr>
+<td>NVIDIA driver</td>
+<td>≥ 525 (CUDA 12.x capable)</td>
+<td>Latest production driver</td>
+</tr>
+<tr>
+<td>CUDA toolkit</td>
+<td>12.4+</td>
+<td>Match JAX CUDA 12 wheels</td>
+</tr>
+<tr>
+<td>OS</td>
+<td>Ubuntu 20.04+, RHEL 8+</td>
+<td>Ubuntu 22.04 LTS</td>
+</tr>
+<tr>
+<td>Host compiler</td>
+<td>GCC 11–13 for <code>nvcc</code></td>
+<td>GCC 12 or 13</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>3.10</td>
+<td>3.10 or 3.11</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note on GCC 14.</strong> CUDA 12.x officially supports GCC ≤ 13. If only GCC 14 is available,
+the provided build script passes <code>-allow-unsupported-compiler</code>; compilation usually
+succeeds but is not guaranteed on all platforms.</p>
+<hr />
+<h2 id="2-package-layout">2. Package Layout<a class="headerlink" href="#2-package-layout" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>DiffSolid/
+├── diffsolid/                  # Python package
+├── ext/diffsolid_amgcl_cuda/   # CUDA extension source (must be rebuilt per machine)
+├── third_party/amgcl/          # AMGCL headers (header-only)
+├── pyproject.toml
+├── requirements.txt
+├── INSTALL.md
+├── API.md
+└── scripts/check_install.py
+</code></pre></div>
+<p>The compiled extension artifact under <code>ext/diffsolid_amgcl_cuda/build/</code> is
+<strong>machine-specific</strong> and must not be copied between servers. Rebuild on each target
+system.</p>
+<p>Full conda environment specifications are available to source licensees on request.</p>
+<hr />
+<h2 id="3-python-environment">3. Python Environment<a class="headerlink" href="#3-python-environment" title="Permanent link">&para;</a></h2>
+<h3 id="option-a-minimal-pip-install-cpu-or-gpu-jax">Option A — Minimal pip install (CPU or GPU JAX)<a class="headerlink" href="#option-a-minimal-pip-install-cpu-or-gpu-jax" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/path/to/DiffSolid-core
+python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+<span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>pip
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt<span class="w">   </span><span class="c1"># pins JAX, CuPy, cuDSS, etc.</span>
+</code></pre></div>
+<h3 id="option-b-conda-environment-recommended-for-gpu-hpc">Option B — Conda environment (recommended for GPU HPC)<a class="headerlink" href="#option-b-conda-environment-recommended-for-gpu-hpc" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/path/to/DiffSolid-core-dev
+conda<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>environment.yml
+conda<span class="w"> </span>activate<span class="w"> </span>diffsolid<span class="w">    </span><span class="c1"># or the name defined in environment.yml</span>
+<span class="nb">cd</span><span class="w"> </span>../DiffSolid
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</code></pre></div>
+<h3 id="jax-gpu-support">JAX GPU support<a class="headerlink" href="#jax-gpu-support" title="Permanent link">&para;</a></h3>
+<p>After installing JAX, confirm device visibility:</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import jax; print(jax.devices())&quot;</span>
+<span class="c1"># Expected: [CudaDevice(id=0), ...]</span>
+</code></pre></div>
+<p>If only CPU devices appear:</p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>jax-cuda12-plugin<span class="w"> </span>jax-cuda12-pjrt
+</code></pre></div>
+<hr />
+<h2 id="4-installing-diffsolid">4. Installing DiffSolid<a class="headerlink" href="#4-installing-diffsolid" title="Permanent link">&para;</a></h2>
+<h3 id="installing-from-github-releases">Installing from GitHub Releases<a class="headerlink" href="#installing-from-github-releases" title="Permanent link">&para;</a></h3>
+<p>Preview wheels are published on the private release channel:</p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;https://github.com/zclsjtu/DiffSolid-core/releases/download/v0.1.0-dev.1/diffsolid-0.1.0.dev1-py3-none-any.whl&quot;</span>
+python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import diffsolid as ds; print(&#39;DiffSolid OK&#39;)&quot;</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Note:</strong> Preview wheels may include plain Python source inside the wheel package.
+Compiled wheels without source will be published when the API stabilises.</p>
+</blockquote>
+<p>Optional extras (after core install):</p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;diffsolid[gpu] @ https://github.com/zclsjtu/DiffSolid-core/releases/download/v0.1.0-dev.1/diffsolid-0.1.0.dev1-py3-none-any.whl&quot;</span>
+pip<span class="w"> </span>install<span class="w"> </span>diffsolid<span class="o">[</span>viz<span class="o">]</span>
+pip<span class="w"> </span>install<span class="w"> </span>diffsolid<span class="o">[</span>mesh<span class="o">]</span><span class="w">   </span><span class="c1"># gmsh mesh generation helpers</span>
+</code></pre></div>
+<h3 id="developer-editable-install-source-access-only">Developer editable install (source access only)<a class="headerlink" href="#developer-editable-install-source-access-only" title="Permanent link">&para;</a></h3>
+<p>If you have access to the private source repository:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/path/to/DiffSolid-core-core
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+python<span class="w"> </span>scripts/check_install.py
+</code></pre></div>
+<hr />
+<h2 id="5-amgcl-header-dependency">5. AMGCL Header Dependency<a class="headerlink" href="#5-amgcl-header-dependency" title="Permanent link">&para;</a></h2>
+<p>AMGCL is a header-only C++ library used by the CUDA extension. Clone it into
+<code>third_party/amgcl/</code>:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>--depth<span class="w"> </span><span class="m">1</span><span class="w"> </span>https://github.com/ddemidov/amgcl.git<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>/path/to/DiffSolid-core/third_party/amgcl
+</code></pre></div>
+<p>Verify:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">test</span><span class="w"> </span>-f<span class="w"> </span>/path/to/DiffSolid-core/third_party/amgcl/amgcl/amg.hpp<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span>OK
+</code></pre></div>
+<p>If GitHub is unreachable, copy the <code>third_party/amgcl/</code> directory from an existing
+installation (~2 MB, platform-independent).</p>
+<hr />
+<h2 id="6-building-the-amgcl-cuda-extension">6. Building the AMGCL CUDA Extension<a class="headerlink" href="#6-building-the-amgcl-cuda-extension" title="Permanent link">&para;</a></h2>
+<h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Dependency</th>
+<th>Source</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nvcc</code></td>
+<td>Conda <code>cuda-nvcc</code> or system CUDA</td>
+<td>CUDA compilation</td>
+</tr>
+<tr>
+<td><code>libboost-headers</code></td>
+<td>Conda</td>
+<td>AMGCL JSON parameter parsing</td>
+</tr>
+<tr>
+<td><code>pybind11</code></td>
+<td>pip</td>
+<td>Python/C++ bindings</td>
+</tr>
+<tr>
+<td><code>cmake</code> ≥ 3.18</td>
+<td>pip or conda</td>
+<td>Build system</td>
+</tr>
+<tr>
+<td><code>CUDA::cusparse</code></td>
+<td>CUDA toolkit</td>
+<td>Sparse linear algebra</td>
+</tr>
+</tbody>
+</table>
+<p>Install build dependencies:</p>
+<div class="highlight"><pre><span></span><code>conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>cuda-nvcc<span class="w"> </span>libboost-headers<span class="w"> </span>cmake<span class="w"> </span>-y
+pip<span class="w"> </span>install<span class="w"> </span>pybind11
+</code></pre></div>
+<h3 id="build">Build<a class="headerlink" href="#build" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>conda<span class="w"> </span>activate<span class="w"> </span>diffsolid
+bash<span class="w"> </span>/path/to/DiffSolid-core/ext/diffsolid_amgcl_cuda/build_diffsolid_amgcl_cuda.sh
+</code></pre></div>
+<p>Successful output includes a path such as:</p>
+<div class="highlight"><pre><span></span><code>Built: .../ext/diffsolid_amgcl_cuda/build/diffsolid_amgcl_cuda.cpython-310-x86_64-linux-gnu.so
+</code></pre></div>
+<p>Quick import test:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">PYTHONPATH</span><span class="o">=</span>/path/to/DiffSolid-core/ext/diffsolid_amgcl_cuda/build<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import diffsolid_amgcl_cuda; print(&#39;OK&#39;)&quot;</span>
+</code></pre></div>
+<h3 id="cuda-architecture-flags">CUDA architecture flags<a class="headerlink" href="#cuda-architecture-flags" title="Permanent link">&para;</a></h3>
+<p>Edit <code>CMakeLists.txt</code> if the target GPU is not covered by default architectures:</p>
+<table>
+<thead>
+<tr>
+<th>GPU family</th>
+<th><code>sm</code> version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Turing (RTX 20xx, T4)</td>
+<td>75</td>
+</tr>
+<tr>
+<td>Ampere (RTX 30xx, A100)</td>
+<td>80, 86</td>
+</tr>
+<tr>
+<td>Ada Lovelace (RTX 40xx, RTX 6000 Ada)</td>
+<td>89</td>
+</tr>
+<tr>
+<td>Hopper (H100, H200)</td>
+<td>90</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CUDA_ARCHITECTURES</span><span class="w"> </span><span class="s2">&quot;75;80;86;89;90&quot;</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">STRING</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="common-build-failures">Common build failures<a class="headerlink" href="#common-build-failures" title="Permanent link">&para;</a></h3>
+<p><strong>Unsupported host compiler</strong></p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">CMAKE_CUDA_HOST_COMPILER</span><span class="o">=</span>/usr/bin/g++-12
+bash<span class="w"> </span>ext/diffsolid_amgcl_cuda/build_diffsolid_amgcl_cuda.sh
+</code></pre></div>
+<p><strong>Boost not found</strong></p>
+<div class="highlight"><pre><span></span><code>conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>libboost-headers<span class="w"> </span>libboost<span class="w"> </span>-y
+</code></pre></div>
+<p><strong>No kernel image available at runtime</strong></p>
+<p>Rebuild with the correct <code>CMAKE_CUDA_ARCHITECTURES</code> for your GPU.</p>
+<hr />
+<h2 id="7-optional-backends">7. Optional Backends<a class="headerlink" href="#7-optional-backends" title="Permanent link">&para;</a></h2>
+<h3 id="cudss-direct-gpu-sparse-solver">cuDSS (direct GPU sparse solver)<a class="headerlink" href="#cudss-direct-gpu-sparse-solver" title="Permanent link">&para;</a></h3>
+<p>Required for plasticity, necking, and other problems where a robust direct solve is
+preferred:</p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>cupy-cuda12x<span class="w"> </span>nvmath-python<span class="w"> </span>nvidia-cudss-cu12
+</code></pre></div>
+<p>Facade usage:</p>
+<div class="highlight"><pre><span></span><code><span class="n">sim</span><span class="o">.</span><span class="n">set_linear_solver</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">solvers</span><span class="o">.</span><span class="n">CUDSS</span><span class="p">(</span><span class="n">reorder</span><span class="o">=</span><span class="s2">&quot;amd&quot;</span><span class="p">))</span>
+</code></pre></div>
+<h3 id="petsc-optional">PETSc (optional)<a class="headerlink" href="#petsc-optional" title="Permanent link">&para;</a></h3>
+<p>PETSc is not installed via pip. Use conda-forge:</p>
+<div class="highlight"><pre><span></span><code>conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span><span class="nv">petsc</span><span class="o">=</span><span class="m">3</span>.23<span class="w"> </span>petsc4py<span class="w"> </span>openmpi<span class="w"> </span>-y
+</code></pre></div>
+<h3 id="nvidia-amgx-pyamgx-optional">NVIDIA AmgX / pyamgx (optional)<a class="headerlink" href="#nvidia-amgx-pyamgx-optional" title="Permanent link">&para;</a></h3>
+<p>Only required if you explicitly use the AmgX backend. See the
+<a href="https://pyamgx.readthedocs.io/">pyamgx documentation</a>. AMGCL, cuDSS, and JAX iterative
+solvers do not depend on AmgX.</p>
+<hr />
+<h2 id="8-verification">8. Verification<a class="headerlink" href="#8-verification" title="Permanent link">&para;</a></h2>
+<h3 id="package-import">Package import<a class="headerlink" href="#package-import" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>scripts/check_install.py
+</code></pre></div>
+<h3 id="linear-solver-smoke-test">Linear solver smoke test<a class="headerlink" href="#linear-solver-smoke-test" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;&#39;EOF&#39;</span>
+<span class="s">import numpy as np</span>
+<span class="s">import scipy.sparse</span>
+<span class="s">import jax.numpy as jnp</span>
+
+<span class="s">A = scipy.sparse.csr_matrix(np.array([</span>
+<span class="s">    [4., -1.,  0.,  0.],</span>
+<span class="s">    [-1., 4., -1.,  0.],</span>
+<span class="s">    [0., -1.,  4., -1.],</span>
+<span class="s">    [0.,  0., -1.,  4.],</span>
+<span class="s">], dtype=np.float64))</span>
+<span class="s">b = jnp.array(A @ np.ones(4))</span>
+
+<span class="s">def check(name, x):</span>
+<span class="s">    err = float(np.linalg.norm(np.array(x) - 1.0))</span>
+<span class="s">    print(f&quot;  [{&#39;OK&#39; if err &lt; 1e-6 else &#39;FAIL&#39;}] {name}: ||x-1||={err:.2e}&quot;)</span>
+
+<span class="s">print(&quot;=== Linear solver verification ===&quot;)</span>
+
+<span class="s">try:</span>
+<span class="s">    from diffsolid.solvers.linear.amgcl_gpu import amgcl_solve, AMGCL_CUDA_AVAILABLE</span>
+<span class="s">    if AMGCL_CUDA_AVAILABLE:</span>
+<span class="s">        check(&quot;AMGCL CUDA&quot;, amgcl_solve(A, b, tol=1e-10))</span>
+<span class="s">    else:</span>
+<span class="s">        print(&quot;  [SKIP] AMGCL CUDA extension not built&quot;)</span>
+<span class="s">except Exception as e:</span>
+<span class="s">    print(f&quot;  [ERROR] AMGCL: {e}&quot;)</span>
+
+<span class="s">try:</span>
+<span class="s">    from diffsolid.solvers.linear.cudss import cudss_solve</span>
+<span class="s">    check(&quot;cuDSS&quot;, cudss_solve(A, b))</span>
+<span class="s">except Exception as e:</span>
+<span class="s">    print(f&quot;  [ERROR] cuDSS: {e}&quot;)</span>
+
+<span class="s">print(&quot;=== Done ===&quot;)</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<h3 id="regression-tests-development-workspace">Regression tests (development workspace)<a class="headerlink" href="#regression-tests-development-workspace" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>../DiffSolid-dev
+pytest<span class="w"> </span>tests/test_fracture_dynamics_s3_scan.py<span class="w"> </span>-q
+</code></pre></div>
+<hr />
+<h2 id="9-troubleshooting">9. Troubleshooting<a class="headerlink" href="#9-troubleshooting" title="Permanent link">&para;</a></h2>
+<h3 id="amgcl_cuda_available-false"><code>AMGCL_CUDA_AVAILABLE = False</code><a class="headerlink" href="#amgcl_cuda_available-false" title="Permanent link">&para;</a></h3>
+<p>The extension <code>.so</code> is missing or not on <code>PYTHONPATH</code>. Rebuild Section 6 and confirm:</p>
+<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>ext/diffsolid_amgcl_cuda/build/diffsolid_amgcl_cuda*.so
+</code></pre></div>
+<h3 id="cupy-import-failure">CuPy import failure<a class="headerlink" href="#cupy-import-failure" title="Permanent link">&para;</a></h3>
+<p>Match CuPy to your CUDA major version:</p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>cupy-cuda12x<span class="w">   </span><span class="c1"># CUDA 12.x</span>
+pip<span class="w"> </span>install<span class="w"> </span>cupy-cuda11x<span class="w">   </span><span class="c1"># CUDA 11.x</span>
+</code></pre></div>
+<h3 id="jax-sees-only-cpu">JAX sees only CPU<a class="headerlink" href="#jax-sees-only-cpu" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>jax-cuda12-plugin<span class="w"> </span>jax-cuda12-pjrt
+python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import jax; print(jax.devices())&quot;</span>
+</code></pre></div>
+<h3 id="cudss-nvmath-errors">cuDSS / nvmath errors<a class="headerlink" href="#cudss-nvmath-errors" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>nvmath-python<span class="w"> </span>nvidia-cudss-cu12
+</code></pre></div>
+<h3 id="double-precision">Double-precision<a class="headerlink" href="#double-precision" title="Permanent link">&para;</a></h3>
+<p>DiffSolid enables <code>jax_enable_x64</code> on import. Ensure your JAX build supports 64-bit
+floating point on GPU.</p>
+<hr />
+<h2 id="10-dependency-reference">10. Dependency Reference<a class="headerlink" href="#10-dependency-reference" title="Permanent link">&para;</a></h2>
+<h3 id="core-python-packages-pip">Core Python packages (pip)<a class="headerlink" href="#core-python-packages-pip" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Package</th>
+<th>Typical version</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>jax</code>, <code>jaxlib</code></td>
+<td>0.6.x</td>
+<td>Core AD and JIT</td>
+</tr>
+<tr>
+<td><code>jax-cuda12-plugin</code></td>
+<td>0.6.x</td>
+<td>GPU backend</td>
+</tr>
+<tr>
+<td><code>numpy</code></td>
+<td>2.2.x</td>
+<td>Host numerics</td>
+</tr>
+<tr>
+<td><code>scipy</code></td>
+<td>1.15.x</td>
+<td>Sparse linear algebra</td>
+</tr>
+<tr>
+<td><code>meshio</code></td>
+<td>5.3.x</td>
+<td>Mesh I/O</td>
+</tr>
+<tr>
+<td><code>gmsh</code></td>
+<td>4.14.x</td>
+<td>Mesh generation</td>
+</tr>
+<tr>
+<td><code>h5py</code></td>
+<td>3.15.x</td>
+<td>HDF5 / XDMF</td>
+</tr>
+<tr>
+<td><code>matplotlib</code></td>
+<td>3.10.x</td>
+<td>Plotting</td>
+</tr>
+</tbody>
+</table>
+<h3 id="gpu-solver-packages">GPU solver packages<a class="headerlink" href="#gpu-solver-packages" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Package</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cupy-cuda12x</code></td>
+<td>GPU arrays; AMGCL zero-copy path</td>
+</tr>
+<tr>
+<td><code>nvmath-python</code>, <code>nvidia-cudss-cu12</code></td>
+<td>cuDSS direct solver</td>
+</tr>
+<tr>
+<td><code>pybind11</code></td>
+<td>AMGCL CUDA extension build</td>
+</tr>
+</tbody>
+</table>
+<h3 id="third-party-source">Third-party source<a class="headerlink" href="#third-party-source" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AMGCL headers</td>
+<td><code>third_party/amgcl/</code></td>
+</tr>
+<tr>
+<td>CUDA extension</td>
+<td><code>ext/diffsolid_amgcl_cuda/</code></td>
+</tr>
+</tbody>
+</table>
+<p>For pinned versions used in production, see <code>requirements.txt</code> and
+<code>../DiffSolid-dev/environment.yml</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/zclsjtu/DiffSolid" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

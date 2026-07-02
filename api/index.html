@@ -1,0 +1,4399 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="JAX-native differentiable solid mechanics and phase-field fracture">
+      
+      
+      
+        <link rel="canonical" href="https://zclsjtu.github.io/DiffSolid/api/">
+      
+      
+        <link rel="prev" href="../quickstart/">
+      
+      
+        <link rel="next" href="../theory/formulations/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>API Reference - DiffSolid</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#diffsolid-api-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="DiffSolid" class="md-header__button md-logo" aria-label="DiffSolid" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DiffSolid
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              API Reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/zclsjtu/DiffSolid" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    DiffSolid
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quick Start
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  API Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../theory/formulations/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Theory
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../legal/license/" class="md-tabs__link">
+          
+  
+  
+  Legal
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="DiffSolid" class="md-nav__button md-logo" aria-label="DiffSolid" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    DiffSolid
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/zclsjtu/DiffSolid" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    DiffSolid
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#document-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Document Scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Introduction
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-design-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Design Principles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-canonical-import" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Canonical Import
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-minimal-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Minimal Workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-simulation-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Simulation Manager
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Simulation Manager">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-construction-and-mesh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Construction and Mesh
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 Construction and Mesh">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simulation__init__namesimulation-dim3-ele_typehex8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simulation.__init__(name="simulation", dim=3, ele_type="HEX8")
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simload_meshpath_or_mesh-ele_typenone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sim.load_mesh(path_or_mesh, ele_type=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simadd_physicsphysics_descriptor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sim.add_physics(physics_descriptor)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simadd_physical_groupname-indices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sim.add_physical_group(name, indices)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-global-solver-and-algorithm-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Global Solver and Algorithm Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-steps-and-analysis-drivers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Steps and Analysis Drivers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 Steps and Analysis Drivers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simadd_stepnamenone-duration-dtnone-solver_overrides" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sim.add_step(name=None, *, duration, dt=None, **solver_overrides)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simadd_reference_pointname-coordsnone-ndofs1-labelsnone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sim.add_reference_point(name, *, coords=None, ndofs=1, labels=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simadd_periodic_bcformulationauto-axesnone-eps_barnone-f_barnone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sim.add_periodic_bc(formulation="auto", axes=None, eps_bar=None, F_bar=None, ...)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-history-output-simulation-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 History Output (Simulation-Level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-simsolve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 sim.solve(...)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-checkpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 Checkpoints
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-step-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Step Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Step Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-dirichlet-and-neumann-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Dirichlet and Neumann Conditions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-convenience-mechanical-bcs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Convenience Mechanical BCs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-damage-and-fracture-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Damage and Fracture Dynamics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3 Damage and Fracture Dynamics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stepset_damage_evolutionfield-pde-integrator-eta-tau-rho_d-mu_d-lumped" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        step.set_damage_evolution(field=..., pde=..., integrator=..., eta=..., tau=..., rho_d=..., mu_d=..., lumped=...)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stepset_fracture_dynamicsmechanics_integrator-coupling_mode-cfl_safety-integrator-scan_mode-drive_field_mode-irreversibility_mode-damage_subcycles-explicit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        step.set_fracture_dynamics(mechanics_integrator=..., coupling_mode=..., cfl_safety=..., integrator=..., scan_mode=..., drive_field_mode=..., irreversibility_mode=..., damage_subcycles=..., explicit=...)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-output-declarations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Output Declarations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-advanced-constraints-step-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 Advanced Constraints (Step Methods)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36-per-step-solver-overrides-add_step-keyword-arguments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 Per-Step Solver Overrides (add_step keyword arguments)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-phase-field-fracture-strategies-s1s7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Phase-Field Fracture Strategies (S1–S7)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Phase-Field Fracture Strategies (S1–S7)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-valid-combinations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Valid Combinations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-configuration-axes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Configuration Axes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-damage-pde-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Damage PDE Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-defaults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Defaults
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-physics-descriptors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Physics Descriptors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Physics Descriptors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-solidmechanics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 SolidMechanics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-axisymmetricsolidmechanics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 AxisymmetricSolidMechanics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-phasefield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 PhaseField
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-fracture-phasefieldfracture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Fracture / PhaseFieldFracture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55-damage-descriptor-shortcuts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5 Damage Descriptor Shortcuts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#56-damageevolution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6 DamageEvolution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#57-phase-field-regions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.7 Phase-Field Regions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-material-descriptors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Material Descriptors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Material Descriptors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-elasticity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Elasticity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-phase-field-ready-solids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Phase-Field Ready Solids
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-degradation-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Degradation Functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-dislocation-pfdd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 Dislocation / PFDD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65-advanced-constitutive-models-package-root" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 Advanced Constitutive Models (Package Root)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-couplers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Couplers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Couplers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-staggered" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Staggered
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-fracturecoupling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 FractureCoupling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-historymax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 HistoryMax
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74-slipstaggered-pfdd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 SlipStaggered (PFDD)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-solver-descriptors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Solver Descriptors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Solver Descriptors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-linear-solvers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 Linear Solvers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-nonlinear-solvers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 Nonlinear Solvers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-dynamics-solver-descriptors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 Dynamics Solver Descriptors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-amplitudes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Amplitudes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-constraints-and-advanced-boundary-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Constraints and Advanced Boundary Conditions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Constraints and Advanced Boundary Conditions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-_linearmpc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 _LinearMPC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102-_periodicbc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 _PeriodicBC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103-_concentratedload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3 _ConcentratedLoad
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#104-_pressurebc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4 _PressureBC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#105-_inclineddirichlet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.5 _InclinedDirichlet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#106-_couplingconstraint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.6 _CouplingConstraint
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-output-results-and-post-processing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Output, Results, and Post-Processing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Output, Results, and Post-Processing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111-field-output-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 Field Output Keys
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-xdmf-vtu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 XDMF / VTU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113-result-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 Result Object
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114-post-processing-namespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 Post-Processing Namespace
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-mesh-io-and-checkpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Mesh I/O and Checkpoints
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-pure-mechanics-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Pure Mechanics Dynamics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. Pure Mechanics Dynamics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-step-based-preferred" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 Step-Based (Preferred)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-legacy-entry-points" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.2 Legacy Entry Points
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#133-utility-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.3 Utility Functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-phase-field-dislocation-dynamics-pfdd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Phase-Field Dislocation Dynamics (PFDD)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. Phase-Field Dislocation Dynamics (PFDD)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#141-dislocationsimulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1 DislocationSimulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#142-gpu-baseline-helpers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2 GPU Baseline Helpers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#143-related-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3 Related Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-inverse-problems-and-optimisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. Inverse Problems and Optimisation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="15. Inverse Problems and Optimisation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#151-simulation-facade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.1 Simulation Facade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#152-inverse-namespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.2 Inverse Namespace
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-type-aliases-and-enumerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. Type Aliases and Enumerations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="16. Type Aliases and Enumerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#161-kinematics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.1 Kinematics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#162-formulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.2 Formulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#163-geometry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.3 Geometry
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#164-integration-enum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.4 Integration (Enum)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17. Environment Variables
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18-appendix-legacy-api-migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18. Appendix — Legacy API Migration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../theory/formulations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Legal
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Legal
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../legal/license/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../legal/third-party/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Third-Party Notices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#document-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Document Scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Introduction
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-design-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Design Principles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-canonical-import" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Canonical Import
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-minimal-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Minimal Workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-simulation-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Simulation Manager
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Simulation Manager">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-construction-and-mesh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Construction and Mesh
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 Construction and Mesh">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simulation__init__namesimulation-dim3-ele_typehex8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simulation.__init__(name="simulation", dim=3, ele_type="HEX8")
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simload_meshpath_or_mesh-ele_typenone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sim.load_mesh(path_or_mesh, ele_type=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simadd_physicsphysics_descriptor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sim.add_physics(physics_descriptor)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simadd_physical_groupname-indices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sim.add_physical_group(name, indices)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-global-solver-and-algorithm-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Global Solver and Algorithm Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-steps-and-analysis-drivers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Steps and Analysis Drivers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 Steps and Analysis Drivers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simadd_stepnamenone-duration-dtnone-solver_overrides" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sim.add_step(name=None, *, duration, dt=None, **solver_overrides)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simadd_reference_pointname-coordsnone-ndofs1-labelsnone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sim.add_reference_point(name, *, coords=None, ndofs=1, labels=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simadd_periodic_bcformulationauto-axesnone-eps_barnone-f_barnone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sim.add_periodic_bc(formulation="auto", axes=None, eps_bar=None, F_bar=None, ...)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-history-output-simulation-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 History Output (Simulation-Level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-simsolve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 sim.solve(...)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-checkpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 Checkpoints
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-step-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Step Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Step Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-dirichlet-and-neumann-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Dirichlet and Neumann Conditions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-convenience-mechanical-bcs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Convenience Mechanical BCs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-damage-and-fracture-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Damage and Fracture Dynamics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3 Damage and Fracture Dynamics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stepset_damage_evolutionfield-pde-integrator-eta-tau-rho_d-mu_d-lumped" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        step.set_damage_evolution(field=..., pde=..., integrator=..., eta=..., tau=..., rho_d=..., mu_d=..., lumped=...)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stepset_fracture_dynamicsmechanics_integrator-coupling_mode-cfl_safety-integrator-scan_mode-drive_field_mode-irreversibility_mode-damage_subcycles-explicit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        step.set_fracture_dynamics(mechanics_integrator=..., coupling_mode=..., cfl_safety=..., integrator=..., scan_mode=..., drive_field_mode=..., irreversibility_mode=..., damage_subcycles=..., explicit=...)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-output-declarations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Output Declarations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-advanced-constraints-step-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 Advanced Constraints (Step Methods)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36-per-step-solver-overrides-add_step-keyword-arguments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 Per-Step Solver Overrides (add_step keyword arguments)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-phase-field-fracture-strategies-s1s7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Phase-Field Fracture Strategies (S1–S7)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Phase-Field Fracture Strategies (S1–S7)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-valid-combinations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Valid Combinations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-configuration-axes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Configuration Axes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-damage-pde-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Damage PDE Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-defaults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Defaults
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-physics-descriptors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Physics Descriptors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Physics Descriptors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-solidmechanics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 SolidMechanics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-axisymmetricsolidmechanics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 AxisymmetricSolidMechanics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-phasefield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 PhaseField
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-fracture-phasefieldfracture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Fracture / PhaseFieldFracture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55-damage-descriptor-shortcuts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5 Damage Descriptor Shortcuts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#56-damageevolution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6 DamageEvolution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#57-phase-field-regions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.7 Phase-Field Regions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-material-descriptors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Material Descriptors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Material Descriptors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-elasticity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Elasticity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-phase-field-ready-solids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Phase-Field Ready Solids
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-degradation-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Degradation Functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-dislocation-pfdd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 Dislocation / PFDD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65-advanced-constitutive-models-package-root" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 Advanced Constitutive Models (Package Root)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-couplers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Couplers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Couplers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-staggered" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Staggered
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-fracturecoupling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 FractureCoupling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-historymax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 HistoryMax
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74-slipstaggered-pfdd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 SlipStaggered (PFDD)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-solver-descriptors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Solver Descriptors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Solver Descriptors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-linear-solvers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 Linear Solvers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-nonlinear-solvers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 Nonlinear Solvers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-dynamics-solver-descriptors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 Dynamics Solver Descriptors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-amplitudes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Amplitudes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-constraints-and-advanced-boundary-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Constraints and Advanced Boundary Conditions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Constraints and Advanced Boundary Conditions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-_linearmpc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 _LinearMPC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102-_periodicbc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 _PeriodicBC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103-_concentratedload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3 _ConcentratedLoad
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#104-_pressurebc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4 _PressureBC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#105-_inclineddirichlet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.5 _InclinedDirichlet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#106-_couplingconstraint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.6 _CouplingConstraint
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-output-results-and-post-processing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Output, Results, and Post-Processing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Output, Results, and Post-Processing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111-field-output-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 Field Output Keys
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-xdmf-vtu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 XDMF / VTU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113-result-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 Result Object
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114-post-processing-namespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 Post-Processing Namespace
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-mesh-io-and-checkpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Mesh I/O and Checkpoints
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-pure-mechanics-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Pure Mechanics Dynamics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. Pure Mechanics Dynamics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-step-based-preferred" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 Step-Based (Preferred)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-legacy-entry-points" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.2 Legacy Entry Points
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#133-utility-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.3 Utility Functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-phase-field-dislocation-dynamics-pfdd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Phase-Field Dislocation Dynamics (PFDD)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. Phase-Field Dislocation Dynamics (PFDD)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#141-dislocationsimulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1 DislocationSimulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#142-gpu-baseline-helpers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2 GPU Baseline Helpers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#143-related-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3 Related Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-inverse-problems-and-optimisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. Inverse Problems and Optimisation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="15. Inverse Problems and Optimisation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#151-simulation-facade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.1 Simulation Facade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#152-inverse-namespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.2 Inverse Namespace
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-type-aliases-and-enumerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. Type Aliases and Enumerations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="16. Type Aliases and Enumerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#161-kinematics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.1 Kinematics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#162-formulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.2 Formulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#163-geometry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.3 Geometry
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#164-integration-enum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.4 Integration (Enum)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17. Environment Variables
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18-appendix-legacy-api-migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18. Appendix — Legacy API Migration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="diffsolid-api-reference">DiffSolid API Reference<a class="headerlink" href="#diffsolid-api-reference" title="Permanent link">&para;</a></h1>
+<p><strong>Version:</strong> 0.1.0<br />
+<strong>Scope:</strong> Public Python API accessed via <code>import diffsolid as ds</code></p>
+<hr />
+<h2 id="document-scope">Document Scope<a class="headerlink" href="#document-scope" title="Permanent link">&para;</a></h2>
+<p>This reference documents <strong>all user-facing functionality</strong> shipped with DiffSolid.
+The API is organised in two layers:</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Import path</th>
+<th>Intended use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Facade (primary)</strong></td>
+<td><code>ds.Simulation</code>, <code>ds.physics</code>, <code>ds.materials</code>, <code>ds.solvers</code>, …</td>
+<td>Standard simulations — <strong>start here</strong></td>
+</tr>
+<tr>
+<td><strong>Extended user API</strong></td>
+<td><code>ds.post</code>, <code>ds.inverse</code>, <code>ds.io</code>, top-level <code>ds.Mesh</code>, …</td>
+<td>Post-processing, inverse problems, mesh I/O</td>
+</tr>
+</tbody>
+</table>
+<p>Sections 1–16 cover the facade and extended user API. Theory is in <a href="../theory/formulations/">formulations.md</a>.</p>
+<hr />
+<h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
+<ol>
+<li><a href="#1-introduction">Introduction</a></li>
+<li><a href="#2-simulation-manager">Simulation Manager</a></li>
+<li><a href="#3-step-configuration">Step Configuration</a></li>
+<li><a href="#4-phase-field-fracture-strategies-s1s7">Phase-Field Fracture Strategies (S1–S7)</a></li>
+<li><a href="#5-physics-descriptors">Physics Descriptors</a></li>
+<li><a href="#6-material-descriptors">Material Descriptors</a></li>
+<li><a href="#7-couplers">Couplers</a></li>
+<li><a href="#8-solver-descriptors">Solver Descriptors</a></li>
+<li><a href="#9-amplitudes">Amplitudes</a></li>
+<li><a href="#10-constraints-and-advanced-boundary-conditions">Constraints and Advanced Boundary Conditions</a></li>
+<li><a href="#11-output-results-and-post-processing">Output, Results, and Post-Processing</a></li>
+<li><a href="#12-mesh-io-and-checkpoints">Mesh I/O and Checkpoints</a></li>
+<li><a href="#13-pure-mechanics-dynamics">Pure Mechanics Dynamics</a></li>
+<li><a href="#14-phase-field-dislocation-dynamics-pfdd">Phase-Field Dislocation Dynamics (PFDD)</a></li>
+<li><a href="#15-inverse-problems-and-optimisation">Inverse Problems and Optimisation</a></li>
+<li><a href="#16-type-aliases-and-enumerations">Type Aliases and Enumerations</a></li>
+<li><a href="#17-environment-variables">Environment Variables</a></li>
+<li><a href="#18-appendix-legacy-api-migration">Appendix — Legacy API Migration</a></li>
+</ol>
+<hr />
+<h2 id="1-introduction">1. Introduction<a class="headerlink" href="#1-introduction" title="Permanent link">&para;</a></h2>
+<p>DiffSolid is a JAX-native finite element framework for nonlinear solid mechanics,
+phase-field fracture, GPU linear algebra, explicit/implicit dynamics, crystal
+plasticity, and gradient-based inverse problems.</p>
+<h3 id="11-design-principles">1.1 Design Principles<a class="headerlink" href="#11-design-principles" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Step-scoped configuration.</strong> Boundary conditions, damage evolution, outputs,
+  and per-step solver overrides attach to loading steps.</li>
+<li><strong>Validated fracture strategies.</strong> Coupled mechanics–damage workflows map to
+  literature strategy IDs <strong>S1–S7</strong> and are validated at solve time.</li>
+<li><strong>Material-centric phase-field physics.</strong> Strain energy splits and degradation
+  functions live on constitutive models, not on the coupler.</li>
+<li><strong>Double precision.</strong> <code>jax_enable_x64</code> is enabled on import.</li>
+</ul>
+<h3 id="12-canonical-import">1.2 Canonical Import<a class="headerlink" href="#12-canonical-import" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">diffsolid</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ds</span>
+</code></pre></div>
+<h3 id="13-minimal-workflow">1.3 Minimal Workflow<a class="headerlink" href="#13-minimal-workflow" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">sim</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">Simulation</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;case&quot;</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">ele_type</span><span class="o">=</span><span class="s2">&quot;HEX8&quot;</span><span class="p">)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">load_mesh</span><span class="p">(</span><span class="s2">&quot;mesh.msh&quot;</span><span class="p">)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">add_physics</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">physics</span><span class="o">.</span><span class="n">SolidMechanics</span><span class="p">(</span><span class="n">material</span><span class="o">=</span><span class="n">mat</span><span class="p">))</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">set_linear_solver</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">solvers</span><span class="o">.</span><span class="n">AMGCL</span><span class="p">(</span><span class="n">gpu</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+<span class="n">step</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">add_step</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;load&quot;</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">step</span><span class="o">.</span><span class="n">add_dirichlet_bc</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="s2">&quot;x == 0&quot;</span><span class="p">,</span> <span class="n">components</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">],</span> <span class="n">value</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;results/&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>For phase-field fracture, add <code>PhaseField</code> physics, a coupler, and step-level
+damage/dynamics configuration (Sections 4–5, 7).</p>
+<hr />
+<h2 id="2-simulation-manager">2. Simulation Manager<a class="headerlink" href="#2-simulation-manager" title="Permanent link">&para;</a></h2>
+<p>Class: <code>ds.Simulation</code></p>
+<h3 id="21-construction-and-mesh">2.1 Construction and Mesh<a class="headerlink" href="#21-construction-and-mesh" title="Permanent link">&para;</a></h3>
+<h4 id="simulation__init__namesimulation-dim3-ele_typehex8"><code>Simulation.__init__(name="simulation", dim=3, ele_type="HEX8")</code><a class="headerlink" href="#simulation__init__namesimulation-dim3-ele_typehex8" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td><code>str</code></td>
+<td><code>"simulation"</code></td>
+<td>Identifier for logs and output</td>
+</tr>
+<tr>
+<td><code>dim</code></td>
+<td><code>int</code></td>
+<td><code>3</code></td>
+<td>Spatial dimension; updated after mesh load</td>
+</tr>
+<tr>
+<td><code>ele_type</code></td>
+<td><code>str</code></td>
+<td><code>"HEX8"</code></td>
+<td>Default element type</td>
+</tr>
+</tbody>
+</table>
+<h4 id="simload_meshpath_or_mesh-ele_typenone"><code>sim.load_mesh(path_or_mesh, ele_type=None)</code><a class="headerlink" href="#simload_meshpath_or_mesh-ele_typenone" title="Permanent link">&para;</a></h4>
+<p>Loads meshio-compatible files (<code>.msh</code>, <code>.inp</code>, <code>.vtu</code>, …) or a <code>ds.Mesh</code> object.
+Returns the internal mesh; updates <code>sim.dim</code> when inferable.</p>
+<h4 id="simadd_physicsphysics_descriptor"><code>sim.add_physics(physics_descriptor)</code><a class="headerlink" href="#simadd_physicsphysics_descriptor" title="Permanent link">&para;</a></h4>
+<p>Registers <code>SolidMechanics</code>, <code>PhaseField</code>, or (for PFDD) descriptors consumed by
+<code>DislocationSimulation</code>. Returns the descriptor for chaining.</p>
+<p><strong>Limitation:</strong> staggered <strong>phase-field fracture</strong> currently supports <strong>one</strong>
+loading step when both solid mechanics and phase field are present.</p>
+<h4 id="simadd_physical_groupname-indices"><code>sim.add_physical_group(name, indices)</code><a class="headerlink" href="#simadd_physical_groupname-indices" title="Permanent link">&para;</a></h4>
+<p>Registers a named node group for <code>@name</code> location selectors in boundary conditions.</p>
+<h3 id="22-global-solver-and-algorithm-configuration">2.2 Global Solver and Algorithm Configuration<a class="headerlink" href="#22-global-solver-and-algorithm-configuration" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>set_coupler(coupler)</code></td>
+<td>Multi-physics coupling (<code>Staggered</code>, <code>FractureCoupling</code>, …)</td>
+</tr>
+<tr>
+<td><code>set_linear_solver(solver)</code></td>
+<td>Default linear backend for Newton solves</td>
+</tr>
+<tr>
+<td><code>set_dynamics_solver(solver)</code></td>
+<td><code>ExplicitDynamicsSolver</code> or <code>ImplicitDynamicsSolver</code> descriptor</td>
+</tr>
+<tr>
+<td><code>set_pf_solver(solver)</code></td>
+<td>Phase-field nonlinear solver override</td>
+</tr>
+<tr>
+<td><code>set_pf_linear_solver(solver)</code></td>
+<td>Linear backend for VI/Newton phase-field solves</td>
+</tr>
+<tr>
+<td><code>set_phase_field_solver(...)</code></td>
+<td>Combined PF solver + linear backend shorthand</td>
+</tr>
+<tr>
+<td><code>set_newton_options(rtol=..., atol=..., max_iter=..., line_search=...)</code></td>
+<td>Global Newton tolerances</td>
+</tr>
+<tr>
+<td><code>set_arc_length_solver(psi=..., Delta_l=..., tol=..., mode="displacement")</code></td>
+<td>Crisfield arc-length for limit-point problems</td>
+</tr>
+<tr>
+<td><code>set_adaptive_stepping(enabled=True, dt_min=..., dt_max=..., ...)</code></td>
+<td>Quasi-static adaptive load increments</td>
+</tr>
+<tr>
+<td><code>set_stagger_adaptive_stepping(dt_min=..., dt_max=..., ...)</code></td>
+<td>Adaptive increment for staggered PF</td>
+</tr>
+<tr>
+<td><code>set_log(level="summary")</code></td>
+<td><code>"summary"</code>, <code>"solver"</code>, or <code>"debug"</code></td>
+</tr>
+<tr>
+<td><code>set_performance_report(True, output_dir=...)</code></td>
+<td>Detailed timing report</td>
+</tr>
+</tbody>
+</table>
+<h3 id="23-steps-and-analysis-drivers">2.3 Steps and Analysis Drivers<a class="headerlink" href="#23-steps-and-analysis-drivers" title="Permanent link">&para;</a></h3>
+<h4 id="simadd_stepnamenone-duration-dtnone-solver_overrides"><code>sim.add_step(name=None, *, duration, dt=None, **solver_overrides)</code><a class="headerlink" href="#simadd_stepnamenone-duration-dtnone-solver_overrides" title="Permanent link">&para;</a></h4>
+<p>Creates a loading interval with step-local time <code>t_local ∈ [0, duration]</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>duration</code></td>
+<td>Physical step length (required)</td>
+</tr>
+<tr>
+<td><code>dt</code></td>
+<td>Increment size; <code>None</code> → CFL-based auto estimation for dynamics</td>
+</tr>
+<tr>
+<td><code>**solver_overrides</code></td>
+<td>Per-step Newton, adaptive, or dynamics options (Section 3.6)</td>
+</tr>
+</tbody>
+</table>
+<p>Returns a step builder (<code>_Step</code>). Supports context manager form:</p>
+<div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="n">sim</span><span class="o">.</span><span class="n">add_step</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;hold&quot;</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span> <span class="k">as</span> <span class="n">step</span><span class="p">:</span>
+    <span class="n">step</span><span class="o">.</span><span class="n">add_dirichlet_bc</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="simadd_reference_pointname-coordsnone-ndofs1-labelsnone"><code>sim.add_reference_point(name, *, coords=None, ndofs=1, labels=None)</code><a class="headerlink" href="#simadd_reference_pointname-coordsnone-ndofs1-labelsnone" title="Permanent link">&para;</a></h4>
+<p>Virtual control node for coupling constraints and concentrated loads.</p>
+<h4 id="simadd_periodic_bcformulationauto-axesnone-eps_barnone-f_barnone"><code>sim.add_periodic_bc(formulation="auto", axes=None, eps_bar=None, F_bar=None, ...)</code><a class="headerlink" href="#simadd_periodic_bcformulationauto-axesnone-eps_barnone-f_barnone" title="Permanent link">&para;</a></h4>
+<p>Returns a <code>_PeriodicBC</code> object attached via <code>step.add_periodic_bc(pbc)</code>.</p>
+<h3 id="24-history-output-simulation-level">2.4 History Output (Simulation-Level)<a class="headerlink" href="#24-history-output-simulation-level" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">sim</span><span class="o">.</span><span class="n">add_history_output</span><span class="p">(</span><span class="s2">&quot;F_top&quot;</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;@top&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;reaction.z&quot;</span><span class="p">,</span> <span class="n">every</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<p>Global history keys must be unique. Step-level <code>add_history_output</code> scopes recording
+to that step's increment window.</p>
+<h3 id="25-simsolve">2.5 <code>sim.solve(...)</code><a class="headerlink" href="#25-simsolve" title="Permanent link">&para;</a></h3>
+<p>Runs all registered steps sequentially.</p>
+<div class="highlight"><pre><span></span><code><span class="n">result</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span>
+    <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;results/&quot;</span><span class="p">,</span>
+    <span class="n">save_every</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">output_format</span><span class="o">=</span><span class="s2">&quot;xdmf&quot;</span><span class="p">,</span>       <span class="c1"># &quot;xdmf&quot; | &quot;vtu&quot; | &quot;none&quot;</span>
+    <span class="n">field_output</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>            <span class="c1"># None → [&quot;u&quot;]</span>
+    <span class="n">field_save_every</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">history_csv</span><span class="o">=</span><span class="s2">&quot;history.csv&quot;</span><span class="p">,</span>    <span class="c1"># None to disable CSV</span>
+<span class="p">)</span>
+</code></pre></div>
+<p><strong>Routing (mechanics + phase field):</strong></p>
+<ol>
+<li>Merge step damage evolution and fracture dynamics configuration.</li>
+<li>Validate against S1–S7 (<code>validate_fracture_combo</code>).</li>
+<li><code>mechanics_integrator != "quasi_static"</code> → <code>_solve_fracture_dynamics</code>.</li>
+<li>Else → <code>_solve_staggered</code>.</li>
+</ol>
+<p>Returns a <code>Result</code> object (dict subclass) — Section 11.</p>
+<h3 id="26-checkpoints">2.6 Checkpoints<a class="headerlink" href="#26-checkpoints" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">sim</span><span class="o">.</span><span class="n">set_checkpoint_options</span><span class="p">(</span><span class="n">every</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">&quot;chk/&quot;</span><span class="p">)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">save_checkpoint</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s2">&quot;state.eqx&quot;</span><span class="p">)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">load_checkpoint</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s2">&quot;state.eqx&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>Checkpoints store displacement, internal variables, and phase-field state where
+applicable.</p>
+<hr />
+<h2 id="3-step-configuration">3. Step Configuration<a class="headerlink" href="#3-step-configuration" title="Permanent link">&para;</a></h2>
+<p>Objects returned by <code>sim.add_step()</code>. Configuration is <strong>not inherited</strong> across steps.</p>
+<h3 id="31-dirichlet-and-neumann-conditions">3.1 Dirichlet and Neumann Conditions<a class="headerlink" href="#31-dirichlet-and-neumann-conditions" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">step</span><span class="o">.</span><span class="n">add_dirichlet_bc</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="s2">&quot;x == 0&quot;</span><span class="p">,</span> <span class="n">components</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">],</span> <span class="n">value</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+                      <span class="n">amplitude</span><span class="o">=</span><span class="n">ds</span><span class="o">.</span><span class="n">amplitudes</span><span class="o">.</span><span class="n">Ramp</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">step</span><span class="o">.</span><span class="n">add_neumann_bc</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="s2">&quot;x == 1&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">traction_vector</span><span class="p">,</span> <span class="n">amplitude</span><span class="o">=</span><span class="n">amp</span><span class="p">)</span>
+</code></pre></div>
+<p>Unified API:</p>
+<div class="highlight"><pre><span></span><code><span class="n">step</span><span class="o">.</span><span class="n">add_bc</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s2">&quot;u&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;dirichlet&quot;</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;@bottom&quot;</span><span class="p">,</span>
+            <span class="n">components</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">],</span> <span class="n">value</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="n">step</span><span class="o">.</span><span class="n">add_bc</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;dirichlet&quot;</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;y == 0&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="n">step</span><span class="o">.</span><span class="n">add_scalar_dirichlet_bc</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="n">on</span><span class="o">=...</span><span class="p">,</span> <span class="n">value</span><span class="o">=...</span><span class="p">)</span>
+<span class="n">step</span><span class="o">.</span><span class="n">add_scalar_neumann_bc</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="n">on</span><span class="o">=...</span><span class="p">,</span> <span class="n">value</span><span class="o">=...</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Location selectors:</strong> geometric strings (<code>"x == 0"</code>), <code>@physical_group</code>, or callables.</p>
+<p><strong>Amplitudes</strong> are evaluated at step-local time (Section 9).</p>
+<h3 id="32-convenience-mechanical-bcs">3.2 Convenience Mechanical BCs<a class="headerlink" href="#32-convenience-mechanical-bcs" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>add_symmetry_bc(on, plane="x")</code></td>
+<td>Symmetry about a coordinate plane</td>
+</tr>
+<tr>
+<td><code>add_encastre(on)</code></td>
+<td>Fully fixed (all translational DOFs)</td>
+</tr>
+<tr>
+<td><code>add_inclined_dirichlet_bc(on, direction=..., value=...)</code></td>
+<td>Dirichlet in rotated frame</td>
+</tr>
+</tbody>
+</table>
+<h3 id="33-damage-and-fracture-dynamics">3.3 Damage and Fracture Dynamics<a class="headerlink" href="#33-damage-and-fracture-dynamics" title="Permanent link">&para;</a></h3>
+<h4 id="stepset_damage_evolutionfield-pde-integrator-eta-tau-rho_d-mu_d-lumped"><code>step.set_damage_evolution(field=..., pde=..., integrator=..., eta=..., tau=..., rho_d=..., mu_d=..., lumped=...)</code><a class="headerlink" href="#stepset_damage_evolutionfield-pde-integrator-eta-tau-rho_d-mu_d-lumped" title="Permanent link">&para;</a></h4>
+<p>Configures the damage PDE and time integrator for strategy axis 1–2.</p>
+<h4 id="stepset_fracture_dynamicsmechanics_integrator-coupling_mode-cfl_safety-integrator-scan_mode-drive_field_mode-irreversibility_mode-damage_subcycles-explicit"><code>step.set_fracture_dynamics(mechanics_integrator=..., coupling_mode=..., cfl_safety=..., integrator=..., scan_mode=..., drive_field_mode=..., irreversibility_mode=..., damage_subcycles=..., explicit=...)</code><a class="headerlink" href="#stepset_fracture_dynamicsmechanics_integrator-coupling_mode-cfl_safety-integrator-scan_mode-drive_field_mode-irreversibility_mode-damage_subcycles-explicit" title="Permanent link">&para;</a></h4>
+<p>Configures mechanics time integration and stagger coupling (strategy axis 3–4).
+Setting <code>mechanics_integrator="explicit_central_difference"</code> marks the step as explicit dynamics.</p>
+<p><strong>Explicit damage options</strong> (<code>FractureExplicitOptions</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>drive_field_mode</code></td>
+<td><code>"current_energy"</code></td>
+<td><code>"current_energy"</code> or <code>"history_max"</code></td>
+</tr>
+<tr>
+<td><code>irreversibility_mode</code></td>
+<td><code>"macaulay_rate"</code></td>
+<td>Irreversibility enforcement scheme</td>
+</tr>
+<tr>
+<td><code>damage_subcycles</code></td>
+<td><code>False</code></td>
+<td>Sub-cycle damage integration</td>
+</tr>
+<tr>
+<td><code>clip_upper</code></td>
+<td><code>True</code></td>
+<td>Clip damage to <code>[0, 1]</code></td>
+</tr>
+<tr>
+<td><code>pseudo_solver_backend</code></td>
+<td><code>"host_spsolve"</code></td>
+<td>S7 pseudo-parabolic backend</td>
+</tr>
+<tr>
+<td><code>pure_sobolev_research</code></td>
+<td><code>False</code></td>
+<td>Research flag for pure Sobolev S7</td>
+</tr>
+</tbody>
+</table>
+<h3 id="34-output-declarations">3.4 Output Declarations<a class="headerlink" href="#34-output-declarations" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">step</span><span class="o">.</span><span class="n">add_history_output</span><span class="p">(</span><span class="s2">&quot;F&quot;</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;@top&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;reaction.z&quot;</span><span class="p">,</span> <span class="n">every</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">step</span><span class="o">.</span><span class="n">add_energy_output</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;energy&quot;</span><span class="p">)</span>
+<span class="n">step</span><span class="o">.</span><span class="n">add_field_output</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;u&quot;</span><span class="p">,</span> <span class="s2">&quot;cauchy.von_mises&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">],</span> <span class="n">every</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">step</span><span class="o">.</span><span class="n">add_field_snapshot</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s2">&quot;cauchy.zz&quot;</span><span class="p">,</span> <span class="n">every</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">deformed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;snaps/&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="35-advanced-constraints-step-methods">3.5 Advanced Constraints (Step Methods)<a class="headerlink" href="#35-advanced-constraints-step-methods" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Underlying type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>add_equation_constraint(terms, rhs=..., amplitude=...)</code></td>
+<td><code>_LinearMPC</code></td>
+</tr>
+<tr>
+<td><code>add_periodic_bc(pbc)</code></td>
+<td><code>_PeriodicBC</code></td>
+</tr>
+<tr>
+<td><code>add_concentrated_force(target=..., components=..., value=...)</code></td>
+<td><code>_ConcentratedLoad</code></td>
+</tr>
+<tr>
+<td><code>add_pressure_bc(on=..., magnitude=..., follower=True)</code></td>
+<td><code>_PressureBC</code></td>
+</tr>
+<tr>
+<td><code>add_coupling_constraint(rp=..., on=..., type="kinematic")</code></td>
+<td><code>_CouplingConstraint</code></td>
+</tr>
+</tbody>
+</table>
+<p>See Section 10 for parameter semantics.</p>
+<h3 id="36-per-step-solver-overrides-add_step-keyword-arguments">3.6 Per-Step Solver Overrides (<code>add_step</code> keyword arguments)<a class="headerlink" href="#36-per-step-solver-overrides-add_step-keyword-arguments" title="Permanent link">&para;</a></h3>
+<p><strong>Quasi-static Newton / adaptive:</strong></p>
+<p><code>adaptive</code>, <code>dt_min</code>, <code>dt_max</code>, <code>iter_boost</code>, <code>iter_keep</code>, <code>iter_cutback</code>,
+<code>grow_factor</code>, <code>cutback_factor</code>, <code>max_retries</code>, <code>line_search</code>, <code>stabilize</code>,
+<code>rtol</code>, <code>atol</code>, <code>max_iter</code>, <code>verbose</code>, …</p>
+<p><strong>Explicit / implicit dynamics:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dynamics</code></td>
+<td><code>None</code>, <code>"explicit"</code>, or <code>"implicit"</code></td>
+</tr>
+<tr>
+<td><code>integrator</code></td>
+<td><code>"auto"</code>, <code>"scan_energy"</code>, <code>"scan_residual"</code>, <code>"scan_stateful"</code>, <code>"python"</code></td>
+</tr>
+<tr>
+<td><code>scan_mode</code></td>
+<td>JAX scan routing (<code>"auto"</code> or bool)</td>
+</tr>
+<tr>
+<td><code>cfl_safety</code></td>
+<td>CFL factor when <code>dt=None</code></td>
+</tr>
+<tr>
+<td><code>wave_speed</code></td>
+<td>Override elastic wave speed for CFL</td>
+</tr>
+<tr>
+<td><code>mass_scale</code>, <code>target_dt</code>, <code>auto_mass_scale</code></td>
+<td>Mass scaling to reach target Δt</td>
+</tr>
+<tr>
+<td><code>use_element_cfl</code></td>
+<td>Element-wise CFL (default <code>True</code>)</td>
+</tr>
+<tr>
+<td><code>alpha_m</code>, <code>alpha_k</code></td>
+<td>Rayleigh damping</td>
+</tr>
+<tr>
+<td><code>beta</code>, <code>gamma</code></td>
+<td>Newmark parameters (implicit)</td>
+</tr>
+<tr>
+<td><code>initial_displacement</code>, <code>initial_velocity</code>, <code>initial_acceleration</code></td>
+<td>IC overrides</td>
+</tr>
+<tr>
+<td><code>save_every</code></td>
+<td>Override simulation-level output cadence</td>
+</tr>
+<tr>
+<td><code>cp_chunk_size</code></td>
+<td>Crystal plasticity scan chunk size</td>
+</tr>
+<tr>
+<td><code>verbose_dynamics</code></td>
+<td>Print time-step progress</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-phase-field-fracture-strategies-s1s7">4. Phase-Field Fracture Strategies (S1–S7)<a class="headerlink" href="#4-phase-field-fracture-strategies-s1s7" title="Permanent link">&para;</a></h2>
+<p>At solve time,
+<code>validate_fracture_combo()</code> returns the strategy ID or raises <code>ValueError</code>.</p>
+<h3 id="41-valid-combinations">4.1 Valid Combinations<a class="headerlink" href="#41-valid-combinations" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Mechanics</th>
+<th>Damage PDE</th>
+<th>Damage integrator</th>
+<th>Coupling</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>S1</strong></td>
+<td><code>quasi_static</code></td>
+<td><code>elliptic</code></td>
+<td><code>implicit</code></td>
+<td><code>stagger_fixed_point</code></td>
+</tr>
+<tr>
+<td><strong>S2</strong></td>
+<td><code>explicit_central_difference</code></td>
+<td><code>elliptic</code></td>
+<td><code>implicit</code></td>
+<td><code>stagger_one_pass</code></td>
+</tr>
+<tr>
+<td><strong>S3</strong></td>
+<td><code>explicit_central_difference</code></td>
+<td><code>parabolic_viscous</code></td>
+<td><code>explicit_euler</code></td>
+<td><code>stagger_one_pass</code></td>
+</tr>
+<tr>
+<td><strong>S4</strong></td>
+<td><code>explicit_central_difference</code></td>
+<td><code>inertial</code></td>
+<td><code>explicit_verlet</code></td>
+<td><code>stagger_one_pass</code></td>
+</tr>
+<tr>
+<td><strong>S5</strong></td>
+<td><code>quasi_static</code></td>
+<td><code>parabolic_viscous</code></td>
+<td><code>implicit</code></td>
+<td><code>stagger_fixed_point</code></td>
+</tr>
+<tr>
+<td><strong>S6</strong></td>
+<td><code>quasi_static</code></td>
+<td><code>pseudo_parabolic</code></td>
+<td><code>implicit</code></td>
+<td><code>stagger_fixed_point</code></td>
+</tr>
+<tr>
+<td><strong>S7</strong></td>
+<td><code>explicit_central_difference</code></td>
+<td><code>pseudo_parabolic</code></td>
+<td><code>explicit_euler_tau</code></td>
+<td><code>stagger_one_pass</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="42-configuration-axes">4.2 Configuration Axes<a class="headerlink" href="#42-configuration-axes" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Axis</th>
+<th>Configuration</th>
+<th>API</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1–2</td>
+<td>Damage PDE + integrator</td>
+<td><code>DamageEvolution</code>, <code>step.set_damage_evolution</code></td>
+</tr>
+<tr>
+<td>3–4</td>
+<td>Mechanics integrator + coupling</td>
+<td><code>step.set_fracture_dynamics</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Explicit damage options</td>
+<td><code>FractureExplicitOptions</code> fields on <code>set_fracture_dynamics</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="43-damage-pde-types">4.3 Damage PDE Types<a class="headerlink" href="#43-damage-pde-types" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><code>pde</code></th>
+<th>Physical model</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>elliptic</code></td>
+<td>Quasi-static Allen–Cahn / AT-type elliptic damage</td>
+</tr>
+<tr>
+<td><code>parabolic_viscous</code></td>
+<td>Rate-dependent damage with viscosity η</td>
+</tr>
+<tr>
+<td><code>pseudo_parabolic</code></td>
+<td>Gradient viscosity with parameter τ</td>
+</tr>
+<tr>
+<td><code>inertial</code></td>
+<td>Second-order damage dynamics with ρ_d, μ_d</td>
+</tr>
+</tbody>
+</table>
+<h3 id="44-defaults">4.4 Defaults<a class="headerlink" href="#44-defaults" title="Permanent link">&para;</a></h3>
+<p>If <code>set_fracture_dynamics()</code> is omitted:</p>
+<ul>
+<li>Explicit damage integrators → dynamic mechanics + one-pass coupling.</li>
+<li>Implicit damage integrators → quasi-static mechanics + fixed-point coupling.</li>
+</ul>
+<p>Worked examples: <a href="../quickstart/">quickstart.md</a>.</p>
+<hr />
+<h2 id="5-physics-descriptors">5. Physics Descriptors<a class="headerlink" href="#5-physics-descriptors" title="Permanent link">&para;</a></h2>
+<p>Namespace: <code>ds.physics</code></p>
+<h3 id="51-solidmechanics">5.1 <code>SolidMechanics</code><a class="headerlink" href="#51-solidmechanics" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">solid</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">physics</span><span class="o">.</span><span class="n">SolidMechanics</span><span class="p">(</span>
+    <span class="n">material</span><span class="o">=</span><span class="n">mat</span><span class="p">,</span>
+    <span class="n">geometry</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">,</span>              <span class="c1"># &quot;3d&quot; | &quot;plane_strain&quot; | &quot;plane_stress&quot; | &quot;axisymmetric&quot;</span>
+    <span class="n">formulation</span><span class="o">=</span><span class="s2">&quot;standard&quot;</span><span class="p">,</span>   <span class="c1"># &quot;standard&quot; | &quot;bbar&quot; | &quot;fbar&quot; | &quot;fbar_patch&quot; | &quot;eas&quot;</span>
+    <span class="n">kinematics</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>            <span class="c1"># &quot;strain&quot; | &quot;deformation_gradient&quot;</span>
+    <span class="n">integration</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>         <span class="c1"># Integration.FULL | REDUCED | int gauss order</span>
+    <span class="n">hourglass_alpha</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>       <span class="c1"># Stabilisation for reduced integration</span>
+    <span class="n">hourglass_mu</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>               <span class="c1"># Required for dynamics</span>
+    <span class="n">thickness</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>              <span class="c1"># 2D plane models</span>
+    <span class="n">dt</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<p><strong>Factory behaviour:</strong> <code>geometry="axisymmetric"</code> redirects to <code>AxisymmetricSolidMechanics</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>add_section(cells=..., material=..., name=...)</code></td>
+<td>Multi-material mesh sections</td>
+</tr>
+<tr>
+<td><code>add_body_force(value, amplitude=None)</code></td>
+<td>Volume force (summed over calls)</td>
+</tr>
+</tbody>
+</table>
+<p>Boundary conditions are <strong>step-scoped</strong> (Section 3). Physics-level <code>add_dirichlet_bc</code>
+was removed.</p>
+<h3 id="52-axisymmetricsolidmechanics">5.2 <code>AxisymmetricSolidMechanics</code><a class="headerlink" href="#52-axisymmetricsolidmechanics" title="Permanent link">&para;</a></h3>
+<p>Dedicated 2D r–z axisymmetric backend. Prefer the unified entry point
+<code>SolidMechanics(..., geometry="axisymmetric")</code>.</p>
+<h3 id="53-phasefield">5.3 <code>PhaseField</code><a class="headerlink" href="#53-phasefield" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">pf</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">add_physics</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">physics</span><span class="o">.</span><span class="n">PhaseField</span><span class="p">(</span>
+    <span class="n">field</span><span class="o">=</span><span class="s2">&quot;d&quot;</span><span class="p">,</span>
+    <span class="nb">type</span><span class="o">=</span><span class="n">ds</span><span class="o">.</span><span class="n">physics</span><span class="o">.</span><span class="n">Fracture</span><span class="p">(</span>
+        <span class="n">degradation</span><span class="o">=</span><span class="n">degrad</span><span class="p">,</span>
+        <span class="n">damage</span><span class="o">=</span><span class="n">ds</span><span class="o">.</span><span class="n">physics</span><span class="o">.</span><span class="n">DamageEvolution</span><span class="p">(</span><span class="n">pde</span><span class="o">=</span><span class="s2">&quot;elliptic&quot;</span><span class="p">,</span> <span class="n">integrator</span><span class="o">=</span><span class="s2">&quot;implicit&quot;</span><span class="p">),</span>
+        <span class="n">driving</span><span class="o">=</span><span class="s2">&quot;W_plus&quot;</span><span class="p">,</span>
+        <span class="n">history</span><span class="o">=</span><span class="s2">&quot;max&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="n">integration</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">))</span>
+</code></pre></div>
+<p>Only <code>type="fracture"</code> (or <code>Fracture(...)</code>) is implemented.</p>
+<h3 id="54-fracture-phasefieldfracture">5.4 <code>Fracture</code> / <code>PhaseFieldFracture</code><a class="headerlink" href="#54-fracture-phasefieldfracture" title="Permanent link">&para;</a></h3>
+<p>Alias: <code>ds.physics.Fracture</code>. Bundles degradation law, default damage evolution,
+driving variable name, and history mode.</p>
+<h3 id="55-damage-descriptor-shortcuts">5.5 Damage Descriptor Shortcuts<a class="headerlink" href="#55-damage-descriptor-shortcuts" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Maps to</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Elliptic()</code></td>
+<td>S1 elliptic + implicit</td>
+</tr>
+<tr>
+<td><code>Parabolic(eta=..., integrator=...)</code></td>
+<td>Parabolic viscous</td>
+</tr>
+<tr>
+<td><code>ParabolicViscous(eta=..., integrator="explicit_euler")</code></td>
+<td>S3 default</td>
+</tr>
+<tr>
+<td><code>PseudoParabolic(eta=..., tau=..., integrator=...)</code></td>
+<td>S6 / S7</td>
+</tr>
+<tr>
+<td><code>InertialDamage(rho_d=..., mu_d=...)</code></td>
+<td>S4 inertial damage</td>
+</tr>
+</tbody>
+</table>
+<h3 id="56-damageevolution">5.6 <code>DamageEvolution</code><a class="headerlink" href="#56-damageevolution" title="Permanent link">&para;</a></h3>
+<p>Dataclass with fields: <code>pde</code>, <code>integrator</code>, <code>eta</code>, <code>tau</code>, <code>rho_d</code>, <code>mu_d</code>, <code>lumped</code>, <code>dt</code>.
+Also available as <code>ds.physics.DamageEvolution</code>.</p>
+<h3 id="57-phase-field-regions">5.7 Phase-Field Regions<a class="headerlink" href="#57-phase-field-regions" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">pf</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="n">cells</span><span class="o">=...</span><span class="p">,</span> <span class="n">degradation</span><span class="o">=...</span><span class="p">,</span> <span class="n">name</span><span class="o">=...</span><span class="p">)</span>   <span class="c1"># PFSection</span>
+<span class="n">pf</span><span class="o">.</span><span class="n">add_active_zone</span><span class="p">(</span><span class="n">cells</span><span class="o">=...</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>                     <span class="c1"># PFActiveZone</span>
+</code></pre></div>
+<p>Restricts damage evolution or material degradation to mesh subsets.</p>
+<hr />
+<h2 id="6-material-descriptors">6. Material Descriptors<a class="headerlink" href="#6-material-descriptors" title="Permanent link">&para;</a></h2>
+<p>Namespace: <code>ds.materials</code></p>
+<p>Facade classes wrap library <code>UPOT_*</code> / <code>UMAT_*</code> implementations.</p>
+<h3 id="61-elasticity">6.1 Elasticity<a class="headerlink" href="#61-elasticity" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Class / function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Elasticity(E, nu)</code></td>
+<td>Linear isotropic elasticity</td>
+</tr>
+<tr>
+<td><code>NeoHookean(E, nu)</code></td>
+<td>Compressible Neo-Hookean</td>
+</tr>
+<tr>
+<td><code>Elasticity_with_eigenstrain(C11, C12, C44, eps_0=...)</code></td>
+<td>Cubic elasticity + eigenstrain</td>
+</tr>
+</tbody>
+</table>
+<h3 id="62-phase-field-ready-solids">6.2 Phase-Field Ready Solids<a class="headerlink" href="#62-phase-field-ready-solids" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FractureElasticity(E, nu, split="spectral", hybrid=False, degradation=...)</code></td>
+<td>Linear elasticity + PF state (<code>d</code>, <code>W_plus</code>)</td>
+</tr>
+<tr>
+<td><code>FractureNeoHookean(E, nu, split="vol_dev", hybrid=False)</code></td>
+<td>Finite-strain Neo-Hookean + PF</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Strain splits:</strong> <code>spectral</code>, <code>spectral_pff</code> (2D explicit eigenvalues), <code>amor</code>, <code>vol_dev</code>.</p>
+<p>Pass <code>degradation=</code> so mechanics uses the matching <code>g(d)</code> from the degradation model.</p>
+<h3 id="63-degradation-functions">6.3 Degradation Functions<a class="headerlink" href="#63-degradation-functions" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Model</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AT1_Degradation(Gc, l0)</code></td>
+<td>AT1 linear crack geometric function</td>
+</tr>
+<tr>
+<td><code>AT2_Degradation(Gc, l0)</code></td>
+<td>AT2 quadratic function (standard)</td>
+</tr>
+<tr>
+<td><code>CohesiveDegradation(Gc, l0, sigma_c, E0, cohesive_law="linear")</code></td>
+<td>Cohesive-zone PF</td>
+</tr>
+</tbody>
+</table>
+<h3 id="64-dislocation-pfdd">6.4 Dislocation / PFDD<a class="headerlink" href="#64-dislocation-pfdd" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SlipEigenstrainElasticity(C11, C12, C44, slip_systems, burgers_over_d)</code></td>
+<td>Cubic elasticity driven by slip eigenstrain</td>
+</tr>
+</tbody>
+</table>
+<h3 id="65-advanced-constitutive-models-package-root">6.5 Advanced Constitutive Models (Package Root)<a class="headerlink" href="#65-advanced-constitutive-models-package-root" title="Permanent link">&para;</a></h3>
+<p>Plasticity, viscoelasticity, crystal plasticity, and hyperelastic potentials are
+exported at package root for custom <code>SolidMechanics(material=...)</code> wiring:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">diffsolid</span><span class="w"> </span><span class="kn">import</span> <span class="n">UMAT_FeFpJ2Plasticity</span><span class="p">,</span> <span class="n">UMAT_FCCCrystalPlasticity</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">diffsolid</span><span class="w"> </span><span class="kn">import</span> <span class="n">UPOT_MooneyRivlin</span><span class="p">,</span> <span class="n">UPOT_Ogden</span>
+</code></pre></div>
+<p>See Section 17 for the full list. These follow the JAX-UMAT interface
+(<code>UserMaterial</code>, <code>UserPotential</code>).</p>
+<hr />
+<h2 id="7-couplers">7. Couplers<a class="headerlink" href="#7-couplers" title="Permanent link">&para;</a></h2>
+<p>Namespace: <code>ds.couplers</code></p>
+<h3 id="71-staggered">7.1 <code>Staggered</code><a class="headerlink" href="#71-staggered" title="Permanent link">&para;</a></h3>
+<p>Alternating minimization for quasi-static and one-pass dynamic fracture.</p>
+<div class="highlight"><pre><span></span><code><span class="n">sim</span><span class="o">.</span><span class="n">set_coupler</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">couplers</span><span class="o">.</span><span class="n">Staggered</span><span class="p">(</span>
+    <span class="n">max_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+    <span class="n">tol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
+    <span class="n">stagger_dd_criterion</span><span class="o">=</span><span class="s2">&quot;positive_increment&quot;</span><span class="p">,</span>  <span class="c1"># or &quot;abs_max&quot;</span>
+    <span class="n">stagger_damage_accel</span><span class="o">=</span><span class="s2">&quot;off&quot;</span><span class="p">,</span>                   <span class="c1"># or &quot;aitken&quot;</span>
+    <span class="n">mech_solver</span><span class="o">=</span><span class="n">ds</span><span class="o">.</span><span class="n">solvers</span><span class="o">.</span><span class="n">NewtonSolver</span><span class="p">(</span><span class="o">...</span><span class="p">),</span>
+    <span class="n">pf_solver</span><span class="o">=</span><span class="n">ds</span><span class="o">.</span><span class="n">solvers</span><span class="o">.</span><span class="n">VINewtonSolver</span><span class="p">(</span><span class="n">preset</span><span class="o">=</span><span class="s2">&quot;elliptic&quot;</span><span class="p">),</span>
+    <span class="n">pf_linear_solver</span><span class="o">=</span><span class="n">ds</span><span class="o">.</span><span class="n">solvers</span><span class="o">.</span><span class="n">AMGCL</span><span class="p">(</span><span class="n">gpu</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">driving_force_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">mech_single_linear</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">at2_history_mode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">))</span>
+</code></pre></div>
+<p><strong>Driving force <code>H</code>:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Configuration</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>driving_force_fn=None</code></td>
+<td>Read <code>psi_plus</code> from material internal state</td>
+</tr>
+<tr>
+<td>Plain callable</td>
+<td><code>H = fn(u_sol, mech_problem)</code> each stagger pass</td>
+</tr>
+<tr>
+<td><code>HistoryMax(fn)</code></td>
+<td><code>H = max(H_prev, fn(...))</code> — irreversible history</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Deprecated:</strong> <code>strain_split</code> on the coupler — specify split on
+<code>FractureElasticity(split=...)</code> instead.</p>
+<h3 id="72-fracturecoupling">7.2 <code>FractureCoupling</code><a class="headerlink" href="#72-fracturecoupling" title="Permanent link">&para;</a></h3>
+<p>Subclass of <code>Staggered</code> with explicit <code>coupling_mode</code> for literature matrix
+compatibility (<code>stagger_fixed_point</code> vs <code>stagger_one_pass</code>).</p>
+<h3 id="73-historymax">7.3 <code>HistoryMax</code><a class="headerlink" href="#73-historymax" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">ds</span><span class="o">.</span><span class="n">couplers</span><span class="o">.</span><span class="n">HistoryMax</span><span class="p">(</span><span class="k">lambda</span> <span class="n">u_sol</span><span class="p">,</span> <span class="n">prob</span><span class="p">:</span> <span class="n">raw_field</span><span class="p">(</span><span class="n">u_sol</span><span class="p">,</span> <span class="n">prob</span><span class="p">))</span>
+</code></pre></div>
+<p>Wrapper signalling history accumulation of a quadrature-point field
+<code>(n_cells, n_quads)</code>.</p>
+<h3 id="74-slipstaggered-pfdd">7.4 <code>SlipStaggered</code> (PFDD)<a class="headerlink" href="#74-slipstaggered-pfdd" title="Permanent link">&para;</a></h3>
+<p>Staggered coupling for slip Allen–Cahn + mechanics. Used with
+<code>DislocationSimulation</code> (Section 14).</p>
+<hr />
+<h2 id="8-solver-descriptors">8. Solver Descriptors<a class="headerlink" href="#8-solver-descriptors" title="Permanent link">&para;</a></h2>
+<p>Namespace: <code>ds.solvers</code></p>
+<h3 id="81-linear-solvers">8.1 Linear Solvers<a class="headerlink" href="#81-linear-solvers" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AMGCL(gpu=True, relaxation="chebyshev", solver_type="fgmres", ...)</code></td>
+<td>Iterative AMG; <strong>recommended for 3D</strong></td>
+</tr>
+<tr>
+<td><code>CUDSS(reorder="amd")</code></td>
+<td>GPU direct sparse solver</td>
+</tr>
+<tr>
+<td><code>UMFPACK()</code></td>
+<td>CPU direct (default fallback)</td>
+</tr>
+<tr>
+<td><code>SciPy()</code></td>
+<td>CPU SciPy backend</td>
+</tr>
+<tr>
+<td><code>AMGx(...)</code></td>
+<td>NVIDIA AmgX (optional)</td>
+</tr>
+<tr>
+<td><code>BiCGSTAB(tol=..., maxiter=...)</code></td>
+<td>JAX iterative (VI inner solves)</td>
+</tr>
+<tr>
+<td><code>CG(tol=..., maxiter=...)</code></td>
+<td>JAX CG for SPD systems</td>
+</tr>
+</tbody>
+</table>
+<p><strong>AMGCL notes:</strong></p>
+<ul>
+<li>Use <code>relaxation="chebyshev"</code> for 3D elasticity and plasticity; <code>spai0</code>/<code>ilu0</code>
+  may stagnate.</li>
+<li><code>cache_slot</code> (0–3): separate caches for mechanics vs phase-field hierarchies.</li>
+<li><code>symmetric_dirichlet=True</code> required for <code>solver_type="cg"</code>.</li>
+</ul>
+<p><strong>Selection guide:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3D plasticity, necking, arc-length</td>
+<td><code>CUDSS(reorder="amd")</code></td>
+</tr>
+<tr>
+<td>3D elastic / large PF elliptic systems</td>
+<td><code>AMGCL(gpu=True, relaxation="chebyshev")</code></td>
+</tr>
+<tr>
+<td>2D moderate DOF</td>
+<td><code>CUDSS</code> or <code>UMFPACK</code></td>
+</tr>
+<tr>
+<td>Explicit dynamics</td>
+<td>No per-step linear solve</td>
+</tr>
+</tbody>
+</table>
+<h3 id="82-nonlinear-solvers">8.2 Nonlinear Solvers<a class="headerlink" href="#82-nonlinear-solvers" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NewtonSolver(linear_solver=..., tol=..., rel_tol=..., max_iter=...)</code></td>
+<td>Newton–Raphson for mechanics / elliptic residuals</td>
+</tr>
+<tr>
+<td><code>LBFGSSolver(maxiter=..., gtol=..., ftol=...)</code></td>
+<td>Energy minimisation for PF</td>
+</tr>
+<tr>
+<td><code>VINewtonSolver(preset="elliptic", linear_solver=..., ...)</code></td>
+<td>VI active-set PF with irreversibility</td>
+</tr>
+</tbody>
+</table>
+<p><strong>VI presets:</strong> <code>"elliptic"</code>, <code>"parabolic"</code>, <code>"hyperbolic"</code>, <code>"pff_miehe"</code>.</p>
+<p>Key VI options: <code>vi_reduced_space</code>, <code>vi_fast_jax_linear</code>, <code>vi_fullspace_block_elim</code>,
+<code>line_search</code>, <code>vi_lbfgs_fallback</code>.</p>
+<p>Aliases: <code>Newton = NewtonSolver</code>, <code>LBFGS = LBFGSSolver</code>.</p>
+<h3 id="83-dynamics-solver-descriptors">8.3 Dynamics Solver Descriptors<a class="headerlink" href="#83-dynamics-solver-descriptors" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ExplicitDynamicsSolver(damping=0.0)</code></td>
+<td>Pure mechanics explicit integration</td>
+</tr>
+<tr>
+<td><code>ImplicitDynamicsSolver(linear_solver=..., beta=0.25, gamma=0.5, ...)</code></td>
+<td>Newmark-beta implicit</td>
+</tr>
+</tbody>
+</table>
+<p>Set via <code>sim.set_dynamics_solver(...)</code> or step <code>dynamics="explicit"</code> / <code>"implicit"</code>.</p>
+<hr />
+<h2 id="9-amplitudes">9. Amplitudes<a class="headerlink" href="#9-amplitudes" title="Permanent link">&para;</a></h2>
+<p>Namespace: <code>ds.amplitudes</code></p>
+<p>Time-dependent scale factors for BC values: <code>prescribed = reference_value × amplitude(t_local)</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ramp(t_start, t_end, v_start=0, v_end=1)</code></td>
+<td>Linear ramp, clamped outside interval</td>
+</tr>
+<tr>
+<td><code>Smooth(t_start, t_end, v_start=0, v_end=1)</code></td>
+<td>C² Hermite smoothstep</td>
+</tr>
+<tr>
+<td><code>Step(t_step, v_before=0, v_after=1)</code></td>
+<td>Heaviside step</td>
+</tr>
+<tr>
+<td><code>Tabular(times, values, extrapolate="clamp")</code></td>
+<td>Piecewise-linear table</td>
+</tr>
+<tr>
+<td><code>Sine(amplitude, frequency, phase=0, offset=0)</code></td>
+<td>Harmonic loading</td>
+</tr>
+<tr>
+<td><code>Constant(value=1.0)</code></td>
+<td>Unit scale</td>
+</tr>
+<tr>
+<td><code>Amplitude</code></td>
+<td>Abstract base; supports <code>+</code>, <code>*</code> composition</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="10-constraints-and-advanced-boundary-conditions">10. Constraints and Advanced Boundary Conditions<a class="headerlink" href="#10-constraints-and-advanced-boundary-conditions" title="Permanent link">&para;</a></h2>
+<p>Namespace: <code>ds.constraints</code> (types); attached via step methods (Section 3.5).</p>
+<h3 id="101-_linearmpc">10.1 <code>_LinearMPC</code><a class="headerlink" href="#101-_linearmpc" title="Permanent link">&para;</a></h3>
+<p>General linear multi-point constraint: Σ c_k u_{dof_k} = b(t).</p>
+<h3 id="102-_periodicbc">10.2 <code>_PeriodicBC</code><a class="headerlink" href="#102-_periodicbc" title="Permanent link">&para;</a></h3>
+<p>Periodic boundary conditions on a box RVE.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>formulation</code></td>
+<td><code>"auto"</code>, <code>"small_strain"</code>, <code>"large_strain"</code></td>
+</tr>
+<tr>
+<td><code>axes</code></td>
+<td>Periodic axes (default: all)</td>
+</tr>
+<tr>
+<td><code>eps_bar</code> / <code>F_bar</code></td>
+<td>Macro-strain or deformation-gradient driver</td>
+</tr>
+<tr>
+<td><code>lattice</code></td>
+<td>Optional cell dimensions for mod-L pairing</td>
+</tr>
+<tr>
+<td><code>anchor</code></td>
+<td>Rigid-body anchor node</td>
+</tr>
+</tbody>
+</table>
+<p>Small strain: u(x+) − u(x−) = ε̄ · L.<br />
+Large strain: u(X+) − u(X−) = (F̄ − I) · L.</p>
+<h3 id="103-_concentratedload">10.3 <code>_ConcentratedLoad</code><a class="headerlink" href="#103-_concentratedload" title="Permanent link">&para;</a></h3>
+<p>Point force at a node or reference point.</p>
+<h3 id="104-_pressurebc">10.4 <code>_PressureBC</code><a class="headerlink" href="#104-_pressurebc" title="Permanent link">&para;</a></h3>
+<p>Surface pressure; <code>follower=True</code> uses deformed outward normal.</p>
+<h3 id="105-_inclineddirichlet">10.5 <code>_InclinedDirichlet</code><a class="headerlink" href="#105-_inclineddirichlet" title="Permanent link">&para;</a></h3>
+<p>Dirichlet constraint along a rotated direction vector.</p>
+<h3 id="106-_couplingconstraint">10.6 <code>_CouplingConstraint</code><a class="headerlink" href="#106-_couplingconstraint" title="Permanent link">&para;</a></h3>
+<p>Tie slave surface to master reference point (<code>kinematic</code> or <code>distributing</code>).</p>
+<hr />
+<h2 id="11-output-results-and-post-processing">11. Output, Results, and Post-Processing<a class="headerlink" href="#11-output-results-and-post-processing" title="Permanent link">&para;</a></h2>
+<h3 id="111-field-output-keys">11.1 Field Output Keys<a class="headerlink" href="#111-field-output-keys" title="Permanent link">&para;</a></h3>
+<p>Used in <code>field_output</code>, <code>add_field_output</code>, and <code>add_field_snapshot</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Key pattern</th>
+<th>Quantity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>"u"</code></td>
+<td>Displacement</td>
+</tr>
+<tr>
+<td><code>"d"</code></td>
+<td>Phase-field damage</td>
+</tr>
+<tr>
+<td><code>"cauchy.von_mises"</code></td>
+<td>von Mises stress</td>
+</tr>
+<tr>
+<td><code>"cauchy.{xx,yy,zz,xy,yz,zx}"</code></td>
+<td>Cauchy components</td>
+</tr>
+<tr>
+<td><code>"strain.{...}"</code></td>
+<td>Strain components</td>
+</tr>
+<tr>
+<td><code>"displacement.{x,y,z,mag}"</code></td>
+<td>Nodal displacement</td>
+</tr>
+<tr>
+<td>UMAT state name</td>
+<td>e.g. <code>"alpha"</code>, <code>"ep"</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="112-xdmf-vtu">11.2 XDMF / VTU<a class="headerlink" href="#112-xdmf-vtu" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>output_format="xdmf"</code>: accumulates <code>output_dir/results.xdmf</code> + <code>.h5</code>.</li>
+<li><code>output_format="vtu"</code>: per-step VTU files.</li>
+<li><code>output_format="none"</code>: no disk output (benchmarks).</li>
+</ul>
+<h3 id="113-result-object">11.3 <code>Result</code> Object<a class="headerlink" href="#113-result-object" title="Permanent link">&para;</a></h3>
+<p>Returned by <code>sim.solve()</code>. Subclasses <code>dict</code> — legacy <code>result["u"]</code> still works.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>u</code>, <code>d</code>, <code>H</code></td>
+<td>Primary fields</td>
+</tr>
+<tr>
+<td><code>sigma</code>, <code>von_mises</code>, <code>strain</code></td>
+<td>Lazy fields via <code>StepSnapshot</code></td>
+</tr>
+<tr>
+<td><code>state</code>, <code>state_dict</code></td>
+<td>Internal variables</td>
+</tr>
+<tr>
+<td><code>history</code></td>
+<td>User history outputs</td>
+</tr>
+<tr>
+<td><code>diagnostics</code></td>
+<td>Newton iteration records</td>
+</tr>
+<tr>
+<td><code>performance</code></td>
+<td>Timing report</td>
+</tr>
+<tr>
+<td><code>converged</code>, <code>iterations</code>, <code>wall_time</code></td>
+<td>Summary accessors</td>
+</tr>
+<tr>
+<td><code>at_node(i)</code>, <code>at_element(e)</code></td>
+<td><code>NodeView</code>, <code>ElementView</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="114-post-processing-namespace">11.4 Post-Processing Namespace<a class="headerlink" href="#114-post-processing-namespace" title="Permanent link">&para;</a></h3>
+<p><code>import diffsolid.post as post</code> or <code>from diffsolid import post</code></p>
+<p><strong>Stress and strain recovery:</strong></p>
+<p><code>gauss_stress</code>, <code>gauss_strain</code>, <code>nodal_average</code>, <code>von_mises</code>, <code>hydrostatic</code>,
+<code>principal_stresses</code>, <code>reaction_force_2d</code>, <code>reaction_force_3d</code>, …</p>
+<p><strong>Plotting:</strong></p>
+<p><code>post.plot(...)</code>, <code>post.contour(...)</code>, <code>post.plot_fields(...)</code></p>
+<p><strong>Phase-field diagnostics:</strong></p>
+<p><code>crack_surface_density</code>, <code>dissipated_energy</code>, <code>crack_length</code>,
+<code>phase_field_profile</code>, <code>build_pf_frame_data</code>, <code>save_pf_xdmf</code></p>
+<hr />
+<h2 id="12-mesh-io-and-checkpoints">12. Mesh I/O and Checkpoints<a class="headerlink" href="#12-mesh-io-and-checkpoints" title="Permanent link">&para;</a></h2>
+<p>Exported at package root (<code>ds.*</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>parse_mesh_file(path)</code></td>
+<td>Parse external mesh file</td>
+</tr>
+<tr>
+<td><code>rectangle_mesh</code>, <code>box_mesh</code>, <code>box_mesh_gmsh</code>, <code>cylinder_mesh_gmsh</code></td>
+<td>Built-in mesh generators</td>
+</tr>
+<tr>
+<td><code>save_sol</code>, <code>save_sol_extended</code></td>
+<td>Write solution to VTK/XDMF</td>
+</tr>
+<tr>
+<td><code>save_checkpoint</code>, <code>load_checkpoint</code></td>
+<td>JAX/checkpoint I/O</td>
+</tr>
+<tr>
+<td><code>Mesh</code></td>
+<td>Core mesh object</td>
+</tr>
+<tr>
+<td><code>MeshParser</code></td>
+<td>Structured mesh parsing helper</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="13-pure-mechanics-dynamics">13. Pure Mechanics Dynamics<a class="headerlink" href="#13-pure-mechanics-dynamics" title="Permanent link">&para;</a></h2>
+<p>For simulations <strong>without</strong> phase field.</p>
+<h3 id="131-step-based-preferred">13.1 Step-Based (Preferred)<a class="headerlink" href="#131-step-based-preferred" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">step</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">add_step</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;wave&quot;</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="n">T</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">dt</span><span class="p">,</span> <span class="n">dynamics</span><span class="o">=</span><span class="s2">&quot;explicit&quot;</span><span class="p">,</span>
+                    <span class="n">cfl_safety</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">integrator</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;results/&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="132-legacy-entry-points">13.2 Legacy Entry Points<a class="headerlink" href="#132-legacy-entry-points" title="Permanent link">&para;</a></h3>
+<p>Still available on <code>Simulation</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="n">sim</span><span class="o">.</span><span class="n">solve_explicit_dynamics</span><span class="p">(</span><span class="n">t_end</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=...</span><span class="p">,</span> <span class="n">save_every</span><span class="o">=...</span><span class="p">,</span>
+                            <span class="n">damping</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">u0</span><span class="o">=...</span><span class="p">,</span> <span class="n">v0</span><span class="o">=...</span><span class="p">,</span> <span class="n">callback</span><span class="o">=...</span><span class="p">)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">solve_implicit_dynamics</span><span class="p">(</span><span class="n">t_end</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</code></pre></div>
+<p>Prefer <code>add_step</code> + <code>sim.solve()</code> for new workflows.</p>
+<h3 id="133-utility-functions">13.3 Utility Functions<a class="headerlink" href="#133-utility-functions" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">diffsolid</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_lumped_mass</span><span class="p">,</span> <span class="n">estimate_dt_crit</span><span class="p">,</span> <span class="n">estimate_dynamics_dt</span>
+</code></pre></div>
+<hr />
+<h2 id="14-phase-field-dislocation-dynamics-pfdd">14. Phase-Field Dislocation Dynamics (PFDD)<a class="headerlink" href="#14-phase-field-dislocation-dynamics-pfdd" title="Permanent link">&para;</a></h2>
+<p>Parallel facade for slip-based dislocation modelling.</p>
+<h3 id="141-dislocationsimulation">14.1 <code>DislocationSimulation</code><a class="headerlink" href="#141-dislocationsimulation" title="Permanent link">&para;</a></h3>
+<p>Mirrors <code>Simulation</code> with slip fields instead of fracture damage:</p>
+<div class="highlight"><pre><span></span><code><span class="n">sim</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">DislocationSimulation</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;pfdd&quot;</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">ele_type</span><span class="o">=</span><span class="s2">&quot;HEX8&quot;</span><span class="p">)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">load_mesh</span><span class="p">(</span><span class="n">mesh</span><span class="p">)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">add_physics</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">physics</span><span class="o">.</span><span class="n">SolidMechanics</span><span class="p">(</span>
+    <span class="n">material</span><span class="o">=</span><span class="n">ds</span><span class="o">.</span><span class="n">materials</span><span class="o">.</span><span class="n">SlipEigenstrainElasticity</span><span class="p">(</span><span class="o">...</span><span class="p">)))</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">add_physics</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">physics</span><span class="o">.</span><span class="n">Dislocation</span><span class="p">(</span>
+    <span class="n">field</span><span class="o">=</span><span class="s2">&quot;eta&quot;</span><span class="p">,</span> <span class="n">slip_systems</span><span class="o">=</span><span class="n">slip</span><span class="p">,</span> <span class="n">crystal_energy</span><span class="o">=</span><span class="n">energy</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="mf">1.0</span><span class="p">))</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">set_coupler</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">couplers</span><span class="o">.</span><span class="n">SlipStaggered</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">))</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">set_initial_slip</span><span class="p">([</span><span class="n">eta1_0</span><span class="p">,</span> <span class="n">eta2_0</span><span class="p">])</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">eta</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">eta</span>   <span class="c1"># list of slip fields per system</span>
+</code></pre></div>
+<h3 id="142-gpu-baseline-helpers">14.2 GPU Baseline Helpers<a class="headerlink" href="#142-gpu-baseline-helpers" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">ds</span><span class="o">.</span><span class="n">apply_pfdd_gpu_baseline</span><span class="p">(</span><span class="n">sim</span><span class="p">,</span> <span class="n">mech</span><span class="o">=</span><span class="s2">&quot;cudss&quot;</span><span class="p">,</span> <span class="n">slip</span><span class="o">=</span><span class="s2">&quot;amgcl&quot;</span><span class="p">)</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">pfdd_amgcl_mech_baseline</span><span class="p">()</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">pfdd_amgcl_slip_baseline</span><span class="p">()</span>
+</code></pre></div>
+<p>Default pairs <strong>mechanics = CUDSS</strong> with <strong>slip = AMGCL(gpu=True)</strong> to avoid GPU
+memory contention.</p>
+<h3 id="143-related-types">14.3 Related Types<a class="headerlink" href="#143-related-types" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>ds.physics.Dislocation</code> — slip Allen–Cahn descriptor (in <code>dislocation</code> module)</li>
+<li><code>ds.couplers.SlipStaggered</code> — staggered mechanics + slip solve</li>
+</ul>
+<hr />
+<h2 id="15-inverse-problems-and-optimisation">15. Inverse Problems and Optimisation<a class="headerlink" href="#15-inverse-problems-and-optimisation" title="Permanent link">&para;</a></h2>
+<h3 id="151-simulation-facade">15.1 Simulation Facade<a class="headerlink" href="#151-simulation-facade" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">params</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">list_inverse_params</span><span class="p">(</span><span class="n">include_mech</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">include_field</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">problem</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">observes</span><span class="o">=</span><span class="n">obs_list</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;transient&quot;</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+</code></pre></div>
+<p>Returns a configured <code>InverseProblem</code> for gradient-based optimisation.</p>
+<h3 id="152-inverse-namespace">15.2 Inverse Namespace<a class="headerlink" href="#152-inverse-namespace" title="Permanent link">&para;</a></h3>
+<p><code>import diffsolid.inverse as inv</code> or top-level exports:</p>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>from_simulation(sim, ...)</code></td>
+<td>Build inverse problem from configured simulation</td>
+</tr>
+<tr>
+<td><code>InverseResult</code></td>
+<td>Optimisation result container</td>
+</tr>
+<tr>
+<td><code>pack_params</code></td>
+<td>Flatten parameters for JAX</td>
+</tr>
+<tr>
+<td><code>implicit_vjp</code>, <code>ad_wrapper</code>, <code>ad_wrapper_transient</code></td>
+<td>Adjoint drivers</td>
+</tr>
+<tr>
+<td><code>mse_loss</code>, <code>stress_strain_mse</code></td>
+<td>Loss functions</td>
+</tr>
+<tr>
+<td><code>gradient_check</code></td>
+<td>Finite-difference verification</td>
+</tr>
+<tr>
+<td><code>compliance_objective</code>, <code>volume_fraction</code></td>
+<td>Topology optimisation helpers</td>
+</tr>
+<tr>
+<td><code>simp_penalization</code>, <code>heaviside_projection</code></td>
+<td>SIMP / projection filters</td>
+</tr>
+<tr>
+<td><code>make_topology_opt_objective</code></td>
+<td>Combined TO objective factory</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="16-type-aliases-and-enumerations">16. Type Aliases and Enumerations<a class="headerlink" href="#16-type-aliases-and-enumerations" title="Permanent link">&para;</a></h2>
+<p>Exported at package root:</p>
+<h3 id="161-kinematics">16.1 <code>Kinematics</code><a class="headerlink" href="#161-kinematics" title="Permanent link">&para;</a></h3>
+<p><code>"strain"</code> | <code>"deformation_gradient"</code> — kinematic input expected by the material.</p>
+<h3 id="162-formulation">16.2 <code>Formulation</code><a class="headerlink" href="#162-formulation" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>"standard"</code></td>
+<td>Standard displacement formulation</td>
+</tr>
+<tr>
+<td><code>"bbar"</code></td>
+<td>B-bar volumetric mean (small strain)</td>
+</tr>
+<tr>
+<td><code>"fbar"</code></td>
+<td>F-bar (finite strain)</td>
+</tr>
+<tr>
+<td><code>"fbar_patch"</code></td>
+<td>F-bar patch (TRI3/TET4)</td>
+</tr>
+<tr>
+<td><code>"eas"</code></td>
+<td>Enhanced Assumed Strain</td>
+</tr>
+</tbody>
+</table>
+<p>Pair <code>"standard"</code> + <code>integration="reduced"</code> with <code>hourglass_alpha</code> for explicit
+dynamics on QUAD4/HEX8.</p>
+<h3 id="163-geometry">16.3 <code>Geometry</code><a class="headerlink" href="#163-geometry" title="Permanent link">&para;</a></h3>
+<p><code>"3d"</code> | <code>"plane_strain"</code> | <code>"plane_stress"</code> | <code>"axisymmetric"</code></p>
+<h3 id="164-integration-enum">16.4 <code>Integration</code> (Enum)<a class="headerlink" href="#164-integration-enum" title="Permanent link">&para;</a></h3>
+<p><code>Integration.FULL</code> | <code>Integration.REDUCED</code> — quadrature rules per element type.
+Integer gauss orders also accepted (FEniCS-style).</p>
+<hr />
+<h2 id="17-environment-variables">17. Environment Variables<a class="headerlink" href="#17-environment-variables" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DIFFSOLID_SCAN_CHUNK</code></td>
+<td>Max steps per JAX <code>lax.scan</code> chunk (default 8192)</td>
+</tr>
+<tr>
+<td><code>DIFFSOLID_SCAN_CHUNK_MIN</code></td>
+<td>Minimum chunk floor</td>
+</tr>
+<tr>
+<td><code>DIFFSOLID_SCAN_CHUNK_LARGE</code></td>
+<td>Chunk cap for large DOF problems</td>
+</tr>
+<tr>
+<td><code>DIFFSOLID_SCAN_LARGE_NDOF</code></td>
+<td>DOF threshold for large-problem path</td>
+</tr>
+<tr>
+<td><code>DIFFSOLID_ENABLE_LEGACY_EXPLICIT_FAST_PATHS</code></td>
+<td>Experimental fast paths (<code>0</code> default)</td>
+</tr>
+<tr>
+<td><code>DIFFSOLID_EXPLICIT_PROFILE_LEVEL</code></td>
+<td><code>summary</code>, <code>operator</code>, <code>memory</code>, <code>trace</code></td>
+</tr>
+<tr>
+<td><code>DIFFSOLID_STAGGER_DAMAGE_ACCEL</code></td>
+<td><code>off</code> or <code>aitken</code> stagger acceleration</td>
+</tr>
+<tr>
+<td><code>DIFFSOLID_PERF</code></td>
+<td>Enable performance reporting</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="18-appendix-legacy-api-migration">18. Appendix — Legacy API Migration<a class="headerlink" href="#18-appendix-legacy-api-migration" title="Permanent link">&para;</a></h2>
+<p>Removed keys raise <code>ValueError</code> with a migration table.</p>
+<table>
+<thead>
+<tr>
+<th>Legacy</th>
+<th>Replacement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>equation="elliptic"</code> / <code>model=</code></td>
+<td><code>DamageEvolution(pde="elliptic", integrator="implicit")</code></td>
+</tr>
+<tr>
+<td><code>equation="parabolic"</code></td>
+<td><code>pde="parabolic_viscous"</code> + integrator</td>
+</tr>
+<tr>
+<td><code>equation="hyperbolic"</code></td>
+<td><strong>Not</strong> inertial damage — use <code>parabolic_viscous</code> + explicit dynamics</td>
+</tr>
+<tr>
+<td><code>time_scheme="implicit"</code> / <code>"explicit"</code></td>
+<td><code>integrator="implicit"</code> / <code>"explicit_euler"</code></td>
+</tr>
+<tr>
+<td><code>sim.solve(time_steps=..., dt=...)</code></td>
+<td><code>add_step(duration=..., dt=...)</code> then <code>sim.solve()</code></td>
+</tr>
+<tr>
+<td>Physics-level BC methods</td>
+<td>Step-level <code>add_dirichlet_bc</code> / <code>add_bc</code></td>
+</tr>
+<tr>
+<td><code>set_field_evolution</code>, <code>set_phase_field</code></td>
+<td><code>set_damage_evolution</code></td>
+</tr>
+<tr>
+<td><code>Staggered(strain_split=...)</code></td>
+<td><code>FractureElasticity(split=...)</code> on material</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Theory: <a href="../theory/formulations/">formulations.md</a></li>
+<li>Installation: <a href="../install/">install.md</a></li>
+<li>Quick examples: <a href="../quickstart/">quickstart.md</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/zclsjtu/DiffSolid" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,4023 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="JAX-native differentiable solid mechanics and phase-field fracture">
+      
+      
+      
+        <link rel="canonical" href="https://zclsjtu.github.io/DiffSolid/theory/formulations/">
+      
+      
+        <link rel="prev" href="../../api/">
+      
+      
+        <link rel="next" href="../../legal/license/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Theory - DiffSolid</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#finite-element-formulations-in-diffsolid" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="DiffSolid" class="md-header__button md-logo" aria-label="DiffSolid" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DiffSolid
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Theory
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/zclsjtu/DiffSolid" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    DiffSolid
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quick Start
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../api/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  API Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Theory
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../legal/license/" class="md-tabs__link">
+          
+  
+  
+  Legal
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="DiffSolid" class="md-nav__button md-logo" aria-label="DiffSolid" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    DiffSolid
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/zclsjtu/DiffSolid" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    DiffSolid
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Theory
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Notation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-finite-element-discretization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Finite Element Discretization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Finite Element Discretization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-mesh-and-shape-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Mesh and Shape Functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-isoparametric-mapping-and-quadrature" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Isoparametric Mapping and Quadrature
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-displacement-gradient-computation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Displacement Gradient Computation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-three-dimensional-formulations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Three-Dimensional Formulations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Three-Dimensional Formulations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-small-strain-mechanics-internal-mechanicsequation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Small-Strain Mechanics ([internal] — MechanicsEquation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-finite-strain-hyperelasticity-internal-hyperelasticequation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Finite-Strain Hyperelasticity ([internal] — HyperElasticEquation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-f-bar-volumetric-anti-locking-3d-internal-fbar3dmechanicsequation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 F-bar Volumetric Anti-Locking — 3D ([internal] — Fbar3DMechanicsEquation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-b-bar-mean-dilatation-3d-internal-bbarmechanicsequation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 B-bar Mean-Dilatation — 3D ([internal] — BbarMechanicsEquation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-two-dimensional-formulations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Two-Dimensional Formulations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Two-Dimensional Formulations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-plane-strain-finite-strain-with-f-bar-internal-planestrainfbarmechanicsequation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Plane Strain — Finite Strain with F-bar ([internal] — PlaneStrainFbarMechanicsEquation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-plane-stress" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Plane Stress
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-b-bar-for-2d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 B-bar for 2D
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-axisymmetric-formulations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Axisymmetric Formulations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Axisymmetric Formulations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-kinematics-deformation-gradient-and-strain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Kinematics: Deformation Gradient and Strain
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.1 Kinematics: Deformation Gradient and Strain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#611-finite-strain-axisymmetric-internal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1.1 Finite-Strain Axisymmetric ([internal])
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#612-small-strain-axisymmetric-internal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1.2 Small-Strain Axisymmetric ([internal])
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-weak-form-and-hoop-term" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Weak Form and Hoop Term
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 Weak Form and Hoop Term">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#621-finite-strain-weak-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.1 Finite-Strain Weak Form
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#622-small-strain-weak-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.2 Small-Strain Weak Form
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-f-bar-for-axisymmetric-problems-internal-axisymmetricfbarkinematicmechanicsequation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 F-bar for Axisymmetric Problems ([internal] — AxisymmetricFbarKinematicMechanicsEquation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-b-bar-for-axisymmetric-small-strain-internal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 B-bar for Axisymmetric Small-Strain ([internal])
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-consistent-tangent-via-automatic-differentiation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Consistent Tangent via Automatic Differentiation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-boundary-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Boundary Conditions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Boundary Conditions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-dirichlet-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 Dirichlet Conditions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-neumann-traction-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 Neumann (Traction) Conditions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-post-processing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Post-Processing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Post-Processing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-stress-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 Stress Recovery
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-output-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 Output Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-plane-stress-formulation-internal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Plane-Stress Formulation ([internal])
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Plane-Stress Formulation ([internal])">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-kinematic-constraint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 Kinematic Constraint
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102-small-strain-plane-stress-planestressmechanicsequation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 Small-Strain Plane Stress (PlaneStressMechanicsEquation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103-finite-strain-plane-stress-planestressfinitestrainequation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3 Finite-Strain Plane Stress (PlaneStressFiniteStrainEquation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-periodic-boundary-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Periodic Boundary Conditions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Periodic Boundary Conditions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111-multi-point-constraint-formulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 Multi-Point Constraint Formulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-implementation-via-constraint-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 Implementation via Constraint Matrix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113-node-pairing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 Node Pairing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-enhanced-assumed-strain-eas-method-internal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Enhanced Assumed Strain (EAS) Method ([internal])
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. Enhanced Assumed Strain (EAS) Method ([internal])">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121-motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.1 Motivation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#122-enhanced-strain-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.2 Enhanced Strain Field
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#123-enhanced-mode-matrices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.3 Enhanced Mode Matrices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#124-static-condensation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.4 Static Condensation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-f-bar-patch-method-internal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. F-bar Patch Method ([internal])
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. F-bar Patch Method ([internal])">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 Motivation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-patch-construction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.2 Patch Construction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#133-patch-average-jacobian" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.3 Patch-Average Jacobian
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#134-consistent-tangent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.4 Consistent Tangent
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-constitutive-models-materials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Constitutive Models (materials/)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. Constitutive Models (materials/)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#141-elastic-potentials-userpotential" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1 Elastic Potentials (UserPotential)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.1 Elastic Potentials (UserPotential)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1411-isotropic-linear-elasticity-upot_linearelasticity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1.1 Isotropic Linear Elasticity (UPOT_LinearElasticity)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1412-compressible-neo-hookean-upot_neohookean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1.2 Compressible Neo-Hookean (UPOT_NeoHookean)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1413-mooneyrivlin-upot_mooneyrivlin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1.3 Mooney–Rivlin (UPOT_MooneyRivlin)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1414-gentmooneyrivlin-upot_gentmooneyrivlin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1.4 Gent–Mooney–Rivlin (UPOT_GentMooneyRivlin)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1415-ogden-upot_ogden" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1.5 Ogden (UPOT_Ogden)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1416-st-venantkirchhoff-upot_stvenantkirchhoff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1.6 St. Venant–Kirchhoff (UPOT_StVenantKirchhoff)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#142-small-strain-plasticity-usermaterial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2 Small-Strain Plasticity (UserMaterial)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.2 Small-Strain Plasticity (UserMaterial)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1421-j2-plasticity-return-mapping-umat_j2smallstrain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2.1 J2 Plasticity — Return Mapping (UMAT_J2SmallStrain)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1422-viscoplastic-armstrongfrederick-umat_armstrongfrederick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2.2 Viscoplastic Armstrong–Frederick (UMAT_ArmstrongFrederick)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#143-finite-strain-plasticity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3 Finite-Strain Plasticity
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.3 Finite-Strain Plasticity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1431-multiplicative-mathbffemathbffp-j2-plasticity-umat_fefpj2plasticity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3.1 Multiplicative $\mathbf{F}^e\mathbf{F}^p$ J2 Plasticity (UMAT_FeFpJ2Plasticity)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#144-viscoelasticity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.4 Viscoelasticity
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.4 Viscoelasticity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1441-standard-linear-solid-umat_standardlinearsolid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.4.1 Standard Linear Solid (UMAT_StandardLinearSolid)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1442-generalized-maxwell-umat_generalizedmaxwell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.4.2 Generalized Maxwell (UMAT_GeneralizedMaxwell)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#145-crystal-plasticity-usermaterial-kinematics-deformation_gradient" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.5 Crystal Plasticity (UserMaterial, kinematics = "deformation_gradient")
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.5 Crystal Plasticity (UserMaterial, kinematics = &#34;deformation_gradient&#34;)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1451-fcc-crystal-plasticity-umat_fcccrystalplasticity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.5.1 FCC Crystal Plasticity (UMAT_FCCCrystalPlasticity)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1452-bcc-crystal-plasticity-umat_bcccrystalplasticity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.5.2 BCC Crystal Plasticity (UMAT_BCCCrystalPlasticity)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1453-hcp-crystal-plasticity-umat_hcpcrystalplasticity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.5.3 HCP Crystal Plasticity (UMAT_HCPCrystalPlasticity)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1454-hcp-gnd-umat_hcpcrystalplasticity_gnd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.5.4 HCP + GND (UMAT_HCPCrystalPlasticity_GND)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#146-phase-field-fracture-coupling-internal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.6 Phase-Field Fracture Coupling ([internal])
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-nonlinear-solvers-solvers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. Nonlinear Solvers (solvers/)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="15. Nonlinear Solvers (solvers/)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#151-newtonraphson-method-internal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.1 Newton–Raphson Method ([internal])
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#152-line-search-matthies-strang-1979" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.2 Line Search (Matthies &amp; Strang 1979)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#153-artificial-stabilization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.3 Artificial Stabilization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#154-arc-length-method-internal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.4 Arc-Length Method ([internal])
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-linear-solvers-internal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. Linear Solvers ([internal])
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="16. Linear Solvers ([internal])">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#161-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.1 Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#162-jax-native-iterative-solvers-internal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.2 JAX-Native Iterative Solvers ([internal])
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="16.2 JAX-Native Iterative Solvers ([internal])">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1621-bicgstab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.2.1 BiCGSTAB
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1622-conjugate-gradient-cg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.2.2 Conjugate Gradient (CG)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#163-amgcl-algebraic-multigrid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.3 AMGCL Algebraic Multigrid
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#164-solver-selection-guidelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.4 Solver Selection Guidelines
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-explicit-dynamics-integrator-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix: Explicit dynamics integrator routing
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Legal
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Legal
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../legal/license/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../legal/third-party/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Third-Party Notices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Notation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-finite-element-discretization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Finite Element Discretization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Finite Element Discretization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-mesh-and-shape-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Mesh and Shape Functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-isoparametric-mapping-and-quadrature" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Isoparametric Mapping and Quadrature
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-displacement-gradient-computation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Displacement Gradient Computation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-three-dimensional-formulations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Three-Dimensional Formulations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Three-Dimensional Formulations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-small-strain-mechanics-internal-mechanicsequation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Small-Strain Mechanics ([internal] — MechanicsEquation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-finite-strain-hyperelasticity-internal-hyperelasticequation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Finite-Strain Hyperelasticity ([internal] — HyperElasticEquation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-f-bar-volumetric-anti-locking-3d-internal-fbar3dmechanicsequation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 F-bar Volumetric Anti-Locking — 3D ([internal] — Fbar3DMechanicsEquation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-b-bar-mean-dilatation-3d-internal-bbarmechanicsequation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 B-bar Mean-Dilatation — 3D ([internal] — BbarMechanicsEquation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-two-dimensional-formulations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Two-Dimensional Formulations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Two-Dimensional Formulations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-plane-strain-finite-strain-with-f-bar-internal-planestrainfbarmechanicsequation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Plane Strain — Finite Strain with F-bar ([internal] — PlaneStrainFbarMechanicsEquation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-plane-stress" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Plane Stress
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-b-bar-for-2d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 B-bar for 2D
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-axisymmetric-formulations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Axisymmetric Formulations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Axisymmetric Formulations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-kinematics-deformation-gradient-and-strain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Kinematics: Deformation Gradient and Strain
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.1 Kinematics: Deformation Gradient and Strain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#611-finite-strain-axisymmetric-internal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1.1 Finite-Strain Axisymmetric ([internal])
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#612-small-strain-axisymmetric-internal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1.2 Small-Strain Axisymmetric ([internal])
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-weak-form-and-hoop-term" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Weak Form and Hoop Term
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 Weak Form and Hoop Term">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#621-finite-strain-weak-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.1 Finite-Strain Weak Form
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#622-small-strain-weak-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.2 Small-Strain Weak Form
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-f-bar-for-axisymmetric-problems-internal-axisymmetricfbarkinematicmechanicsequation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 F-bar for Axisymmetric Problems ([internal] — AxisymmetricFbarKinematicMechanicsEquation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-b-bar-for-axisymmetric-small-strain-internal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 B-bar for Axisymmetric Small-Strain ([internal])
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-consistent-tangent-via-automatic-differentiation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Consistent Tangent via Automatic Differentiation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-boundary-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Boundary Conditions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Boundary Conditions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-dirichlet-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 Dirichlet Conditions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-neumann-traction-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 Neumann (Traction) Conditions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-post-processing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Post-Processing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Post-Processing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-stress-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 Stress Recovery
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-output-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 Output Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-plane-stress-formulation-internal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Plane-Stress Formulation ([internal])
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Plane-Stress Formulation ([internal])">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-kinematic-constraint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 Kinematic Constraint
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102-small-strain-plane-stress-planestressmechanicsequation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 Small-Strain Plane Stress (PlaneStressMechanicsEquation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103-finite-strain-plane-stress-planestressfinitestrainequation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3 Finite-Strain Plane Stress (PlaneStressFiniteStrainEquation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-periodic-boundary-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Periodic Boundary Conditions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Periodic Boundary Conditions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111-multi-point-constraint-formulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 Multi-Point Constraint Formulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-implementation-via-constraint-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 Implementation via Constraint Matrix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113-node-pairing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 Node Pairing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-enhanced-assumed-strain-eas-method-internal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Enhanced Assumed Strain (EAS) Method ([internal])
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. Enhanced Assumed Strain (EAS) Method ([internal])">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121-motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.1 Motivation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#122-enhanced-strain-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.2 Enhanced Strain Field
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#123-enhanced-mode-matrices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.3 Enhanced Mode Matrices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#124-static-condensation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.4 Static Condensation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-f-bar-patch-method-internal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. F-bar Patch Method ([internal])
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. F-bar Patch Method ([internal])">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 Motivation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-patch-construction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.2 Patch Construction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#133-patch-average-jacobian" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.3 Patch-Average Jacobian
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#134-consistent-tangent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.4 Consistent Tangent
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-constitutive-models-materials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Constitutive Models (materials/)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. Constitutive Models (materials/)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#141-elastic-potentials-userpotential" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1 Elastic Potentials (UserPotential)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.1 Elastic Potentials (UserPotential)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1411-isotropic-linear-elasticity-upot_linearelasticity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1.1 Isotropic Linear Elasticity (UPOT_LinearElasticity)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1412-compressible-neo-hookean-upot_neohookean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1.2 Compressible Neo-Hookean (UPOT_NeoHookean)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1413-mooneyrivlin-upot_mooneyrivlin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1.3 Mooney–Rivlin (UPOT_MooneyRivlin)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1414-gentmooneyrivlin-upot_gentmooneyrivlin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1.4 Gent–Mooney–Rivlin (UPOT_GentMooneyRivlin)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1415-ogden-upot_ogden" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1.5 Ogden (UPOT_Ogden)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1416-st-venantkirchhoff-upot_stvenantkirchhoff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1.6 St. Venant–Kirchhoff (UPOT_StVenantKirchhoff)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#142-small-strain-plasticity-usermaterial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2 Small-Strain Plasticity (UserMaterial)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.2 Small-Strain Plasticity (UserMaterial)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1421-j2-plasticity-return-mapping-umat_j2smallstrain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2.1 J2 Plasticity — Return Mapping (UMAT_J2SmallStrain)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1422-viscoplastic-armstrongfrederick-umat_armstrongfrederick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2.2 Viscoplastic Armstrong–Frederick (UMAT_ArmstrongFrederick)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#143-finite-strain-plasticity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3 Finite-Strain Plasticity
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.3 Finite-Strain Plasticity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1431-multiplicative-mathbffemathbffp-j2-plasticity-umat_fefpj2plasticity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3.1 Multiplicative $\mathbf{F}^e\mathbf{F}^p$ J2 Plasticity (UMAT_FeFpJ2Plasticity)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#144-viscoelasticity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.4 Viscoelasticity
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.4 Viscoelasticity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1441-standard-linear-solid-umat_standardlinearsolid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.4.1 Standard Linear Solid (UMAT_StandardLinearSolid)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1442-generalized-maxwell-umat_generalizedmaxwell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.4.2 Generalized Maxwell (UMAT_GeneralizedMaxwell)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#145-crystal-plasticity-usermaterial-kinematics-deformation_gradient" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.5 Crystal Plasticity (UserMaterial, kinematics = "deformation_gradient")
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.5 Crystal Plasticity (UserMaterial, kinematics = &#34;deformation_gradient&#34;)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1451-fcc-crystal-plasticity-umat_fcccrystalplasticity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.5.1 FCC Crystal Plasticity (UMAT_FCCCrystalPlasticity)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1452-bcc-crystal-plasticity-umat_bcccrystalplasticity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.5.2 BCC Crystal Plasticity (UMAT_BCCCrystalPlasticity)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1453-hcp-crystal-plasticity-umat_hcpcrystalplasticity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.5.3 HCP Crystal Plasticity (UMAT_HCPCrystalPlasticity)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1454-hcp-gnd-umat_hcpcrystalplasticity_gnd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.5.4 HCP + GND (UMAT_HCPCrystalPlasticity_GND)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#146-phase-field-fracture-coupling-internal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.6 Phase-Field Fracture Coupling ([internal])
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-nonlinear-solvers-solvers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. Nonlinear Solvers (solvers/)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="15. Nonlinear Solvers (solvers/)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#151-newtonraphson-method-internal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.1 Newton–Raphson Method ([internal])
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#152-line-search-matthies-strang-1979" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.2 Line Search (Matthies &amp; Strang 1979)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#153-artificial-stabilization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.3 Artificial Stabilization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#154-arc-length-method-internal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.4 Arc-Length Method ([internal])
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-linear-solvers-internal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. Linear Solvers ([internal])
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="16. Linear Solvers ([internal])">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#161-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.1 Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#162-jax-native-iterative-solvers-internal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.2 JAX-Native Iterative Solvers ([internal])
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="16.2 JAX-Native Iterative Solvers ([internal])">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1621-bicgstab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.2.1 BiCGSTAB
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1622-conjugate-gradient-cg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.2.2 Conjugate Gradient (CG)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#163-amgcl-algebraic-multigrid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.3 AMGCL Algebraic Multigrid
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#164-solver-selection-guidelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.4 Solver Selection Guidelines
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-explicit-dynamics-integrator-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix: Explicit dynamics integrator routing
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="finite-element-formulations-in-diffsolid">Finite Element Formulations in diffsolid<a class="headerlink" href="#finite-element-formulations-in-diffsolid" title="Permanent link">&para;</a></h1>
+<p><strong>Version:</strong> 2026-05
+<strong>Scope:</strong> 3D, plane-strain, plane-stress, axisymmetric solid mechanics; constitutive models; solvers</p>
+<hr />
+<h2 id="1-introduction">1. Introduction<a class="headerlink" href="#1-introduction" title="Permanent link">&para;</a></h2>
+<p>This document is the complete theoretical reference for diffsolid. It covers:</p>
+<ul>
+<li><strong>Finite element infrastructure</strong> (§2–§3): notation, isoparametric mapping, quadrature, and displacement-gradient assembly.</li>
+<li><strong>Formulations</strong> (§4–§6): three-dimensional, two-dimensional, and axisymmetric solid mechanics under small-strain and finite-strain kinematics.</li>
+<li><strong>Anti-locking and special methods</strong> (§4.3–§4.4, §6.3–§6.4, §10–§13): F-bar, B-bar, plane-stress condensation, periodic BCs, EAS, and F-bar patch.</li>
+<li><strong>Consistent tangent</strong> (§7): automatic differentiation via <code>jax.jvp</code>.</li>
+<li><strong>Boundary conditions</strong> (§8): Dirichlet and Neumann.</li>
+<li><strong>Post-processing</strong> (§9): stress recovery, Hencky strain, VTK output.</li>
+<li><strong>Constitutive models</strong> (§14): elastic potentials, small-strain plasticity, finite-strain plasticity, viscoelasticity, crystal plasticity (FCC/BCC/HCP/HCP-GND), and phase-field fracture coupling.</li>
+<li><strong>Solvers</strong> (§15–§16): Newton–Raphson with line search, arc-length method, and linear solver backends.</li>
+</ul>
+<hr />
+<h2 id="2-notation">2. Notation<a class="headerlink" href="#2-notation" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$\Omega_0$, $\Omega$</td>
+<td>Reference and current configurations</td>
+</tr>
+<tr>
+<td>$\mathbf{X}$, $\mathbf{x}$</td>
+<td>Material and spatial position vectors</td>
+</tr>
+<tr>
+<td>$\mathbf{u}$</td>
+<td>Displacement field, $\mathbf{u} = \mathbf{x} - \mathbf{X}$</td>
+</tr>
+<tr>
+<td>$\mathbf{F}$</td>
+<td>Deformation gradient, $F_{iJ} = \partial x_i / \partial X_J$</td>
+</tr>
+<tr>
+<td>$J$</td>
+<td>Jacobian of deformation, $J = \det \mathbf{F}$</td>
+</tr>
+<tr>
+<td>$\boldsymbol{\varepsilon}$</td>
+<td>Small-strain tensor, $\varepsilon_{ij} = \tfrac{1}{2}(u_{i,j} + u_{j,i})$</td>
+</tr>
+<tr>
+<td>$\mathbf{P}$</td>
+<td>First Piola–Kirchhoff (PK1) stress, $P_{iJ}$</td>
+</tr>
+<tr>
+<td>$\boldsymbol{\sigma}$</td>
+<td>Cauchy stress, $\sigma_{ij}$</td>
+</tr>
+<tr>
+<td>$\Psi(\mathbf{F})$</td>
+<td>Strain-energy density function</td>
+</tr>
+<tr>
+<td>$N_a(\boldsymbol{\xi})$</td>
+<td>Shape function of node $a$ in reference coordinates</td>
+</tr>
+<tr>
+<td>$n_\text{en}$</td>
+<td>Number of nodes per element</td>
+</tr>
+<tr>
+<td>$n_q$</td>
+<td>Number of quadrature points per element</td>
+</tr>
+<tr>
+<td>$w_q$</td>
+<td>Quadrature weight at point $q$</td>
+</tr>
+<tr>
+<td>$\mathbf{j}$</td>
+<td>Isoparametric Jacobian matrix (reference-to-physical mapping)</td>
+</tr>
+<tr>
+<td>$\text{JxW}_q$</td>
+<td>Quadrature weight scaled by physical volume, $\det(\mathbf{j}_q)\,w_q$</td>
+</tr>
+<tr>
+<td>$V_e$</td>
+<td>Physical volume of element $e$</td>
+</tr>
+<tr>
+<td>$\boldsymbol{\xi}$</td>
+<td>Reference (parametric) coordinates</td>
+</tr>
+<tr>
+<td>$\delta(\cdot)$</td>
+<td>Variation of a field</td>
+</tr>
+<tr>
+<td>$\text{sym}(\mathbf{A})$</td>
+<td>Symmetric part, $\tfrac{1}{2}(\mathbf{A} + \mathbf{A}^T)$</td>
+</tr>
+<tr>
+<td>$\mathbf{I}$</td>
+<td>Identity tensor</td>
+</tr>
+<tr>
+<td>$\text{tr}(\mathbf{A})$</td>
+<td>Trace of tensor $\mathbf{A}$</td>
+</tr>
+</tbody>
+</table>
+<p>Indices $i,j,k$ denote spatial (current-configuration) directions; $I,J,K$ denote material (reference-configuration) directions. Einstein summation convention is used unless otherwise noted.</p>
+<hr />
+<h2 id="3-finite-element-discretization">3. Finite Element Discretization<a class="headerlink" href="#3-finite-element-discretization" title="Permanent link">&para;</a></h2>
+<h3 id="31-mesh-and-shape-functions">3.1 Mesh and Shape Functions<a class="headerlink" href="#31-mesh-and-shape-functions" title="Permanent link">&para;</a></h3>
+<p>The domain is partitioned into $n_e$ non-overlapping elements. Within each element the geometry and displacement are interpolated using the same set of shape functions (isoparametric formulation):</p>
+<p>$$
+\mathbf{X}(\boldsymbol{\xi}) = \sum_{n=1}^{n_\text{en}} N_n(\boldsymbol{\xi})\, \mathbf{X}<em>n, \qquad
+\mathbf{u}(\boldsymbol{\xi}) = \sum</em>{n=1}^{n_\text{en}} N_n(\boldsymbol{\xi})\, \mathbf{u}_n.
+$$</p>
+<p>Shape function values and reference-coordinate gradients are precomputed by the <code>basix</code> library (FEniCS) and stored as arrays <code>shape_vals[q, n]</code> and <code>shape_grads_ref[q, n, i]</code> (<code>core/basis.py</code>).</p>
+<h3 id="32-isoparametric-mapping-and-quadrature">3.2 Isoparametric Mapping and Quadrature<a class="headerlink" href="#32-isoparametric-mapping-and-quadrature" title="Permanent link">&para;</a></h3>
+<p>The isoparametric Jacobian at quadrature point $q$ is</p>
+<p>$$
+j_{ij} = \sum_{n=1}^{n_\text{en}} X_n^i \frac{\partial N_n}{\partial \xi^j},
+$$</p>
+<p>and the physical quadrature weight is</p>
+<p>$$
+\text{JxW}_q = \det(\mathbf{j}_q)\, w_q.
+$$</p>
+<p>Physical shape-function gradients are obtained by the chain rule (<code>[internal]</code>):</p>
+<p>$$
+\frac{\partial N_n}{\partial x^i} = \sum_j \frac{\partial N_n}{\partial \xi^j}\, (j^{-1})_{ji},
+\quad \text{i.e.,} \quad
+\texttt{shape_grads} = \texttt{shape_grads_ref} \cdot \mathbf{j}^{-1}.
+$$</p>
+<p>Default Gauss quadrature orders (<code>core/basis.py</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Element type</th>
+<th>Quadrature points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TRI3, TET4</td>
+<td>1</td>
+</tr>
+<tr>
+<td>QUAD4</td>
+<td>$2 \times 2$</td>
+</tr>
+<tr>
+<td>HEX8</td>
+<td>$2 \times 2 \times 2$</td>
+</tr>
+<tr>
+<td>Higher-order elements</td>
+<td>Correspondingly higher order</td>
+</tr>
+</tbody>
+</table>
+<h3 id="33-displacement-gradient-computation">3.3 Displacement Gradient Computation<a class="headerlink" href="#33-displacement-gradient-computation" title="Permanent link">&para;</a></h3>
+<p>The displacement gradient at quadrature point $q$ of element $e$ is assembled as</p>
+<p>$$
+(u_\text{grad})<em>{q,i,j} = \sum</em>{n=1}^{n_\text{en}} u_n^i \frac{\partial N_n}{\partial x^j}\bigg|_q,
+$$</p>
+<p>implemented via the einsum <code>cni,cqnj-&gt;cqij</code> over cells $c$, nodes $n$, and spatial indices $i,j$ (<code>[internal]</code>).</p>
+<hr />
+<h2 id="4-three-dimensional-formulations">4. Three-Dimensional Formulations<a class="headerlink" href="#4-three-dimensional-formulations" title="Permanent link">&para;</a></h2>
+<h3 id="41-small-strain-mechanics-internal-mechanicsequation">4.1 Small-Strain Mechanics (<code>[internal]</code> — <code>MechanicsEquation</code>)<a class="headerlink" href="#41-small-strain-mechanics-internal-mechanicsequation" title="Permanent link">&para;</a></h3>
+<p>Under the small-strain assumption the linearised strain tensor is</p>
+<p>$$
+\boldsymbol{\varepsilon} = \text{sym}(\nabla \mathbf{u}) = \tfrac{1}{2}!\left(\nabla \mathbf{u} + (\nabla \mathbf{u})^T\right), \quad \varepsilon_{ij} = \tfrac{1}{2}(u_{i,j} + u_{j,i}).
+$$</p>
+<p>The Cauchy stress $\boldsymbol{\sigma} = \boldsymbol{\sigma}(\boldsymbol{\varepsilon})$ is supplied by the user-defined constitutive model (UMAT). The weak form of quasi-static equilibrium (body forces neglected) reads</p>
+<p>$$
+\int_\Omega \boldsymbol{\sigma} : \delta\boldsymbol{\varepsilon}\, dV = 0 \quad \forall\, \delta\mathbf{u} \in \mathcal{V}_0,
+$$</p>
+<p>which, after discretisation, yields the nodal residual</p>
+<p>$$
+R_a^i = \sum_{q=1}^{n_q} \sigma^{ij}(q)\, \frac{\partial N_a}{\partial x^j}\bigg|_q \text{JxW}_q.
+$$</p>
+<p>This is implemented via the einsum <code>qij,qnj,q-&gt;ni</code> (<code>[internal]</code>).</p>
+<h3 id="42-finite-strain-hyperelasticity-internal-hyperelasticequation">4.2 Finite-Strain Hyperelasticity (<code>[internal]</code> — <code>HyperElasticEquation</code>)<a class="headerlink" href="#42-finite-strain-hyperelasticity-internal-hyperelasticequation" title="Permanent link">&para;</a></h3>
+<p>The deformation gradient is</p>
+<p>$$
+\mathbf{F} = \mathbf{I} + \nabla \mathbf{u}, \quad F_{iJ} = \delta_{iJ} + \frac{\partial u_i}{\partial X_J},
+$$</p>
+<p>where $\nabla$ denotes the material gradient. For a hyperelastic material with strain-energy density $\Psi(\mathbf{F})$, the first Piola–Kirchhoff stress is obtained by automatic differentiation:</p>
+<p>$$
+\mathbf{P} = \frac{\partial \Psi}{\partial \mathbf{F}}, \quad P_{iJ} = \frac{\partial \Psi}{\partial F_{iJ}},
+$$</p>
+<p>computed via <code>jax.grad</code> applied to the user-supplied energy function. The weak form in the reference configuration (total Lagrangian) is</p>
+<p>$$
+\int_{\Omega_0} \mathbf{P} : \delta\mathbf{F}\, dV = \int_{\Omega_0} P_{iJ}\, \delta u_{i,J}\, dV = 0,
+$$</p>
+<p>giving the nodal residual</p>
+<p>$$
+R_a^i = \sum_{q=1}^{n_q} P^{iJ}(q)\, \frac{\partial N_a}{\partial X^J}\bigg|_q \text{JxW}_q.
+$$</p>
+<h3 id="43-f-bar-volumetric-anti-locking-3d-internal-fbar3dmechanicsequation">4.3 F-bar Volumetric Anti-Locking — 3D (<code>[internal]</code> — <code>Fbar3DMechanicsEquation</code>)<a class="headerlink" href="#43-f-bar-volumetric-anti-locking-3d-internal-fbar3dmechanicsequation" title="Permanent link">&para;</a></h3>
+<p>Low-order elements (HEX8, TET4) suffer from volumetric locking when the material is nearly incompressible. The F-bar method (de Souza Neto, Perić &amp; Owen 1996) replaces the local Jacobian with an element-averaged value while preserving the isochoric part of the deformation gradient.</p>
+<p><strong>Algorithm:</strong></p>
+<ol>
+<li>
+<p>Compute the local Jacobian at each quadrature point:
+$$
+J_q = \det(\mathbf{F}_q).
+$$</p>
+</li>
+<li>
+<p>Compute the element-average Jacobian (volume-weighted):
+$$
+\bar{J} = \frac{1}{V_e} \sum_{q=1}^{n_q} J_q\, \text{JxW}<em>q, \qquad V_e = \sum</em>{q=1}^{n_q} \text{JxW}_q.
+$$</p>
+</li>
+<li>
+<p>Compute the scaling factor:
+$$
+\alpha_q = \left(\frac{\bar{J}}{J_q}\right)^{1/3}.
+$$</p>
+</li>
+<li>
+<p>Form the modified deformation gradient:
+$$
+\bar{\mathbf{F}}_q = \alpha_q\, \mathbf{F}_q, \qquad \det(\bar{\mathbf{F}}_q) = \alpha_q^3 J_q = \bar{J}.
+$$</p>
+</li>
+<li>
+<p>Evaluate the PK1 stress from the modified gradient: $\mathbf{P} = \text{UMAT}(\bar{\mathbf{F}})$.</p>
+</li>
+</ol>
+<p>The residual has the same form as in Section 4.2 with $\mathbf{P}$ evaluated at $\bar{\mathbf{F}}$.</p>
+<h3 id="44-b-bar-mean-dilatation-3d-internal-bbarmechanicsequation">4.4 B-bar Mean-Dilatation — 3D (<code>[internal]</code> — <code>BbarMechanicsEquation</code>)<a class="headerlink" href="#44-b-bar-mean-dilatation-3d-internal-bbarmechanicsequation" title="Permanent link">&para;</a></h3>
+<p>The B-bar method (Hughes 1980; Simo &amp; Hughes §4.4) modifies the strain operator to use an element-averaged volumetric part, preventing locking in the small-strain setting.</p>
+<p><strong>Mean-dilatation shape-function gradient</strong> (precomputed per element):</p>
+<p>$$
+\bar{\mathbf{b}}<em>a = \frac{1}{V_e} \int</em>{\Omega_e} \nabla N_a\, dV = \frac{1}{V_e} \sum_{q=1}^{n_q} \nabla N_a|_q\, \text{JxW}_q.
+$$</p>
+<p><strong>Element-average divergence:</strong></p>
+<p>$$
+\overline{\text{div}}(\mathbf{u}) = \sum_{a=1}^{n_\text{en}} \bar{\mathbf{b}}_a \cdot \mathbf{u}_a.
+$$</p>
+<p><strong>Modified displacement gradient</strong> at quadrature point $q$:</p>
+<p>$$
+\overline{\nabla \mathbf{u}}(q) = \nabla \mathbf{u}(q) + \frac{1}{d}!\left[\overline{\text{div}}(\mathbf{u}) - \text{div}(\mathbf{u})(q)\right] \mathbf{I},
+$$</p>
+<p>where $d = 3$ in three dimensions. The modified strain is $\bar{\boldsymbol{\varepsilon}} = \text{sym}(\overline{\nabla \mathbf{u}})$, and the residual is</p>
+<p>$$
+R_a^i = \sum_{q=1}^{n_q} \sigma^{ij}(\bar{\boldsymbol{\varepsilon}}(q))\, \frac{\partial N_a}{\partial x^j}\bigg|_q \text{JxW}_q.
+$$</p>
+<hr />
+<h2 id="5-two-dimensional-formulations">5. Two-Dimensional Formulations<a class="headerlink" href="#5-two-dimensional-formulations" title="Permanent link">&para;</a></h2>
+<h3 id="51-plane-strain-finite-strain-with-f-bar-internal-planestrainfbarmechanicsequation">5.1 Plane Strain — Finite Strain with F-bar (<code>[internal]</code> — <code>PlaneStrainFbarMechanicsEquation</code>)<a class="headerlink" href="#51-plane-strain-finite-strain-with-f-bar-internal-planestrainfbarmechanicsequation" title="Permanent link">&para;</a></h3>
+<p>Under the plane-strain constraint the out-of-plane stretch is identically unity, $F_{33} = 1$. The 2D mesh carries DOFs $(u_x, u_y)$; the full 3D deformation gradient is reconstructed as</p>
+<p>$$
+\mathbf{F}<em>\text{3D} = \begin{pmatrix} \mathbf{F}</em>\text{2D} &amp; \mathbf{0} \ \mathbf{0}^T &amp; 1 \end{pmatrix},
+$$</p>
+<p>where $\mathbf{F}_\text{2D}$ is the $2\times 2$ in-plane gradient computed from the 2D mesh.</p>
+<p><strong>F-bar algorithm for plane strain:</strong></p>
+<ol>
+<li>$J_q = \det(\mathbf{F}_\text{2D})$ (in-plane area ratio).</li>
+<li>$\bar{J} = \dfrac{1}{V_e}\displaystyle\sum_q J_q\,\text{JxW}_q$.</li>
+<li>Scaling exponent is $\tfrac{1}{2}$ (two in-plane degrees of freedom):
+$$
+\alpha_q = \left(\frac{\bar{J}}{J_q}\right)^{1/2}.
+$$</li>
+<li>$\bar{\mathbf{F}}<em>\text{2D} = \alpha_q\,\mathbf{F}</em>\text{2D}$, so $\det(\bar{\mathbf{F}}_\text{2D}) = \alpha_q^2 J_q = \bar{J}$.</li>
+<li>$\bar{\mathbf{F}}<em>\text{3D} = \text{diag}(\bar{\mathbf{F}}</em>\text{2D},\, 1)$, giving $\det(\bar{\mathbf{F}}_\text{3D}) = \bar{J}$.</li>
+<li>$\mathbf{P}<em>\text{3D} = \text{UMAT}(\bar{\mathbf{F}}</em>\text{3D})$.</li>
+</ol>
+<p>Only the in-plane block of the PK1 stress contributes to the 2D residual:</p>
+<p>$$
+R_a^i = \sum_{q=1}^{n_q} P_\text{2D}^{ij}(q)\, \frac{\partial N_a}{\partial X^j}\bigg|_q \text{JxW}_q, \quad i,j \in {1,2},
+$$</p>
+<p>where $\mathbf{P}<em>\text{2D} = \mathbf{P}</em>\text{3D}[:2,:2]$.</p>
+<h3 id="52-plane-stress">5.2 Plane Stress<a class="headerlink" href="#52-plane-stress" title="Permanent link">&para;</a></h3>
+<p>Under the plane-stress constraint $\sigma_{33} = \sigma_{13} = \sigma_{23} = 0$. For small-strain problems the out-of-plane strain $\varepsilon_{33}$ is determined by the constitutive relation; for finite-strain problems $F_{33}$ is solved as an additional local unknown (condensed at the element level). The 2D DOFs remain $(u_x, u_y)$; the out-of-plane component is handled internally by the constitutive driver.</p>
+<h3 id="53-b-bar-for-2d">5.3 B-bar for 2D<a class="headerlink" href="#53-b-bar-for-2d" title="Permanent link">&para;</a></h3>
+<p>The B-bar formulation extends directly to two dimensions with $d = 2$ in the modified gradient formula:</p>
+<p>$$
+\overline{\nabla \mathbf{u}}(q) = \nabla \mathbf{u}(q) + \frac{1}{2}!\left[\overline{\text{div}}(\mathbf{u}) - \text{div}(\mathbf{u})(q)\right] \mathbf{I}_\text{2D}.
+$$</p>
+<p>All other steps are identical to the 3D case (Section 4.4).</p>
+<hr />
+<h2 id="6-axisymmetric-formulations">6. Axisymmetric Formulations<a class="headerlink" href="#6-axisymmetric-formulations" title="Permanent link">&para;</a></h2>
+<p>The 2D mesh lies in the $r$–$z$ plane (code convention: $x \equiv r$, $y \equiv z$). DOFs are $(u_r, u_z)$. The circumferential direction $\theta$ is eliminated by symmetry, but the hoop components of stress and strain must be retained explicitly.</p>
+<h3 id="61-kinematics-deformation-gradient-and-strain">6.1 Kinematics: Deformation Gradient and Strain<a class="headerlink" href="#61-kinematics-deformation-gradient-and-strain" title="Permanent link">&para;</a></h3>
+<h4 id="611-finite-strain-axisymmetric-internal">6.1.1 Finite-Strain Axisymmetric (<code>[internal]</code>)<a class="headerlink" href="#611-finite-strain-axisymmetric-internal" title="Permanent link">&para;</a></h4>
+<p>The full 3D deformation gradient in the $r$–$\theta$–$z$ ordering is</p>
+<p>$$
+\mathbf{F} = \begin{pmatrix}
+F_{rr} &amp; 0 &amp; F_{rz} \
+0 &amp; F_{\theta\theta} &amp; 0 \
+F_{zr} &amp; 0 &amp; F_{zz}
+\end{pmatrix},
+$$</p>
+<p>with components</p>
+<p>$$
+F_{rr} = 1 + \frac{\partial u_r}{\partial R}, \quad
+F_{rz} = \frac{\partial u_r}{\partial Z}, \quad
+F_{zr} = \frac{\partial u_z}{\partial R}, \quad
+F_{zz} = 1 + \frac{\partial u_z}{\partial Z},
+$$</p>
+<p>and the hoop stretch (no spatial derivative required):</p>
+<p>$$
+F_{\theta\theta} = 1 + \frac{u_r}{R}.
+$$</p>
+<p>The Jacobian of deformation is</p>
+<p>$$
+J = \det(\mathbf{F}) = \det!\begin{pmatrix} F_{rr} &amp; F_{rz} \ F_{zr} &amp; F_{zz} \end{pmatrix} \cdot F_{\theta\theta}
+= (F_{rr} F_{zz} - F_{rz} F_{zr})\, F_{\theta\theta}.
+$$</p>
+<p>To avoid a singularity on the axis of symmetry, the code uses $r_\text{safe} = \max(r,\, 10^{-14})$ when evaluating $F_{\theta\theta}$.</p>
+<h4 id="612-small-strain-axisymmetric-internal">6.1.2 Small-Strain Axisymmetric (<code>[internal]</code>)<a class="headerlink" href="#612-small-strain-axisymmetric-internal" title="Permanent link">&para;</a></h4>
+<p>The 3D strain tensor in the $r$–$\theta$–$z$ ordering is</p>
+<p>$$
+\boldsymbol{\varepsilon} = \begin{pmatrix}
+\varepsilon_{rr} &amp; 0 &amp; \varepsilon_{rz} \
+0 &amp; \varepsilon_{\theta\theta} &amp; 0 \
+\varepsilon_{rz} &amp; 0 &amp; \varepsilon_{zz}
+\end{pmatrix},
+$$</p>
+<p>with</p>
+<p>$$
+\varepsilon_{rr} = \frac{\partial u_r}{\partial r}, \quad
+\varepsilon_{zz} = \frac{\partial u_z}{\partial z}, \quad
+\varepsilon_{rz} = \tfrac{1}{2}!\left(\frac{\partial u_r}{\partial z} + \frac{\partial u_z}{\partial r}\right), \quad
+\varepsilon_{\theta\theta} = \frac{u_r}{r}.
+$$</p>
+<h3 id="62-weak-form-and-hoop-term">6.2 Weak Form and Hoop Term<a class="headerlink" href="#62-weak-form-and-hoop-term" title="Permanent link">&para;</a></h3>
+<h4 id="621-finite-strain-weak-form">6.2.1 Finite-Strain Weak Form<a class="headerlink" href="#621-finite-strain-weak-form" title="Permanent link">&para;</a></h4>
+<p>The physical volume element in axisymmetry is $dV = R\,dR\,dZ\,d\theta$; integrating over $\theta \in [0, 2\pi)$ gives $dV_\text{phys} = 2\pi R\,\text{JxW}$. The factor $2\pi$ cancels from both sides of the equilibrium equation, leaving an effective weight $R\,\text{JxW}$.</p>
+<p>The variation of the deformation gradient is</p>
+<p>$$
+\delta F_{iJ} = \frac{\partial \delta u_i}{\partial X_J} \quad (i,J \neq \theta),
+\qquad
+\delta F_{\theta\theta} = \frac{\delta u_r}{R}.
+$$</p>
+<p>The virtual work $\delta W = \int_{\Omega_0} P_{iJ}\,\delta F_{iJ}\,dV$ yields the nodal residuals:</p>
+<p>$$
+R_I^r = \sum_q \left[
+  \left(P_{rR}\,\frac{\partial N_I}{\partial R} + P_{rZ}\,\frac{\partial N_I}{\partial Z}\right) R_q
+  + P_{\theta\Theta}\, N_I
+\right] \text{JxW}_q,
+$$</p>
+<p>$$
+R_I^z = \sum_q \left[
+  P_{zR}\,\frac{\partial N_I}{\partial R} + P_{zZ}\,\frac{\partial N_I}{\partial Z}
+\right] R_q\, \text{JxW}_q.
+$$</p>
+<p>The hoop term $P_{\theta\Theta}\,\delta u_r / R$ contributes $P_{\theta\Theta}\,N_I / R$ to the integrand; multiplied by the physical weight $R\,\text{JxW}$, the factor $R$ cancels, leaving $P_{\theta\Theta}\,N_I\,\text{JxW}$.</p>
+<h4 id="622-small-strain-weak-form">6.2.2 Small-Strain Weak Form<a class="headerlink" href="#622-small-strain-weak-form" title="Permanent link">&para;</a></h4>
+<p>The analogous residuals for the small-strain case are</p>
+<p>$$
+R_I^r = \sum_q \left[
+  \left(\sigma_{rr}\,\frac{\partial N_I}{\partial r} + \sigma_{rz}\,\frac{\partial N_I}{\partial z}\right) r_q
+  + \sigma_{\theta\theta}\, N_I
+\right] \text{JxW}_q,
+$$</p>
+<p>$$
+R_I^z = \sum_q \left[
+  \sigma_{zr}\,\frac{\partial N_I}{\partial r} + \sigma_{zz}\,\frac{\partial N_I}{\partial z}
+\right] r_q\, \text{JxW}_q.
+$$</p>
+<h3 id="63-f-bar-for-axisymmetric-problems-internal-axisymmetricfbarkinematicmechanicsequation">6.3 F-bar for Axisymmetric Problems (<code>[internal]</code> — <code>AxisymmetricFbarKinematicMechanicsEquation</code>)<a class="headerlink" href="#63-f-bar-for-axisymmetric-problems-internal-axisymmetricfbarkinematicmechanicsequation" title="Permanent link">&para;</a></h3>
+<p>Because the axisymmetric problem is physically three-dimensional, the F-bar exponent is $\tfrac{1}{3}$.</p>
+<p><strong>Algorithm:</strong></p>
+<ol>
+<li>
+<p>Compute the local Jacobian:
+$$
+J_q = (F_{rr} F_{zz} - F_{rz} F_{zr})\, F_{\theta\theta}.
+$$</p>
+</li>
+<li>
+<p>Compute the element-average Jacobian with the physical volume weight $R_q\,\text{JxW}_q$:
+$$
+\bar{J} = \frac{\displaystyle\sum_q J_q\, R_q\, \text{JxW}_q}{\displaystyle\sum_q R_q\, \text{JxW}_q}.
+$$</p>
+</li>
+<li>
+<p>Scaling factor:
+$$
+\alpha_q = \left(\frac{\bar{J}}{J_q}\right)^{1/3}.
+$$</p>
+</li>
+<li>
+<p>All components of $\mathbf{F}$ are scaled uniformly:
+$$
+\bar{F}<em>{rr} = \alpha_q F</em>{rr}, \quad
+\bar{F}<em>{rz} = \alpha_q F</em>{rz}, \quad
+\bar{F}<em>{zr} = \alpha_q F</em>{zr}, \quad
+\bar{F}<em>{zz} = \alpha_q F</em>{zz}, \quad
+\bar{F}<em>{\theta\theta} = \alpha_q F</em>{\theta\theta}.
+$$</p>
+</li>
+<li>
+<p>$\mathbf{P} = \text{UMAT}(\bar{\mathbf{F}})$.</p>
+</li>
+</ol>
+<p>The weak form and residual assembly are identical to Section 6.2.1 with $\mathbf{P}$ evaluated at $\bar{\mathbf{F}}$.</p>
+<h3 id="64-b-bar-for-axisymmetric-small-strain-internal">6.4 B-bar for Axisymmetric Small-Strain (<code>[internal]</code>)<a class="headerlink" href="#64-b-bar-for-axisymmetric-small-strain-internal" title="Permanent link">&para;</a></h3>
+<p>The volumetric strain at a quadrature point is</p>
+<p>$$
+\varepsilon_v = \varepsilon_{rr} + \varepsilon_{\theta\theta} + \varepsilon_{zz}.
+$$</p>
+<p>The element-average volumetric strain (with physical weight $r\,\text{JxW}$) is</p>
+<p>$$
+\bar{\varepsilon}<em>v = \frac{1}{V_e} \int</em>{\Omega_e} \varepsilon_v\, dV
+= \frac{\displaystyle\sum_q \varepsilon_v(q)\, r_q\, \text{JxW}_q}{\displaystyle\sum_q r_q\, \text{JxW}_q}.
+$$</p>
+<p>The modified strain tensor is</p>
+<p>$$
+\bar{\boldsymbol{\varepsilon}} = \boldsymbol{\varepsilon} + \frac{1}{3}!\left(\bar{\varepsilon}_v - \varepsilon_v\right) \mathbf{I},
+$$</p>
+<p>which replaces the local volumetric part with the element average while leaving the deviatoric part unchanged. The residual is assembled using $\boldsymbol{\sigma}(\bar{\boldsymbol{\varepsilon}})$ in the expressions of Section 6.2.2.</p>
+<hr />
+<h2 id="7-consistent-tangent-via-automatic-differentiation">7. Consistent Tangent via Automatic Differentiation<a class="headerlink" href="#7-consistent-tangent-via-automatic-differentiation" title="Permanent link">&para;</a></h2>
+<p>The Newton–Raphson linearisation requires the consistent tangent stiffness matrix</p>
+<p>$$
+\mathbf{K} = \frac{d\mathbf{R}}{d\mathbf{u}}.
+$$</p>
+<p>Rather than deriving and implementing the material and geometric tangent terms by hand, diffsolid computes $\mathbf{K}$ using JAX forward-mode automatic differentiation:</p>
+<p>$$
+\mathbf{K}\,\Delta\mathbf{u} = \frac{d\mathbf{R}(\mathbf{u} + t\,\Delta\mathbf{u})}{dt}\bigg|_{t=0},
+$$</p>
+<p>which is evaluated by a single call to <code>jax.jvp(R, (u,), (du,))</code>. This approach is exact (to floating-point precision), requires no hand derivation, and automatically handles any user-supplied constitutive model that is differentiable in JAX. The full stiffness matrix is assembled column-by-column by applying <code>jax.jvp</code> with unit perturbation vectors, or more efficiently via <code>jax.linearize</code> over the full DOF vector.</p>
+<p>This design means that any UMAT written as a pure JAX function automatically yields a consistent tangent, including path-dependent models that carry internal state variables (provided the state is treated as fixed during the linearisation step, i.e., the algorithmic tangent is used).</p>
+<hr />
+<h2 id="8-boundary-conditions">8. Boundary Conditions<a class="headerlink" href="#8-boundary-conditions" title="Permanent link">&para;</a></h2>
+<h3 id="81-dirichlet-conditions">8.1 Dirichlet Conditions<a class="headerlink" href="#81-dirichlet-conditions" title="Permanent link">&para;</a></h3>
+<p>Essential boundary conditions are enforced by row elimination. Each Dirichlet constraint is stored as a triplet $(\text{node_inds},\, \text{vec_inds},\, \text{vals})$ specifying the constrained nodes, the constrained DOF component, and the prescribed value. During assembly, the corresponding rows of the residual and stiffness matrix are replaced by the constraint equations $u_i^{(a)} = \bar{u}_i^{(a)}$.</p>
+<p>Multiple Dirichlet variables (e.g., displacement and temperature in a coupled problem) are supported; each variable maintains its own constraint list.</p>
+<h3 id="82-neumann-traction-conditions">8.2 Neumann (Traction) Conditions<a class="headerlink" href="#82-neumann-traction-conditions" title="Permanent link">&para;</a></h3>
+<p>Natural boundary conditions prescribe a traction $\mathbf{t}$ on a portion $\partial\Omega_t$ of the boundary. The traction residual is</p>
+<p>$$
+R_a^i = \int_{\partial\Omega_t} t^i\, N_a\, dS.
+$$</p>
+<p>In the finite-strain setting the physical area element $dS$ is related to the reference area element $dA$ via Nanson's formula:</p>
+<p>$$
+\mathbf{n}\, dS = J\, \mathbf{F}^{-T}\, \mathbf{N}\, dA,
+$$</p>
+<p>where $\mathbf{N}$ is the outward unit normal in the reference configuration. The implementation computes the Nanson scaling factor on each boundary face as</p>
+<p>$$
+\text{nanson_scale} = \left|\mathbf{n}<em>\text{ref}\, \mathbf{j}^{-1}\right| \det(\mathbf{j})\, w</em>\text{face},
+$$</p>
+<p>where $\mathbf{j}$ is the surface Jacobian and $w_\text{face}$ is the face quadrature weight. Face quadrature points and weights are generated by <code>basix</code> for the appropriate facet type.</p>
+<hr />
+<h2 id="9-post-processing">9. Post-Processing<a class="headerlink" href="#9-post-processing" title="Permanent link">&para;</a></h2>
+<h3 id="91-stress-recovery">9.1 Stress Recovery<a class="headerlink" href="#91-stress-recovery" title="Permanent link">&para;</a></h3>
+<p><strong>Cauchy stress from PK1:</strong> Given the first Piola–Kirchhoff stress $\mathbf{P}$ and the deformation gradient $\mathbf{F}$, the Cauchy stress is recovered by the push-forward</p>
+<p>$$
+\boldsymbol{\sigma} = \frac{1}{J}\, \mathbf{P}\, \mathbf{F}^T, \quad \sigma_{ij} = \frac{1}{J}\, P_{iK}\, F_{jK}.
+$$</p>
+<p><strong>Logarithmic (Hencky) strain:</strong> The logarithmic strain tensor is computed from the right Cauchy–Green tensor $\mathbf{C} = \mathbf{F}^T \mathbf{F}$ via spectral decomposition:</p>
+<p>$$
+\boldsymbol{\varepsilon}<em>\text{log} = \frac{1}{2}\ln(\mathbf{F}^T \mathbf{F}) = \sum</em>{\alpha=1}^{3} \frac{1}{2}\ln(\lambda_\alpha^2)\, \mathbf{n}<em>\alpha \otimes \mathbf{n}</em>\alpha,
+$$</p>
+<p>where $\lambda_\alpha$ and $\mathbf{n}_\alpha$ are the principal stretches and principal directions obtained by eigendecomposition of $\mathbf{C}$.</p>
+<p><strong>Internal (state) variables</strong> are stored as arrays of shape <code>(n_cells, n_quads, n_state)</code> and are updated in-place at each converged load step.</p>
+<h3 id="92-output-format">9.2 Output Format<a class="headerlink" href="#92-output-format" title="Permanent link">&para;</a></h3>
+<p>Solution fields and post-processed quantities are written to VTK format via the <code>save_sol</code> and <code>save_sol_extended</code> functions (<code>io/</code> module). The VTK files can be visualised in ParaView or similar tools. Nodal displacement fields, element-averaged stresses, logarithmic strains, and user-defined state variables can all be exported. Time-history data (e.g., reaction forces, average stresses) can be written to CSV using the <code>history_csv</code> argument of the <code>solve</code> function.</p>
+<hr />
+<h2 id="10-plane-stress-formulation-internal">10. Plane-Stress Formulation (<code>[internal]</code>)<a class="headerlink" href="#10-plane-stress-formulation-internal" title="Permanent link">&para;</a></h2>
+<h3 id="101-kinematic-constraint">10.1 Kinematic Constraint<a class="headerlink" href="#101-kinematic-constraint" title="Permanent link">&para;</a></h3>
+<p>Under the plane-stress assumption the out-of-plane normal stress vanishes:</p>
+<p>$$
+\sigma_{33} = 0 \quad \text{(small strain)}, \qquad P_{33} = 0 \quad \text{(finite strain)}.
+$$</p>
+<p>The 2D mesh carries DOFs $(u_x, u_y)$. The out-of-plane strain $\varepsilon_{33}$ (or deformation gradient component $F_{33}$) is not an independent DOF; it is determined locally at each quadrature point by enforcing the plane-stress constraint.</p>
+<h3 id="102-small-strain-plane-stress-planestressmechanicsequation">10.2 Small-Strain Plane Stress (<code>PlaneStressMechanicsEquation</code>)<a class="headerlink" href="#102-small-strain-plane-stress-planestressmechanicsequation" title="Permanent link">&para;</a></h3>
+<p>Given the in-plane displacement gradient $\nabla_\text{2D}\mathbf{u}$, the 3D strain tensor is assembled as</p>
+<p>$$
+\boldsymbol{\varepsilon}<em>\text{3D} = \begin{pmatrix} \varepsilon</em>{11} &amp; \varepsilon_{12} &amp; 0 \ \varepsilon_{12} &amp; \varepsilon_{22} &amp; 0 \ 0 &amp; 0 &amp; \varepsilon_{33} \end{pmatrix},
+$$</p>
+<p>where $\varepsilon_{33}$ is the unknown. At each quadrature point, $\varepsilon_{33}$ is found by solving the scalar nonlinear equation</p>
+<p>$$
+f(\varepsilon_{33}) \;:=\; \sigma_{33}!\left(\boldsymbol{\varepsilon}<em>\text{2D},\, \varepsilon</em>{33};\, \text{state}\right) = 0,
+$$</p>
+<p>using a local Newton iteration (maximum 20 iterations, tolerance $10^{-12}$) implemented via <code>jax.lax.custom_root</code>. The consistent tangent with respect to the in-plane strains is obtained by the implicit function theorem (IFT):</p>
+<p>$$
+\frac{\partial \varepsilon_{33}}{\partial \varepsilon_{\alpha\beta}} = -\left(\frac{\partial \sigma_{33}}{\partial \varepsilon_{33}}\right)^{-1} \frac{\partial \sigma_{33}}{\partial \varepsilon_{\alpha\beta}}, \quad \alpha,\beta \in {1,2}.
+$$</p>
+<p>The <code>tangent_solve</code> function in <code>custom_root</code> implements this as a scalar division: <code>return y / df</code> where <code>df = ∂σ₃₃/∂ε₃₃</code>. Once $\varepsilon_{33}$ is known, the full 3D stress is evaluated and the in-plane block $\boldsymbol{\sigma}_\text{2D}$ is extracted for the residual assembly.</p>
+<h3 id="103-finite-strain-plane-stress-planestressfinitestrainequation">10.3 Finite-Strain Plane Stress (<code>PlaneStressFiniteStrainEquation</code>)<a class="headerlink" href="#103-finite-strain-plane-stress-planestressfinitestrainequation" title="Permanent link">&para;</a></h3>
+<p>The 2D deformation gradient $\mathbf{F}<em>\text{2D}$ is embedded into a 3D gradient with unknown $F</em>{33}$:</p>
+<p>$$
+\mathbf{F}<em>\text{3D} = \begin{pmatrix} F</em>{11} &amp; F_{12} &amp; 0 \ F_{21} &amp; F_{22} &amp; 0 \ 0 &amp; 0 &amp; F_{33} \end{pmatrix}.
+$$</p>
+<p>At each quadrature point, $F_{33}$ is found by solving</p>
+<p>$$
+g(F_{33}) \;:=\; P_{33}!\left(\mathbf{F}<em>\text{2D},\, F</em>{33};\, \text{state}\right) = 0,
+$$</p>
+<p>again via <code>jax.lax.custom_root</code> with IFT tangent. The initial guess is $F_{33} = 1$ (undeformed). The in-plane PK1 block $\mathbf{P}_\text{2D}$ is used in the standard residual formula (Section 4.2).</p>
+<hr />
+<h2 id="11-periodic-boundary-conditions">11. Periodic Boundary Conditions<a class="headerlink" href="#11-periodic-boundary-conditions" title="Permanent link">&para;</a></h2>
+<h3 id="111-multi-point-constraint-formulation">11.1 Multi-Point Constraint Formulation<a class="headerlink" href="#111-multi-point-constraint-formulation" title="Permanent link">&para;</a></h3>
+<p>Periodic boundary conditions (PBCs) link the displacement on opposite faces of a unit cell. For a pair of master node $m$ and slave node $s$ related by the periodicity vector $\mathbf{L}$, the constraint is</p>
+<p>$$
+\mathbf{u}_s = \mathbf{u}_m + \bar{\boldsymbol{\varepsilon}}\, \mathbf{L},
+$$</p>
+<p>where $\bar{\boldsymbol{\varepsilon}}$ is the prescribed macroscopic strain (or $\bar{\mathbf{F}}$ in the finite-strain case). These are linear multi-point constraints (MPCs).</p>
+<h3 id="112-implementation-via-constraint-matrix">11.2 Implementation via Constraint Matrix<a class="headerlink" href="#112-implementation-via-constraint-matrix" title="Permanent link">&para;</a></h3>
+<p>The full DOF vector $\mathbf{u}<em>\text{full} \in \mathbb{R}^{N</em>\text{full}}$ is expressed in terms of a reduced DOF vector $\mathbf{u}<em>\text{red} \in \mathbb{R}^{N</em>\text{red}}$ and a prescribed offset $\mathbf{g}$:</p>
+<p>$$
+\mathbf{u}<em>\text{full} = \mathbf{P}\, \mathbf{u}</em>\text{red} + \mathbf{g},
+$$</p>
+<p>where $\mathbf{P} \in \mathbb{R}^{N_\text{full} \times N_\text{red}}$ is a sparse Boolean constraint matrix (stored as a <code>scipy.sparse.csr_matrix</code>). Each slave DOF row of $\mathbf{P}$ contains a single entry pointing to the corresponding master DOF; master and interior DOF rows are identity rows.</p>
+<p>The reduced residual and stiffness are obtained by the congruence transformation:</p>
+<p>$$
+\mathbf{R}<em>\text{red} = \mathbf{P}^T \mathbf{R}</em>\text{full}, \qquad
+\mathbf{K}<em>\text{red} = \mathbf{P}^T \mathbf{K}</em>\text{full}\, \mathbf{P}.
+$$</p>
+<p>The Newton iteration is performed on $\mathbf{u}<em>\text{red}$; the full solution is recovered by $\mathbf{u}</em>\text{full} = \mathbf{P}\,\mathbf{u}_\text{red} + \mathbf{g}$ after each solve.</p>
+<h3 id="113-node-pairing">11.3 Node Pairing<a class="headerlink" href="#113-node-pairing" title="Permanent link">&para;</a></h3>
+<p>Periodic node pairs are identified geometrically: for each node on the $-x$ face, the matching node on the $+x$ face is found by searching for the node whose coordinates differ by exactly $L_x$ in the $x$-direction and are identical in $y$ and $z$ (within a tolerance). The same procedure is applied to the $y$ and $z$ face pairs. Corner and edge nodes shared by multiple face pairs are handled by assigning them to a single master chain.</p>
+<hr />
+<h2 id="12-enhanced-assumed-strain-eas-method-internal">12. Enhanced Assumed Strain (EAS) Method (<code>[internal]</code>)<a class="headerlink" href="#12-enhanced-assumed-strain-eas-method-internal" title="Permanent link">&para;</a></h2>
+<h3 id="121-motivation">12.1 Motivation<a class="headerlink" href="#121-motivation" title="Permanent link">&para;</a></h3>
+<p>The standard isoparametric displacement formulation exhibits parasitic shear locking in bending-dominated problems and volumetric locking in nearly incompressible problems. The EAS method (Simo &amp; Rifai 1990) enriches the strain field with element-level enhanced modes that are orthogonal to the stress field, eliminating these locking pathologies without introducing additional global DOFs.</p>
+<h3 id="122-enhanced-strain-field">12.2 Enhanced Strain Field<a class="headerlink" href="#122-enhanced-strain-field" title="Permanent link">&para;</a></h3>
+<p>The total compatible strain (or displacement gradient) at a quadrature point is augmented by an enhanced part:</p>
+<p>$$
+\tilde{\mathbf{H}}(\boldsymbol{\xi}) = \frac{j_0}{j(\boldsymbol{\xi})}\, \mathbf{M}_\text{ref}(\boldsymbol{\xi})\, \mathbf{J}_0^{-1},
+$$</p>
+<p>where $j_0 = \det(\mathbf{j})|<em>{\boldsymbol{\xi}=\mathbf{0}}$ is the Jacobian determinant at the element centroid, $j(\boldsymbol{\xi}) = \det(\mathbf{j}(\boldsymbol{\xi}))$ is the local Jacobian determinant, $\mathbf{M}</em>\text{ref}(\boldsymbol{\xi})$ is the matrix of reference-coordinate enhanced modes, and $\mathbf{J}<em>0$ is the Jacobian matrix at the centroid. The factor $j_0/j$ ensures the orthogonality condition $\int</em>{\Omega_e} \boldsymbol{\sigma} : \tilde{\mathbf{H}}\,dV = 0$ for any stress field $\boldsymbol{\sigma}$ that is constant over the element.</p>
+<p>The modified deformation gradient passed to the constitutive model is</p>
+<p>$$
+\bar{\mathbf{F}} = \mathbf{I} + \nabla\mathbf{u} + \tilde{\mathbf{H}}(\boldsymbol{\xi};\, \boldsymbol{\alpha}),
+$$</p>
+<p>where $\boldsymbol{\alpha}$ is the vector of element-level enhanced DOFs.</p>
+<h3 id="123-enhanced-mode-matrices">12.3 Enhanced Mode Matrices<a class="headerlink" href="#123-enhanced-mode-matrices" title="Permanent link">&para;</a></h3>
+<p>The reference-coordinate mode matrix $\mathbf{M}_\text{ref}$ is defined per element type:</p>
+<p><strong>QUAD4 — EAS7 (plane strain and axisymmetric):</strong></p>
+<p>$$
+\mathbf{M}_\text{ref} = \begin{pmatrix}
+\xi &amp; 0 &amp; \eta &amp; 0 &amp; \xi\eta &amp; 0 &amp; 0 \
+0 &amp; \eta &amp; 0 &amp; \xi &amp; 0 &amp; \xi\eta &amp; 0 \
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; \xi\eta/2
+\end{pmatrix}^T \in \mathbb{R}^{7 \times 3},
+$$</p>
+<p>providing 4 normal-strain modes, 2 shear-strain modes, and 1 mixed mode. The axisymmetric variant sets the $\theta\theta$ enhancement to zero.</p>
+<p><strong>HEX8 — EAS9 (3D):</strong></p>
+<p>Nine enhanced modes corresponding to the $\xi$, $\eta$, $\zeta$, $\xi\eta$, $\eta\zeta$, $\xi\zeta$ terms in each of the three normal-strain components (Table 1 of Simo &amp; Rifai 1990).</p>
+<p>The reference coordinates $(\xi, \eta, \zeta)$ are mapped from the basix $[0,1]^d$ reference domain to the standard $[-1,1]^d$ domain to preserve the orthogonality of the mode polynomials.</p>
+<h3 id="124-static-condensation">12.4 Static Condensation<a class="headerlink" href="#124-static-condensation" title="Permanent link">&para;</a></h3>
+<p>The enhanced DOFs $\boldsymbol{\alpha}$ are element-local and are eliminated by static condensation before the global assembly. At each Newton iteration, the element-level system is</p>
+<p>$$
+\begin{pmatrix} \mathbf{K}<em>{uu} &amp; \mathbf{K}</em>{u\alpha} \ \mathbf{K}<em>{\alpha u} &amp; \mathbf{K}</em>{\alpha\alpha} \end{pmatrix}
+\begin{pmatrix} \Delta\mathbf{u} \ \Delta\boldsymbol{\alpha} \end{pmatrix}
+= -\begin{pmatrix} \mathbf{f}<em>u \ \mathbf{f}</em>\alpha \end{pmatrix}.
+$$</p>
+<p>Condensing out $\Delta\boldsymbol{\alpha}$:</p>
+<p>$$
+\Delta\boldsymbol{\alpha} = -\mathbf{K}<em>{\alpha\alpha}^{-1}!\left(\mathbf{f}</em>\alpha + \mathbf{K}_{\alpha u}\,\Delta\mathbf{u}\right),
+$$</p>
+<p>$$
+\tilde{\mathbf{K}}<em>{uu} = \mathbf{K}</em>{uu} - \mathbf{K}<em>{u\alpha}\,\mathbf{K}</em>{\alpha\alpha}^{-1}\,\mathbf{K}_{\alpha u}.
+$$</p>
+<p>The condensed stiffness $\tilde{\mathbf{K}}<em>{uu}$ and residual $\tilde{\mathbf{f}}_u = \mathbf{f}_u - \mathbf{K}</em>{u\alpha}\,\mathbf{K}<em>{\alpha\alpha}^{-1}\,\mathbf{f}</em>\alpha$ are assembled into the global system. The enhanced DOFs $\boldsymbol{\alpha}$ are updated locally via a <code>jax.lax.while_loop</code> Newton iteration (maximum 30 iterations, relative tolerance $10^{-10}$) and stored as element-level state between global Newton steps.</p>
+<hr />
+<h2 id="13-f-bar-patch-method-internal">13. F-bar Patch Method (<code>[internal]</code>)<a class="headerlink" href="#13-f-bar-patch-method-internal" title="Permanent link">&para;</a></h2>
+<h3 id="131-motivation">13.1 Motivation<a class="headerlink" href="#131-motivation" title="Permanent link">&para;</a></h3>
+<p>The standard F-bar method (Section 4.3) averages the Jacobian over a single element. For simplex elements (TRI3, TET4) with only one quadrature point, the element-average equals the point value and no averaging occurs — the method degenerates. The F-bar patch method (de Souza Neto et al. 1996) extends the averaging domain to a <em>patch</em> of elements sharing a common edge (2D) or face (3D), restoring the anti-locking effect for simplex meshes.</p>
+<h3 id="132-patch-construction">13.2 Patch Construction<a class="headerlink" href="#132-patch-construction" title="Permanent link">&para;</a></h3>
+<p><strong>2D (TRI3):</strong> Interior edges are identified. Each interior edge is shared by exactly two elements; these two elements form a patch of size 2. Boundary elements that are not part of any interior-edge pair are adopted into the nearest available patch.</p>
+<p><strong>3D (TET4):</strong> Interior faces are identified. Each interior face is shared by exactly two elements; these form a size-2 patch. Boundary elements are adopted similarly.</p>
+<p>The patch construction is performed once at problem setup using a greedy matching algorithm. The result is a mapping <code>patch_id[e]</code> that assigns each element to a patch, and <code>patch_elements[p]</code> that lists the elements in patch $p$.</p>
+<h3 id="133-patch-average-jacobian">13.3 Patch-Average Jacobian<a class="headerlink" href="#133-patch-average-jacobian" title="Permanent link">&para;</a></h3>
+<p>For patch $p$ containing elements ${e_1, e_2, \ldots}$, the patch-average Jacobian is</p>
+<p>$$
+\bar{J}<em>p = \frac{\displaystyle\sum</em>{e \in p}\sum_{q} J_{e,q}\,\text{JxW}<em>{e,q}}{\displaystyle\sum</em>{e \in p}\sum_{q} \text{JxW}_{e,q}} = \frac{V_p^\text{def}}{V_p},
+$$</p>
+<p>where $V_p = \sum_{e \in p} V_e$ is the reference volume of the patch and $V_p^\text{def}$ is the deformed volume. The modified deformation gradient for element $e$ at quadrature point $q$ is</p>
+<p>$$
+\bar{\mathbf{F}}<em>{e,q} = \left(\frac{\bar{J}_p}{J</em>{e,q}}\right)^{1/n} \mathbf{F}_{e,q},
+$$</p>
+<p>with $n = 2$ for plane strain and $n = 3$ for 3D and axisymmetric problems.</p>
+<h3 id="134-consistent-tangent">13.4 Consistent Tangent<a class="headerlink" href="#134-consistent-tangent" title="Permanent link">&para;</a></h3>
+<p>The patch coupling introduces off-diagonal stiffness blocks between elements in the same patch. The consistent tangent is assembled in two parts:</p>
+<p><strong>Local (diagonal) block</strong> — the autodiff tangent of the modified residual with respect to the element's own DOFs. The patch-average Jacobian is split as</p>
+<p>$$
+\bar{J}<em>p = c_1^{(e)}\, J</em>{e,q} + \underbrace{c_2^{(e)}}_{\text{stop_gradient}},
+$$</p>
+<p>where $c_1^{(e)} = \text{JxW}<em>{e,q} / V_p$ is the weight of element $e$'s contribution to $\bar{J}_p$. JAX's autodiff sees $\partial \bar{J}_p / \partial J</em>{e,q} = c_1^{(e)}$, giving the correct local volumetric stiffness.</p>
+<p><strong>Coupling (off-diagonal) block</strong> — the rank-1 correction (eq. 15 of de Souza Neto et al. 1996):</p>
+<p>$$
+\mathbf{K}_{es} = \mathbf{g}_e \otimes \mathbf{h}_s, \quad e \neq s \in p,
+$$</p>
+<p>where</p>
+<p>$$
+\mathbf{g}_e = \frac{\partial \mathbf{R}_e}{\partial \bar{J}_p} \quad \text{(JAX jacfwd w.r.t. scalar } \bar{J}_p\text{)},
+$$</p>
+<p>$$
+\mathbf{h}<em>s = c_1^{(s)}\, J</em>{s,q}\, \left(\nabla N_a \cdot \mathbf{F}<em>s^{-1}\right)</em>{a,i}.
+$$</p>
+<p>The coupling blocks are assembled as sparse COO entries and added to the global stiffness matrix after the standard volume assembly.</p>
+<hr />
+<h2 id="14-constitutive-models-materials">14. Constitutive Models (<code>materials/</code>)<a class="headerlink" href="#14-constitutive-models-materials" title="Permanent link">&para;</a></h2>
+<p>All constitutive models implement one of two interfaces defined in <code>[internal]</code>:</p>
+<ul>
+<li><strong><code>UserPotential</code></strong> — path-independent materials expressible as a scalar strain-energy density $\Psi$. The user implements <code>upot(x) -&gt; scalar</code>; stress and tangent are derived automatically via <code>jax.grad</code> and <code>jax.jvp</code>.</li>
+<li><strong><code>UserMaterial</code></strong> — path-dependent materials (plasticity, viscoelasticity, crystal plasticity). The user implements <code>umat(F_or_eps, state: dict, dt) -&gt; (stress, new_state)</code> and declares <code>state_fields</code> specifying the names and shapes of internal variables. The framework handles packing/unpacking of the flat state array.</li>
+</ul>
+<h3 id="141-elastic-potentials-userpotential">14.1 Elastic Potentials (<code>UserPotential</code>)<a class="headerlink" href="#141-elastic-potentials-userpotential" title="Permanent link">&para;</a></h3>
+<h4 id="1411-isotropic-linear-elasticity-upot_linearelasticity">14.1.1 Isotropic Linear Elasticity (<code>UPOT_LinearElasticity</code>)<a class="headerlink" href="#1411-isotropic-linear-elasticity-upot_linearelasticity" title="Permanent link">&para;</a></h4>
+<p>Strain-energy density:</p>
+<p>$$
+\Psi(\boldsymbol{\varepsilon}) = \frac{\lambda}{2}\left[\text{tr}(\boldsymbol{\varepsilon})\right]^2 + \mu\,|\boldsymbol{\varepsilon}|^2,
+$$</p>
+<p>with Lamé constants $\lambda = E\nu/[(1+\nu)(1-2\nu)]$ and $\mu = E/[2(1+\nu)]$. The Cauchy stress is</p>
+<p>$$
+\boldsymbol{\sigma} = \lambda\,\text{tr}(\boldsymbol{\varepsilon})\,\mathbf{I} + 2\mu\,\boldsymbol{\varepsilon}.
+$$</p>
+<p><strong>Parameters:</strong> Young's modulus $E$, Poisson's ratio $\nu$.</p>
+<h4 id="1412-compressible-neo-hookean-upot_neohookean">14.1.2 Compressible Neo-Hookean (<code>UPOT_NeoHookean</code>)<a class="headerlink" href="#1412-compressible-neo-hookean-upot_neohookean" title="Permanent link">&para;</a></h4>
+<p>Simo–Hesch decoupled form:</p>
+<p>$$
+\Psi(\mathbf{F}) = \underbrace{\frac{\mu}{2}!\left(J^{-2/3} I_1 - 3\right)}<em>{\text{isochoric}} + \underbrace{\frac{\kappa}{2}!\left[\tfrac{1}{2}(J^2 - 1) - \ln J\right]}</em>{\text{volumetric}},
+$$</p>
+<p>where $I_1 = \text{tr}(\mathbf{F}^T\mathbf{F})$, $J = \det\mathbf{F}$, $\mu = E/[2(1+\nu)]$, $\kappa = E/[3(1-2\nu)]$.</p>
+<p><strong>Parameters:</strong> $E$, $\nu$.</p>
+<h4 id="1413-mooneyrivlin-upot_mooneyrivlin">14.1.3 Mooney–Rivlin (<code>UPOT_MooneyRivlin</code>)<a class="headerlink" href="#1413-mooneyrivlin-upot_mooneyrivlin" title="Permanent link">&para;</a></h4>
+<p>$$
+\Psi = \frac{c_1}{2}(\bar{I}_1 - 3) + \frac{c_2}{2}(\bar{I}_2 - 3) + \kappa\, U(J),
+$$</p>
+<p>with isochoric invariants $\bar{I}_1 = J^{-2/3} I_1$, $\bar{I}_2 = J^{-4/3} I_2$, and volumetric penalty $U(J) = \beta^{-2}(J^\beta - \beta\ln J - 1)$ (default $\beta = 2$).</p>
+<p><strong>Parameters:</strong> $c_1$, $c_2$, $\kappa$, $\beta$.</p>
+<h4 id="1414-gentmooneyrivlin-upot_gentmooneyrivlin">14.1.4 Gent–Mooney–Rivlin (<code>UPOT_GentMooneyRivlin</code>)<a class="headerlink" href="#1414-gentmooneyrivlin-upot_gentmooneyrivlin" title="Permanent link">&para;</a></h4>
+<p>Extends Mooney–Rivlin with a Gent-type extensibility limit $J_m$ on the isochoric first invariant:</p>
+<p>$$
+\Psi = -\frac{c_1}{2} J_m \ln!\left(1 - \frac{\bar{I}_1 - 3}{J_m}\right) + \frac{c_2}{2}(\bar{I}_2 - 3) + \kappa\, U(J).
+$$</p>
+<p><strong>Parameters:</strong> $c_1$, $c_2$, $J_m$, $\kappa$, $\beta$.</p>
+<h4 id="1415-ogden-upot_ogden">14.1.5 Ogden (<code>UPOT_Ogden</code>)<a class="headerlink" href="#1415-ogden-upot_ogden" title="Permanent link">&para;</a></h4>
+<p>$$
+\Psi = \sum_{i=1}^{N} \frac{\mu_i}{\alpha_i}!\left(\bar{\lambda}_1^{\alpha_i} + \bar{\lambda}_2^{\alpha_i} + \bar{\lambda}_3^{\alpha_i} - 3\right) + \kappa\, U(J),
+$$</p>
+<p>where $\bar{\lambda}_k = J^{-1/3}\lambda_k$ are the isochoric principal stretches obtained from the eigenvalues of $\mathbf{F}^T\mathbf{F}$.</p>
+<p><strong>Parameters:</strong> arrays $\boldsymbol{\mu}$, $\boldsymbol{\alpha}$; bulk modulus $\kappa$; exponent $\beta$.</p>
+<h4 id="1416-st-venantkirchhoff-upot_stvenantkirchhoff">14.1.6 St. Venant–Kirchhoff (<code>UPOT_StVenantKirchhoff</code>)<a class="headerlink" href="#1416-st-venantkirchhoff-upot_stvenantkirchhoff" title="Permanent link">&para;</a></h4>
+<p>$$
+\Psi(\mathbf{E}) = \frac{\lambda}{2}\left[\text{tr}(\mathbf{E})\right]^2 + \mu\,|\mathbf{E}|^2, \qquad \mathbf{E} = \tfrac{1}{2}(\mathbf{F}^T\mathbf{F} - \mathbf{I}).
+$$</p>
+<p><strong>Parameters:</strong> $E$, $\nu$.</p>
+<h3 id="142-small-strain-plasticity-usermaterial">14.2 Small-Strain Plasticity (<code>UserMaterial</code>)<a class="headerlink" href="#142-small-strain-plasticity-usermaterial" title="Permanent link">&para;</a></h3>
+<h4 id="1421-j2-plasticity-return-mapping-umat_j2smallstrain">14.2.1 J2 Plasticity — Return Mapping (<code>UMAT_J2SmallStrain</code>)<a class="headerlink" href="#1421-j2-plasticity-return-mapping-umat_j2smallstrain" title="Permanent link">&para;</a></h4>
+<p>Implements the radial-return algorithm of Simo &amp; Hughes (1998) BOX 3.2 for isotropic/kinematic hardening von Mises plasticity.</p>
+<p><strong>Yield function:</strong></p>
+<p>$$
+f(\boldsymbol{\xi}, \alpha) = |\boldsymbol{\xi}| - \sqrt{\tfrac{2}{3}}\, K(\alpha) \leq 0,
+$$</p>
+<p>where $\boldsymbol{\xi} = \mathbf{s} - \boldsymbol{\beta}$ is the shifted deviatoric stress, $\mathbf{s}$ is the deviatoric Cauchy stress, $\boldsymbol{\beta}$ is the back stress, and $K(\alpha)$ is the isotropic yield stress as a function of the accumulated equivalent plastic strain $\alpha$.</p>
+<p><strong>Trial elastic state:</strong></p>
+<p>$$
+\mathbf{s}^\text{tr} = 2\mu!\left(\mathbf{e}_{n+1} - \mathbf{e}^p_n\right), \qquad
+\boldsymbol{\xi}^\text{tr} = \mathbf{s}^\text{tr} - \boldsymbol{\beta}_n, \qquad
+f^\text{tr} = |\boldsymbol{\xi}^\text{tr}| - \sqrt{\tfrac{2}{3}}\, K(\alpha_n).
+$$</p>
+<p>If $f^\text{tr} \leq 0$: elastic step, no update.</p>
+<p><strong>Plastic step</strong> — fixed flow direction $\hat{\mathbf{n}} = \boldsymbol{\xi}^\text{tr}/|\boldsymbol{\xi}^\text{tr}|$, scalar consistency equation:</p>
+<p>$$
+g(\Delta\gamma) = |\boldsymbol{\xi}^\text{tr}| - 2\mu\Delta\gamma - \sqrt{\tfrac{2}{3}}!\left[H(\alpha_{n+1}) - H(\alpha_n)\right] - \sqrt{\tfrac{2}{3}}\, K(\alpha_{n+1}) = 0,
+$$</p>
+<p>where $\alpha_{n+1} = \alpha_n + \sqrt{2/3}\,\Delta\gamma$ and $H(\alpha)$ is the kinematic hardening potential. This scalar equation is solved via <code>jax.lax.custom_root</code> with IFT tangent.</p>
+<p><strong>State update:</strong></p>
+<p>$$
+\mathbf{e}^p_{n+1} = \mathbf{e}^p_n + \Delta\gamma\,\hat{\mathbf{n}}, \quad
+\boldsymbol{\beta}<em>{n+1} = \boldsymbol{\beta}_n + \sqrt{\tfrac{2}{3}}!\left[H(\alpha</em>{n+1}) - H(\alpha_n)\right]\hat{\mathbf{n}}, \quad
+\boldsymbol{\sigma}<em>{n+1} = \kappa\,\text{tr}(\boldsymbol{\varepsilon}</em>{n+1})\,\mathbf{I} + \mathbf{s}^\text{tr} - 2\mu\Delta\gamma\,\hat{\mathbf{n}}.
+$$</p>
+<p><strong>State fields:</strong> <code>eps_p</code> (deviatoric plastic strain), <code>alpha</code> (accumulated equivalent plastic strain), <code>beta</code> (back stress), <code>sigma_zz</code> (out-of-plane stress, plane-strain only).</p>
+<p><strong>Hardening laws</strong> (callable objects $\alpha \mapsto K(\alpha)$):</p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Formula</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>LinearIsotropicHardening</code></td>
+<td>$K = \sigma_0 + H\alpha$</td>
+</tr>
+<tr>
+<td><code>VoceHardening</code></td>
+<td>$K = \sigma_0 + (\sigma_u - \sigma_0)(1 - e^{-b\alpha})$</td>
+</tr>
+<tr>
+<td><code>NonlinearIsotropicHardening</code></td>
+<td>$K = \sigma_Y + K_\infty\alpha + (K_\infty - K_0)(1 - e^{-\delta\alpha})$</td>
+</tr>
+<tr>
+<td><code>MixedHardening</code></td>
+<td>$K = \beta_\text{mix}\,h(\alpha)$, $H' = (1-\beta_\text{mix})\,h'(\alpha)$, $h = K_\infty - (K_\infty - K_0)e^{-\delta\alpha} + \bar{H}'\alpha$</td>
+</tr>
+</tbody>
+</table>
+<h4 id="1422-viscoplastic-armstrongfrederick-umat_armstrongfrederick">14.2.2 Viscoplastic Armstrong–Frederick (<code>UMAT_ArmstrongFrederick</code>)<a class="headerlink" href="#1422-viscoplastic-armstrongfrederick-umat_armstrongfrederick" title="Permanent link">&para;</a></h4>
+<p>Combines Norton power-law viscous flow with Voce isotropic hardening and two Armstrong–Frederick nonlinear kinematic backstress tensors.</p>
+<p><strong>Viscoplastic flow rule:</strong></p>
+<p>$$
+\dot{p} = \left\langle \frac{f - \sigma_Y}{K_\text{visc}} \right\rangle_+^m,
+$$</p>
+<p>where $f = |\boldsymbol{\xi}|$ is the effective stress, $\sigma_Y(p)$ is the isotropic yield stress, and $K_\text{visc}$, $m$ are the Norton viscosity and exponent.</p>
+<p><strong>Armstrong–Frederick kinematic hardening</strong> (two backstress tensors $\mathbf{X}_1$, $\mathbf{X}_2$):</p>
+<p>$$
+\dot{\mathbf{X}}_k = \tfrac{2}{3} C_k\,\dot{\boldsymbol{\varepsilon}}^p - \gamma_k\,\mathbf{X}_k\,\dot{p}, \quad k = 1, 2.
+$$</p>
+<p>The implicit backward-Euler update is solved by a local Newton iteration (20 steps via <code>jax.lax.scan</code>).</p>
+<p><strong>State fields:</strong> <code>eps_p</code>, <code>alpha</code>, <code>X1</code>, <code>X2</code>.</p>
+<h3 id="143-finite-strain-plasticity">14.3 Finite-Strain Plasticity<a class="headerlink" href="#143-finite-strain-plasticity" title="Permanent link">&para;</a></h3>
+<h4 id="1431-multiplicative-mathbffemathbffp-j2-plasticity-umat_fefpj2plasticity">14.3.1 Multiplicative $\mathbf{F}^e\mathbf{F}^p$ J2 Plasticity (<code>UMAT_FeFpJ2Plasticity</code>)<a class="headerlink" href="#1431-multiplicative-mathbffemathbffp-j2-plasticity-umat_fefpj2plasticity" title="Permanent link">&para;</a></h4>
+<p>Implements the multiplicative decomposition $\mathbf{F} = \mathbf{F}^e\mathbf{F}^p$ with the return-mapping algorithm of Simo &amp; Hughes (1998) BOX 9.1.</p>
+<p><strong>Relative deformation gradient:</strong></p>
+<p>$$
+\mathbf{f} = \mathbf{F}_{n+1}\mathbf{F}_n^{-1}, \qquad \bar{\mathbf{f}} = (\det\mathbf{f})^{-1/3}\mathbf{f}.
+$$</p>
+<p><strong>Trial elastic left Cauchy–Green tensor:</strong></p>
+<p>$$
+\bar{\mathbf{b}}^e_\text{tr} = \bar{\mathbf{f}}\,\bar{\mathbf{b}}^e_n\,\bar{\mathbf{f}}^T.
+$$</p>
+<p><strong>Trial deviatoric Kirchhoff stress:</strong></p>
+<p>$$
+\mathbf{s}^\text{tr} = \mu\,\text{dev}[\bar{\mathbf{b}}^e_\text{tr}], \qquad f^\text{tr} = |\mathbf{s}^\text{tr}| - \sqrt{\tfrac{2}{3}}\,k(\alpha_n).
+$$</p>
+<p><strong>Return mapping</strong> (if $f^\text{tr} &gt; 0$):</p>
+<p>$$
+\bar{I}^e = \tfrac{1}{3}\text{tr}[\bar{\mathbf{b}}^e_\text{tr}], \quad \bar{\mu} = \mu\bar{I}^e,
+$$</p>
+<p>$$
+\hat{f}(\Delta\gamma) = |\mathbf{s}^\text{tr}| - \sqrt{\tfrac{2}{3}}\,k!\left(\alpha_n + \sqrt{\tfrac{2}{3}}\Delta\gamma\right) - 2\bar{\mu}\Delta\gamma = 0.
+$$</p>
+<p><strong>Kirchhoff and PK1 stresses:</strong></p>
+<p>$$
+\boldsymbol{\tau} = \frac{\kappa}{2}(J^2 - 1)\,\mathbf{I} + \mathbf{s}<em>{n+1}, \qquad
+\mathbf{P} = \boldsymbol{\tau}\,\mathbf{F}</em>{n+1}^{-T}.
+$$</p>
+<p><strong>State fields:</strong> <code>be_bar</code> (isochoric elastic left Cauchy–Green tensor), <code>p</code> (accumulated equivalent plastic strain), <code>F_old</code> (deformation gradient at start of step).</p>
+<h3 id="144-viscoelasticity">14.4 Viscoelasticity<a class="headerlink" href="#144-viscoelasticity" title="Permanent link">&para;</a></h3>
+<h4 id="1441-standard-linear-solid-umat_standardlinearsolid">14.4.1 Standard Linear Solid (<code>UMAT_StandardLinearSolid</code>)<a class="headerlink" href="#1441-standard-linear-solid-umat_standardlinearsolid" title="Permanent link">&para;</a></h4>
+<p>Zener model: an equilibrium elastic branch (stiffness $E_\infty$, $\nu_\infty$) in parallel with a Maxwell branch (spring $E_1$, $\nu_1$; dashpot viscosity $\eta$). The relaxation time is $\tau = \eta/E_1$.</p>
+<p><strong>Exact exponential integrator</strong> (Simo &amp; Hughes 1998):</p>
+<p>$$
+\boldsymbol{\varepsilon}^v_{n+1} = \boldsymbol{\varepsilon}_{n+1} + e^{-\Delta t/\tau}!\left(\boldsymbol{\varepsilon}^v_n - \boldsymbol{\varepsilon}_n\right) - e^{-\Delta t/(2\tau)}\Delta\boldsymbol{\varepsilon},
+$$</p>
+<p>$$
+\boldsymbol{\sigma} = \boldsymbol{\sigma}<em>\infty(\boldsymbol{\varepsilon}</em>{n+1}) + \boldsymbol{\sigma}<em>1!\left(\boldsymbol{\varepsilon}</em>{n+1} - \boldsymbol{\varepsilon}^v_{n+1}\right).
+$$</p>
+<p><strong>State fields:</strong> <code>epsv</code> (viscous strain), <code>eps_old</code> (total strain at start of step).</p>
+<h4 id="1442-generalized-maxwell-umat_generalizedmaxwell">14.4.2 Generalized Maxwell (<code>UMAT_GeneralizedMaxwell</code>)<a class="headerlink" href="#1442-generalized-maxwell-umat_generalizedmaxwell" title="Permanent link">&para;</a></h4>
+<p>Prony series with $N$ Maxwell branches, each with modulus $E_k$ and relaxation time $\tau_k$. The same exact exponential integrator is applied independently to each branch.</p>
+<p><strong>State fields:</strong> <code>epsv_k</code> for $k = 1, \ldots, N$ (viscous strain of each branch), <code>eps_old</code>.</p>
+<h3 id="145-crystal-plasticity-usermaterial-kinematics-deformation_gradient">14.5 Crystal Plasticity (<code>UserMaterial</code>, <code>kinematics = "deformation_gradient"</code>)<a class="headerlink" href="#145-crystal-plasticity-usermaterial-kinematics-deformation_gradient" title="Permanent link">&para;</a></h3>
+<p>All crystal plasticity models use the multiplicative decomposition $\mathbf{F} = \mathbf{F}^e\mathbf{F}^p$ and an implicit S-based (2nd Piola–Kirchhoff) Newton solver with half-step backtracking line search, implemented via <code>jax.lax.while_loop</code> and wrapped with <code>jax.custom_jvp</code> for the implicit-function-theorem consistent tangent.</p>
+<h4 id="1451-fcc-crystal-plasticity-umat_fcccrystalplasticity">14.5.1 FCC Crystal Plasticity (<code>UMAT_FCCCrystalPlasticity</code>)<a class="headerlink" href="#1451-fcc-crystal-plasticity-umat_fcccrystalplasticity" title="Permanent link">&para;</a></h4>
+<p><strong>Reference:</strong> Kalidindi, Bronkhorst &amp; Anand (1992).</p>
+<p><strong>Slip systems:</strong> 12 × ${111}\langle110\rangle$.</p>
+<p><strong>Elastic law:</strong> Cubic anisotropic stiffness $\mathbf{C}$ (constants $C_{11}$, $C_{12}$, $C_{44}$), rotated to the crystal frame:</p>
+<p>$$
+\mathbf{S} = \mathbf{C}_\text{rot} : \mathbf{E}^e, \qquad \mathbf{E}^e = \tfrac{1}{2}(\mathbf{F}^{eT}\mathbf{F}^e - \mathbf{I}).
+$$</p>
+<p><strong>Resolved shear stress:</strong></p>
+<p>$$
+\tau^\alpha = \mathbf{S} : \mathbf{m}^\alpha, \qquad \mathbf{m}^\alpha = \text{sym}(\mathbf{s}^\alpha \otimes \mathbf{n}^\alpha),
+$$</p>
+<p>where $\mathbf{s}^\alpha$ and $\mathbf{n}^\alpha$ are the slip direction and slip-plane normal of system $\alpha$.</p>
+<p><strong>Slip rate (power law):</strong></p>
+<p>$$
+\dot{\gamma}^\alpha = a_0\,\left|\frac{\tau^\alpha}{g^\alpha}\right|^{1/m}!\text{sign}(\tau^\alpha).
+$$</p>
+<p><strong>Kalidindi hardening:</strong></p>
+<p>$$
+\Delta g^\alpha = h\,\sum_\beta Q^{\alpha\beta}\,|\Delta\gamma^\beta|\,\left|1 - \frac{g^\beta}{g_\text{sat}}\right|^{g_a}!\text{sign}!\left(1 - \frac{g^\beta}{g_\text{sat}}\right),
+$$</p>
+<p>where $Q^{\alpha\beta}$ is the latent-hardening matrix (self-hardening $q = 1$, latent-hardening $q = r$ for co-planar systems, $q = 1$ otherwise).</p>
+<p><strong>Plastic velocity gradient:</strong></p>
+<p>$$
+\mathbf{L}^p = \sum_\alpha \dot{\gamma}^\alpha\,\mathbf{s}^\alpha \otimes \mathbf{n}^\alpha, \qquad
+\mathbf{F}^p_{n+1} = \left(\mathbf{I} + \Delta t\,\mathbf{L}^p\right)\mathbf{F}^p_n.
+$$</p>
+<p><strong>State fields:</strong> <code>Fp_inv</code> ($\mathbf{F}^{p-1}$, tensor), <code>slip_resistance</code> ($g^\alpha$, array of 12), <code>slip</code> (accumulated $\gamma^\alpha$, array of 12), <code>rot_mat</code> (crystal orientation, tensor). Total: 42 scalars per quadrature point.</p>
+<p><strong>Parameters:</strong> $C_{11}$, $C_{12}$, $C_{44}$; $g_0$ (initial slip resistance); $h$ (hardening modulus); $g_\text{sat}$ (saturation resistance); $g_a$ (hardening exponent); $a_0$ (reference slip rate); $m$ (rate sensitivity).</p>
+<h4 id="1452-bcc-crystal-plasticity-umat_bcccrystalplasticity">14.5.2 BCC Crystal Plasticity (<code>UMAT_BCCCrystalPlasticity</code>)<a class="headerlink" href="#1452-bcc-crystal-plasticity-umat_bcccrystalplasticity" title="Permanent link">&para;</a></h4>
+<p>Identical algorithm to FCC. Differences:</p>
+<ul>
+<li><strong>Slip systems:</strong> 12 × ${110}\langle111\rangle$.</li>
+<li><strong>Default parameters:</strong> Tantalum ($C_{11} = 267\,\text{GPa}$, $C_{12} = 161\,\text{GPa}$, $C_{44} = 82.5\,\text{GPa}$; $g_0 = 67.5\,\text{MPa}$).</li>
+</ul>
+<p><strong>State fields:</strong> same layout as FCC (42 scalars).</p>
+<h4 id="1453-hcp-crystal-plasticity-umat_hcpcrystalplasticity">14.5.3 HCP Crystal Plasticity (<code>UMAT_HCPCrystalPlasticity</code>)<a class="headerlink" href="#1453-hcp-crystal-plasticity-umat_hcpcrystalplasticity" title="Permanent link">&para;</a></h4>
+<p><strong>Slip systems:</strong> 24 total — basal $\langle a\rangle$ (3), prismatic $\langle a\rangle$ (3), pyramidal-1st $\langle a\rangle$ (6), pyramidal-1st $\langle c+a\rangle$ (12).</p>
+<p><strong>Elastic law:</strong> Transversely isotropic stiffness (constants $C_{11}$, $C_{12}$, $C_{13}$, $C_{33}$, $C_{44}$; $c$-axis along $z$). Default: Zirconium.</p>
+<p><strong>Thermally activated slip rate:</strong></p>
+<p>$$
+\dot{\gamma}^\alpha = \rho_m v_0 b^2 \exp!\left(-\frac{\Delta F}{k_B T}\right) \sinh!\left(\frac{\langle|\tau^\alpha| - \tau_c^\alpha\rangle_+ \Delta V}{k_B T}\right) \text{sign}(\tau^\alpha),
+$$</p>
+<p>where $\rho_m$ is the mobile dislocation density, $v_0$ the attempt frequency, $b$ the Burgers vector magnitude, $\Delta F$ the activation energy, $\Delta V$ the activation volume, and $T$ the temperature.</p>
+<p><strong>SSD evolution (per system $\alpha$):</strong></p>
+<p>$$
+\dot{\rho}^\alpha_\text{SSD} = \frac{1}{b}!\left(\frac{\sqrt{\rho^\alpha_\text{SSD}}}{K^\alpha} - 2 y_c^\alpha \rho^\alpha_\text{SSD}\right)|\dot{\gamma}^\alpha|,
+$$</p>
+<p>where $K^\alpha$ is the storage coefficient and $y_c^\alpha = y_\text{fac}\,b$ is the annihilation distance.</p>
+<p><strong>Taylor hardening:</strong></p>
+<p>$$
+\tau_c^\alpha = \tau_{c0}^\alpha + \lambda_T G b \sqrt{\sum_\beta A^{\alpha\beta} \rho^\beta_\text{SSD}},
+$$</p>
+<p>where $A^{\alpha\beta}$ is the dislocation interaction matrix (diagonal $A_\text{self}$, off-diagonal $A_\text{latent}$).</p>
+<p><strong>State fields:</strong> <code>Fp_inv</code> (tensor), <code>slip_resistance</code> (array of 24), <code>slip</code> (array of 24), <code>rot_mat</code> (tensor), <code>rho_SSD</code> (array of 24). Total: 90 scalars per quadrature point.</p>
+<h4 id="1454-hcp-gnd-umat_hcpcrystalplasticity_gnd">14.5.4 HCP + GND (<code>UMAT_HCPCrystalPlasticity_GND</code>)<a class="headerlink" href="#1454-hcp-gnd-umat_hcpcrystalplasticity_gnd" title="Permanent link">&para;</a></h4>
+<p>Extends <code>UMAT_HCPCrystalPlasticity</code> with geometrically necessary dislocation (GND) density following Arsenlis &amp; Parks (1999).</p>
+<p><strong>Nye tensor:</strong></p>
+<p>$$
+\boldsymbol{\Lambda} = \text{curl}(\mathbf{F}^p) = -\nabla \times \mathbf{F}^{p-1},
+$$</p>
+<p>computed from the spatial gradient of $\mathbf{F}^{p-1}$ via an L2 node-projection / interpolation procedure at the mesh level.</p>
+<p><strong>Screw and edge decomposition</strong> (per slip system $\alpha$):</p>
+<p>$$
+\boldsymbol{\Lambda} = \sum_\alpha \left(\rho^\alpha_\text{screw}\,\mathbf{b}^\alpha \otimes \mathbf{s}^\alpha + \rho^\alpha_\text{edge}\,\mathbf{b}^\alpha \otimes \mathbf{t}^\alpha\right), \quad \mathbf{t}^\alpha = \mathbf{s}^\alpha \times \mathbf{n}^\alpha,
+$$</p>
+<p>solved as a least-squares system $\mathbf{A}\,\boldsymbol{\rho}<em>\text{GND} = \text{vec}(\boldsymbol{\Lambda})$ with $\mathbf{A} \in \mathbb{R}^{9 \times 2N</em>\text{slip}}$.</p>
+<p><strong>Modified Taylor hardening:</strong></p>
+<p>$$
+\tau_c^\alpha = \tau_{c0}^\alpha + \lambda_T G b \sqrt{\sum_\beta A^{\alpha\beta}!\left(\rho^\beta_\text{SSD} + \rho^\beta_\text{GND}\right)}.
+$$</p>
+<p>The GND update is a mesh-level operation performed via a <code>post_step</code> hook registered on the <code>Problem</code> object after each converged Newton step. The hook reads $\mathbf{F}^{p-1}$ from the state array, computes the Nye tensor via <code>jax.ops.segment_sum</code>-based node projection, and writes the updated $\rho_\text{GND}$ back into the state.</p>
+<p><strong>State fields:</strong> same as HCP plus <code>rho_GND</code> (array of 24). Total: 114 scalars per quadrature point.</p>
+<h3 id="146-phase-field-fracture-coupling-internal">14.6 Phase-Field Fracture Coupling (<code>[internal]</code>)<a class="headerlink" href="#146-phase-field-fracture-coupling-internal" title="Permanent link">&para;</a></h3>
+<p>Phase-field fracture models couple the mechanics problem to a scalar damage field $d \in [0,1]$ through a degradation function $g(d)$.</p>
+<p><strong>Degradation function:</strong></p>
+<p>$$
+g(d) = (1 - d)^2 + \eta, \quad \eta = 10^{-10} \text{ (residual stiffness)}.
+$$</p>
+<p><strong>Strain energy split</strong> — the elastic strain energy is decomposed into a tensile (crack-driving) part $\mathcal{H}^+$ and a compressive (crack-resisting) part $\mathcal{H}^-$:</p>
+<p>$$
+\Psi = g(d)\,\mathcal{H}^+ + \mathcal{H}^-.
+$$</p>
+<p>Two splits are implemented:</p>
+<p><strong>Spectral split (Miehe et al. 2010):</strong></p>
+<p>$$
+\mathcal{H}^\pm = \frac{\lambda}{2}\langle\text{tr}\,\boldsymbol{\varepsilon}\rangle_\pm^2 + \mu\,|\boldsymbol{\varepsilon}^\pm|^2,
+$$</p>
+<p>where $\boldsymbol{\varepsilon}^\pm = \sum_\alpha \langle\varepsilon_\alpha\rangle_\pm\,\mathbf{n}<em>\alpha \otimes \mathbf{n}</em>\alpha$ are the positive/negative spectral projections of the strain tensor. The spectral projection uses a custom JVP (Miehe 2001) for correct gradients at repeated eigenvalues.</p>
+<p><strong>Volumetric–deviatoric split (Amor et al. 2009):</strong></p>
+<p>$$
+\mathcal{H}^+ = \frac{\kappa}{2}\langle\text{tr}\,\boldsymbol{\varepsilon}\rangle_+^2 + \mu\,|\text{dev}\,\boldsymbol{\varepsilon}|^2, \qquad
+\mathcal{H}^- = \frac{\kappa}{2}\langle\text{tr}\,\boldsymbol{\varepsilon}\rangle_-^2.
+$$</p>
+<p><strong>Phase-field energy models</strong> (<code>PhasefieldEnergyConfig</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>$c_w$</th>
+<th>Crack surface density</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AT2</td>
+<td>2</td>
+<td>$\gamma(d,\nabla d) = \frac{1}{c_w}!\left(\frac{d^2}{l} + l</td>
+</tr>
+<tr>
+<td>AT1</td>
+<td>8/3</td>
+<td>$\gamma = \frac{1}{c_w}!\left(\frac{d}{l} + l</td>
+</tr>
+<tr>
+<td>Cohesive</td>
+<td>$\pi$</td>
+<td>$\gamma = \frac{1}{c_w}!\left(\frac{\alpha(d)}{l} + l</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="15-nonlinear-solvers-solvers">15. Nonlinear Solvers (<code>solvers/</code>)<a class="headerlink" href="#15-nonlinear-solvers-solvers" title="Permanent link">&para;</a></h2>
+<h3 id="151-newtonraphson-method-internal">15.1 Newton–Raphson Method (<code>[internal]</code>)<a class="headerlink" href="#151-newtonraphson-method-internal" title="Permanent link">&para;</a></h3>
+<p>The quasi-static equilibrium problem $\mathbf{R}(\mathbf{u}) = \mathbf{0}$ is solved by the Newton–Raphson iteration:</p>
+<p>$$
+\mathbf{K}(\mathbf{u}^k)\,\Delta\mathbf{u}^k = -\mathbf{R}(\mathbf{u}^k), \qquad \mathbf{u}^{k+1} = \mathbf{u}^k + s^k\,\Delta\mathbf{u}^k,
+$$</p>
+<p>where $\mathbf{K} = \partial\mathbf{R}/\partial\mathbf{u}$ is the consistent tangent stiffness and $s^k \in (0,1]$ is the step length determined by the line search.</p>
+<p><strong>Convergence criteria</strong> (both must be satisfied):</p>
+<p>$$
+|\mathbf{R}^k| \leq \varepsilon_\text{abs} \quad \text{and} \quad \frac{|\mathbf{R}^k|}{|\mathbf{R}^0|} \leq \varepsilon_\text{rel},
+$$</p>
+<p>with defaults $\varepsilon_\text{abs} = 10^{-5}$ and $\varepsilon_\text{rel} = 10^{-7}$. The maximum number of iterations is 100.</p>
+<h3 id="152-line-search-matthies-strang-1979">15.2 Line Search (Matthies &amp; Strang 1979)<a class="headerlink" href="#152-line-search-matthies-strang-1979" title="Permanent link">&para;</a></h3>
+<p>The line search finds a step length $s$ such that the directional derivative of the residual along the Newton direction $\mathbf{d} = \Delta\mathbf{u}$ is approximately zero:</p>
+<p>$$
+G(s) = \mathbf{d}^T \mathbf{R}(\mathbf{u} + s\,\mathbf{d}) \approx 0.
+$$</p>
+<p>Note that $G(0) = \mathbf{d}^T\mathbf{R}(\mathbf{u}) &lt; 0$ (descent direction) and the full Newton step $s = 1$ is accepted if $|G(1)| \leq s_\text{tol}\,|G(0)|$ (default $s_\text{tol} = 0.5$).</p>
+<p><strong>Algorithm:</strong></p>
+<ol>
+<li><strong>Bracketing:</strong> Starting from $s = 1$, double $s$ until $G(s)$ changes sign (maximum 16 doublings). This handles cases where the full Newton step overshoots.</li>
+<li><strong>Illinois algorithm</strong> (modified regula falsi): Given a bracket $[s_a, s_b]$ with $G(s_a) &lt; 0 &lt; G(s_b)$, iterate:
+$$
+s_{k+1} = s_a - G(s_a)\,\frac{s_b - s_a}{G(s_b) - G(s_a)},
+$$
+with the Illinois modification to prevent stagnation (maximum 10 iterations).</li>
+</ol>
+<h3 id="153-artificial-stabilization">15.3 Artificial Stabilization<a class="headerlink" href="#153-artificial-stabilization" title="Permanent link">&para;</a></h3>
+<p>For problems with near-singular tangents (e.g., large plastic flow, snap-through), an optional diagonal stabilization is added:</p>
+<p>$$
+\tilde{\mathbf{K}} = \mathbf{K} + \alpha_\text{stab}\,\text{diag}(\mathbf{K}),
+$$</p>
+<p>with default $\alpha_\text{stab} = 2 \times 10^{-4}$. A warning is issued if the stabilization energy exceeds 5% of the elastic strain energy.</p>
+<h3 id="154-arc-length-method-internal">15.4 Arc-Length Method (<code>[internal]</code>)<a class="headerlink" href="#154-arc-length-method-internal" title="Permanent link">&para;</a></h3>
+<p>The arc-length method (Crisfield 1981) extends Newton–Raphson to trace equilibrium paths through limit points and snap-through/snap-back behaviour by treating the load parameter $\lambda$ as an additional unknown.</p>
+<p><strong>Augmented system:</strong></p>
+<p>$$
+\mathbf{R}(\mathbf{u}, \lambda) = \mathbf{F}<em>\text{int}(\mathbf{u}) - \lambda\,\mathbf{F}</em>\text{ext} = \mathbf{0},
+$$</p>
+<p>$$
+c(\mathbf{u}, \lambda) = |\Delta\mathbf{u}|^2 + \psi^2\,\Delta\lambda^2\,|\mathbf{q}|^2 - \Delta l^2 = 0,
+$$</p>
+<p>where $\Delta l$ is the prescribed arc length, $\psi$ is a scaling parameter, and $\mathbf{q}$ is a reference load vector.</p>
+<p><strong>Linearisation</strong> at iteration $k$:</p>
+<p>$$
+\begin{pmatrix} \mathbf{K} &amp; -\mathbf{F}_\text{ext} \ 2\Delta\mathbf{u}^T &amp; 2\psi^2\Delta\lambda\,|\mathbf{q}|^2 \end{pmatrix}
+\begin{pmatrix} \delta\mathbf{u} \ \delta\lambda \end{pmatrix}
+= -\begin{pmatrix} \mathbf{R} \ c \end{pmatrix}.
+$$</p>
+<p>The increment $\delta\lambda$ is found by solving the quadratic equation arising from the arc-length constraint; the sign is chosen to maintain a positive dot product with the previous increment direction (Crisfield's criterion).</p>
+<p>Two variants are implemented:</p>
+<ul>
+<li><strong>Displacement-driven</strong> (<code>arc_length_solver_disp_driven</code>): $\mathbf{q} = \mathbf{u}_b$ (reference displacement).</li>
+<li><strong>Force-driven</strong> (<code>arc_length_solver_force_driven</code>): $\mathbf{q} = \mathbf{F}_\text{ext}$ (reference force).</li>
+</ul>
+<hr />
+<h2 id="16-linear-solvers-internal">16. Linear Solvers (<code>[internal]</code>)<a class="headerlink" href="#16-linear-solvers-internal" title="Permanent link">&para;</a></h2>
+<h3 id="161-overview">16.1 Overview<a class="headerlink" href="#161-overview" title="Permanent link">&para;</a></h3>
+<p>The global tangent stiffness matrix $\mathbf{K}$ is stored in CSR (Compressed Sparse Row) format. Several linear solver backends are supported, selectable via the <code>solver</code> argument of the Newton solver:</p>
+<table>
+<thead>
+<tr>
+<th>Backend</th>
+<th>Format</th>
+<th>Device</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>jax_gpu_solver</code></td>
+<td>BCOO</td>
+<td>GPU</td>
+<td>BiCGSTAB, diagonal preconditioner</td>
+</tr>
+<tr>
+<td><code>jax_solver</code></td>
+<td>BCOO</td>
+<td>CPU</td>
+<td>BiCGSTAB, diagonal preconditioner</td>
+</tr>
+<tr>
+<td><code>amgcl_solver</code></td>
+<td>CSR</td>
+<td>CPU/GPU</td>
+<td>Algebraic multigrid, Chebyshev smoother</td>
+</tr>
+<tr>
+<td><code>umfpack_solver</code></td>
+<td>CSR</td>
+<td>CPU</td>
+<td>Direct sparse LU (<code>scipy.sparse.linalg.spsolve</code>)</td>
+</tr>
+<tr>
+<td><code>petsc_solver</code></td>
+<td>CSR</td>
+<td>CPU</td>
+<td>PETSc KSP (BCGSL + ILU)</td>
+</tr>
+<tr>
+<td><code>cudss_solver</code></td>
+<td>CSR</td>
+<td>GPU</td>
+<td>NVIDIA cuDSS direct solver</td>
+</tr>
+<tr>
+<td><code>amgx_solver</code></td>
+<td>CSR</td>
+<td>GPU</td>
+<td>NVIDIA AmgX AMG</td>
+</tr>
+</tbody>
+</table>
+<h3 id="162-jax-native-iterative-solvers-internal">16.2 JAX-Native Iterative Solvers (<code>[internal]</code>)<a class="headerlink" href="#162-jax-native-iterative-solvers-internal" title="Permanent link">&para;</a></h3>
+<h4 id="1621-bicgstab">16.2.1 BiCGSTAB<a class="headerlink" href="#1621-bicgstab" title="Permanent link">&para;</a></h4>
+<p>The Biconjugate Gradient Stabilized method (van der Vorst 1992) solves non-symmetric systems $\mathbf{K}\mathbf{x} = \mathbf{b}$ without forming the transpose. The iteration is implemented via <code>jax.lax.while_loop</code> and is therefore fully JAX-traceable (compatible with JIT and <code>vmap</code>).</p>
+<p><strong>Convergence criterion:</strong></p>
+<p>$$
+|\mathbf{r}^k| \leq \varepsilon_\text{rel}\,|\mathbf{b}| + \varepsilon_\text{abs},
+$$</p>
+<p>with defaults $\varepsilon_\text{rel} = \varepsilon_\text{abs} = 10^{-10}$ and maximum 10,000 iterations.</p>
+<p>An optional diagonal preconditioner $\mathbf{M}^{-1} = \text{diag}(1/K_{ii})$ is applied to improve conditioning.</p>
+<h4 id="1622-conjugate-gradient-cg">16.2.2 Conjugate Gradient (CG)<a class="headerlink" href="#1622-conjugate-gradient-cg" title="Permanent link">&para;</a></h4>
+<p>For symmetric positive-definite systems (linear elasticity, phase-field Laplacian), the standard preconditioned CG method is available with the same convergence and preconditioner options as BiCGSTAB.</p>
+<h3 id="163-amgcl-algebraic-multigrid">16.3 AMGCL Algebraic Multigrid<a class="headerlink" href="#163-amgcl-algebraic-multigrid" title="Permanent link">&para;</a></h3>
+<p>The AMGCL library (Demidov 2019) provides GPU-accelerated algebraic multigrid (AMG) preconditioners. Recommended configurations based on empirical benchmarking on this library:</p>
+<table>
+<thead>
+<tr>
+<th>Problem type</th>
+<th>Smoother</th>
+<th>Krylov solver</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>J2/crystal plasticity</td>
+<td>Chebyshev (degree 2)</td>
+<td>FGMRES</td>
+</tr>
+<tr>
+<td>Linear elasticity</td>
+<td>Chebyshev (degree 2)</td>
+<td>CG</td>
+</tr>
+</tbody>
+</table>
+<p>AMG coarsening uses the classical Ruge–Stüben algorithm. ILU(0), SPAI-0, and block-size variants were found to be slower or less robust on typical finite-element matrices arising from this library and are not recommended.</p>
+<h3 id="164-solver-selection-guidelines">16.4 Solver Selection Guidelines<a class="headerlink" href="#164-solver-selection-guidelines" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Small problems</strong> ($&lt; 10^5$ DOFs): <code>Cudss</code> (direct, robust).</li>
+<li><strong>Large problems</strong> on GPU ($10^5$–$10^7$ DOFs): <code>amgcl_solver</code> with Chebyshev+FGMRES for plasticity, Chebyshev+CG for elasticity.</li>
+<li><strong>JAX-only environments</strong> (no C++ extensions): <code>jax_gpu_solver</code> or <code>jax_solver</code>.</li>
+</ul>
+<hr />
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ol>
+<li>de Souza Neto, E. A., Perić, D., Dutko, M., &amp; Owen, D. R. J. (1996). Design of simple low order finite elements for large strain analysis of nearly incompressible solids. <em>International Journal of Solids and Structures</em>, 33(20–22), 3277–3296.</li>
+<li>Hughes, T. J. R. (1980). Generalization of selective integration procedures to anisotropic and nonlinear media. <em>International Journal for Numerical Methods in Engineering</em>, 15(9), 1413–1418.</li>
+<li>Simo, J. C., &amp; Hughes, T. J. R. (1998). <em>Computational Inelasticity</em>. Springer, New York.</li>
+<li>Bonet, J., &amp; Wood, R. D. (2008). <em>Nonlinear Continuum Mechanics for Finite Element Analysis</em> (2nd ed.). Cambridge University Press.</li>
+<li>Wriggers, P. (2008). <em>Nonlinear Finite Element Methods</em>. Springer, Berlin.</li>
+<li>Simo, J. C., &amp; Rifai, M. S. (1990). A class of mixed assumed strain methods and the method of incompatible modes. <em>International Journal for Numerical Methods in Engineering</em>, 29(8), 1595–1638.</li>
+<li>Miehe, C., Hofacker, M., &amp; Welschinger, F. (2010). A phase field model for rate-independent crack propagation. <em>Computer Methods in Applied Mechanics and Engineering</em>, 199(45–48), 2765–2778.</li>
+<li>Amor, H., Marigo, J.-J., &amp; Maurini, C. (2009). Regularized formulation of the variational brittle fracture with unilateral contact. <em>Journal of the Mechanics and Physics of Solids</em>, 57(8), 1209–1228.</li>
+<li>Kalidindi, S. R., Bronkhorst, C. A., &amp; Anand, L. (1992). Crystallographic texture evolution in bulk deformation processing of FCC metals. <em>Journal of the Mechanics and Physics of Solids</em>, 40(3), 537–569.</li>
+<li>Arsenlis, A., &amp; Parks, D. M. (1999). Crystallographic aspects of geometrically-necessary and statistically-stored dislocation density. <em>Acta Materialia</em>, 47(5), 1597–1611.</li>
+<li>Matthies, H. G., &amp; Strang, G. (1979). The solution of nonlinear finite element equations. <em>International Journal for Numerical Methods in Engineering</em>, 14(11), 1613–1626.</li>
+<li>Crisfield, M. A. (1981). A fast incremental/iterative solution procedure that handles snap-through. <em>Computers &amp; Structures</em>, 13(1–3), 55–62.</li>
+<li>Flanagan, D. P., &amp; Belytschko, T. (1981). A uniform strain hexahedron and quadrilateral with orthogonal hourglass control. <em>International Journal for Numerical Methods in Engineering</em>, 17(5), 679–706.</li>
+<li>van der Vorst, H. A. (1992). Bi-CGSTAB: A fast and smoothly converging variant of Bi-CG for the solution of nonsymmetric linear systems. <em>SIAM Journal on Scientific and Statistical Computing</em>, 13(2), 631–644.</li>
+<li>Demidov, D. (2019). AMGCL: A C++ library for solution of large sparse linear systems. <em>Software X</em>, 10, 100285.</li>
+<li>Miehe, C. (2001). Algorithms for computation of stresses and elasticity moduli in terms of Seth–Hill's family of generalized strain tensors. <em>Communications in Numerical Methods in Engineering</em>, 17(5), 337–353.</li>
+</ol>
+<hr />
+<h2 id="appendix-explicit-dynamics-integrator-routing">Appendix: Explicit dynamics integrator routing<a class="headerlink" href="#appendix-explicit-dynamics-integrator-routing" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Integrator</th>
+<th>Backend</th>
+<th>Typical use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>auto</code></td>
+<td>registry pick</td>
+<td>Default; stateful J2/CP → <code>scan_stateful</code></td>
+</tr>
+<tr>
+<td><code>scan_energy</code></td>
+<td>L0 strain-energy gradient</td>
+<td>Linear elastic, hourglass</td>
+</tr>
+<tr>
+<td><code>scan_residual</code></td>
+<td>L1 <code>compute_residual</code> scan</td>
+<td>Stateless UPOT; MPC+PBC elastic waves</td>
+</tr>
+<tr>
+<td><code>scan_stateful</code></td>
+<td>L3 <code>(u,v,state)</code> scan</td>
+<td>J2/CP/GND, B-bar/F-bar/EAS, time-varying PBC</td>
+</tr>
+<tr>
+<td><code>python</code></td>
+<td>Python Verlet loop</td>
+<td>Debug, unsupported paths</td>
+</tr>
+</tbody>
+</table>
+<p>MPC/PBC: time-varying <code>_mpc_offset</code> (e.g. <code>F_bar(t)</code>) requires <code>tick_fn</code> from <code>Simulation.solve</code>; both <code>scan_stateful</code> and <code>scan_residual</code> precompute per-step <code>(f_ext, g)</code> sequences.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/zclsjtu/DiffSolid" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
