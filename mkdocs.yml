@@ -32,7 +32,7 @@ theme:
     - content.tabs.link
     - toc.follow
   font:
-    text: Source Sans 3
+    text: IBM Plex Sans
     code: IBM Plex Mono
   icon:
     repo: fontawesome/brands/github
