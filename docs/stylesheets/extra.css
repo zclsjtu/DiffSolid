@@ -749,3 +749,39 @@
   color: var(--ds-muted);
   text-align: center;
 }
+
+/* Gallery story — numbered vertical sequence */
+
+.ds-gallery--story {
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+.ds-gallery__item--step {
+  position: relative;
+  padding-top: 0.65rem;
+}
+
+.ds-gallery__step {
+  position: absolute;
+  top: 0.35rem;
+  left: 0.45rem;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.1rem;
+  height: 1.1rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: var(--ds-text-2xs);
+  font-weight: 600;
+  color: var(--ds-surface);
+  background: var(--ds-accent);
+  border-radius: 2px;
+  line-height: 1;
+}
+
+.ds-gallery--story .ds-gallery__item figcaption {
+  text-align: left;
+  padding: 0 0.1rem;
+}

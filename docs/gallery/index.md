@@ -1,13 +1,28 @@
 # Gallery
 
-Benchmark figures from DiffSolid validation and performance studies. Click an image to open the full resolution.
+Benchmark figures from DiffSolid validation and performance studies. Each **story** is a
+curated figure sequence; click any panel for full resolution.
+
+## Featured stories
+
+<div class="ds-home__grid" markdown="1">
+
+<a class="ds-tile" href="kalthoff-borden-gpu/">
+ <span class="ds-tile__label">Story · Phase-field + GPU</span>
+ <span class="ds-tile__title">Borden → Kalthoff on GPU</span>
+ <span class="ds-tile__desc">Damage evolution, Kalthoff morphology &amp; S3 velocity, explicit GPU scaling (4 panels).</span>
+</a>
+
+</div>
+
+## By topic
 
 <div class="ds-home__grid" markdown="1">
 
 <a class="ds-tile" href="phase-field-fracture/">
  <span class="ds-tile__label">Multi-physics</span>
  <span class="ds-tile__title">Phase-field fracture</span>
- <span class="ds-tile__desc">Borden-type branching, Kalthoff impact, Miehe–Amor damage, dynamic crack growth.</span>
+ <span class="ds-tile__desc">Additional branching, Kalthoff, and Miehe–Amor benchmark figures.</span>
 </a>
 
 <a class="ds-tile" href="solid-mechanics/">
