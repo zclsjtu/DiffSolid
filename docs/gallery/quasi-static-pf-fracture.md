@@ -1,8 +1,9 @@
 # Quasi-static phase-field fracture
 
 Cohesive phase-field fracture under **quasi-static** loading: an **L-panel** with Miehe
-spectral–deviatoric split and **cohesive** degradation (standard vs. **hybrid** linear preconditioner),
-then **periodic** unit cells with one or two holes — mechanics and phase field both on **PBC**.
+spectral–deviatoric split vs. **hybrid** stress decomposition (same cohesive degradation,
+**VI-Newton** solver), then **periodic** unit cells with one or two holes — mechanics and
+phase field both on **PBC**.
 
 <div class="ds-gallery ds-gallery--story" markdown="1">
 
@@ -10,15 +11,15 @@ then **periodic** unit cells with one or two holes — mechanics and phase field
   <span class="ds-gallery__step">1</span>
   <figure class="ds-gallery__item">
     <a href="../assets/stories/quasi-static-pf-fracture/01_lpanel_standard_damage.png" target="_blank" rel="noopener">
-      <img src="../assets/stories/quasi-static-pf-fracture/01_lpanel_standard_damage.png" alt="L-panel final damage, cohesive Miehe split, standard solver" loading="lazy" />
+      <img src="../assets/stories/quasi-static-pf-fracture/01_lpanel_standard_damage.png" alt="L-panel final damage, Miehe stress decomposition, VI-Newton" loading="lazy" />
     </a>
-    <figcaption><strong>L-panel · standard.</strong> Cohesive crack with Miehe decomposition — AMGCL, no hybrid preconditioner.</figcaption>
+    <figcaption><strong>L-panel · Miehe.</strong> Cohesive degradation with Miehe spectral–deviatoric split — staggered <strong>VI-Newton</strong>.</figcaption>
   </figure>
   <figure class="ds-gallery__item">
     <a href="../assets/stories/quasi-static-pf-fracture/02_lpanel_hybrid_damage.png" target="_blank" rel="noopener">
-      <img src="../assets/stories/quasi-static-pf-fracture/02_lpanel_hybrid_damage.png" alt="L-panel final damage, cohesive Miehe split, hybrid AMGCL-CG SPAI0" loading="lazy" />
+      <img src="../assets/stories/quasi-static-pf-fracture/02_lpanel_hybrid_damage.png" alt="L-panel final damage, hybrid stress decomposition, VI-Newton" loading="lazy" />
     </a>
-    <figcaption><strong>L-panel · hybrid.</strong> Same setup with hybrid AMGCL + CG + SPAI0 (<code>tol = 10⁻¹²</code>).</figcaption>
+    <figcaption><strong>L-panel · hybrid.</strong> Same cohesive setup and VI-Newton solver — <strong>hybrid</strong> stress decomposition instead of Miehe.</figcaption>
   </figure>
 </div>
 
@@ -42,7 +43,7 @@ then **periodic** unit cells with one or two holes — mechanics and phase field
 
 ---
 
-**Setup.** JPFF cohesive phase field with Miehe strain split; implicit staggered solves (AMGCL /
+**Setup.** Cohesive phase-field degradation with Miehe strain split; implicit staggered solves (AMGCL /
 hybrid CG–SPAI0). Periodic examples use consistent PBC on displacement and damage fields.
 
 [← Gallery overview](index.md) · [Theory: phase-field fracture](../theory/phase-field-fracture.md)

@@ -16,7 +16,7 @@ curated figure sequence; click any panel for full resolution.
 <a class="ds-tile" href="quasi-static-pf-fracture/">
  <span class="ds-tile__label">Story · Quasi-static PF</span>
  <span class="ds-tile__title">Quasi-static phase-field fracture</span>
- <span class="ds-tile__desc">L-panel cohesive Miehe split (standard vs hybrid), PBC unit cells with one or two holes.</span>
+ <span class="ds-tile__desc">L-panel cohesive fracture — Miehe vs hybrid stress split, VI-Newton; PBC cells with one or two holes.</span>
 </a>
 
 </div>
