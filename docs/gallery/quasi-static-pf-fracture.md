@@ -1,7 +1,7 @@
 # Quasi-static phase-field fracture
 
 Cohesive phase-field fracture under **quasi-static** loading: an **L-panel** with Miehe
-spectral–deviatoric split and JPFF degradation (standard vs. **hybrid** linear preconditioner),
+spectral–deviatoric split and **cohesive** degradation (standard vs. **hybrid** linear preconditioner),
 then **periodic** unit cells with one or two holes — mechanics and phase field both on **PBC**.
 
 <div class="ds-gallery ds-gallery--story" markdown="1">
