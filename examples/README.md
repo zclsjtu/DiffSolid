@@ -5,6 +5,8 @@ Examples in this directory call only the public `import diffsolid as ds` API.
 Place a minimal mesh at `meshes/bar.msh` or update paths in the scripts.
 
 ```bash
+python sm_finite_strain_plasticity.py
+python sm_explicit_dynamics.py
 python s1_quasi_static.py
 python s3_explicit_dynamics.py
 python custom_umat.py

@@ -6,7 +6,7 @@ Worked examples for common simulation setups and custom constitutive models.
 
 ## Prerequisites
 
-Install the package from a [GitHub Release wheel](install.md#installing-from-github-releases), then verify:
+Install the package after [wheel access approval](install.md#request-access), then verify:
 
 ```bash
 python -c "import diffsolid as ds; print(ds.__name__)"
@@ -16,7 +16,84 @@ See [install.md](install.md) for GPU setup.
 
 ---
 
-## Example 1 — Quasi-static staggered fracture (Strategy S1)
+## Solid mechanics
+
+### Example 1 — Finite-strain J2 plasticity (Fe–Fp)
+
+Quasi-static tension with multiplicative finite-strain plasticity (`UMAT_FeFpJ2Plasticity`)
+and F-bar HEX8 elements to control volumetric locking.
+
+```python
+import diffsolid as ds
+from diffsolid import UMAT_FeFpJ2Plasticity, NonlinearIsotropicHardening
+
+sim = ds.Simulation(name="fe_fp_bar", dim=3, ele_type="HEX8")
+sim.load_mesh("bar.msh")
+
+mat = UMAT_FeFpJ2Plasticity(
+    mu=80.0,
+    kappa=164.0,
+    yield_stress=NonlinearIsotropicHardening(sig_Y=50.0, K=500.0),
+)
+sim.add_physics(ds.physics.SolidMechanics(
+    material=mat,
+    geometry="3d",
+    formulation="fbar",
+))
+sim.set_linear_solver(ds.solvers.AMGCL(gpu=True))
+
+step = sim.add_step(name="tension", duration=1.0, dt=0.02, line_search=True)
+step.add_dirichlet_bc(on="x == 0", components=["x", "y", "z"], value=0.0)
+step.add_dirichlet_bc(
+    on="x == 1",
+    components=["x"],
+    value=0.05,
+    amplitude=ds.amplitudes.Ramp(0.0, 1.0),
+)
+
+sim.solve(output_dir="results/", save_every=10)
+```
+
+Runnable script: [examples/sm_finite_strain_plasticity.py](https://github.com/zclsjtu/DiffSolid/blob/main/examples/sm_finite_strain_plasticity.py).
+
+---
+
+### Example 2 — Explicit dynamics (linear elastic bar)
+
+Mechanics-only explicit time integration with automatic CFL time step (`dynamics="explicit"`).
+No phase-field physics is required.
+
+```python
+import diffsolid as ds
+from diffsolid import UPOT_LinearElasticity
+
+sim = ds.Simulation(name="elastic_wave", dim=3, ele_type="HEX8")
+sim.load_mesh("bar.msh")
+
+mat = UPOT_LinearElasticity(E=210e3, nu=0.3, density=7850.0)
+sim.add_physics(ds.physics.SolidMechanics(material=mat, geometry="3d"))
+
+step = sim.add_step(
+    name="wave",
+    duration=2e-5,
+    dt=None,
+    dynamics="explicit",
+    cfl_safety=0.5,
+    integrator="scan_energy",
+)
+step.add_dirichlet_bc(on="x == 0", components=["x", "y", "z"], value=0.0)
+step.add_energy_output("energy")
+
+sim.solve(output_dir="results/", output_format="none")
+```
+
+Runnable script: [examples/sm_explicit_dynamics.py](https://github.com/zclsjtu/DiffSolid/blob/main/examples/sm_explicit_dynamics.py).
+
+---
+
+## Phase-field fracture
+
+### Example 3 — Quasi-static staggered fracture (Strategy S1)
 
 Classical implicit elliptic phase-field with alternating minimization between
 mechanics and damage fields.
@@ -54,7 +131,7 @@ sim.solve(output_dir="results/", save_every=5)
 
 ---
 
-## Example 2 — Explicit dynamic fracture (Strategy S3)
+## Example 4 — Explicit dynamic fracture (Strategy S3)
 
 Central-difference mechanics coupled with explicit Euler integration of a
 parabolic viscous damage equation (one-pass stagger).
@@ -107,7 +184,9 @@ sim.solve(output_dir="results/", output_format="none")
 
 ---
 
-## Example 3 — Custom UMAT (user-defined material)
+## Custom constitutive models
+
+### Example 5 — Custom UMAT (user-defined material)
 
 Define your own constitutive model by subclassing `UserMaterial` and passing
 an instance to `SolidMechanics`. The framework assembles the weak form and

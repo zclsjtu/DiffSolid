@@ -2,9 +2,11 @@
 
 <section class="ds-home__hero">
 
-<div class="ds-home__hero-main">
+<div class="ds-home__hero-row">
 
-<img class="ds-home__logo" src="assets/diffsolid-logo.png" alt="DiffSolid" width="168" height="168" />
+<img class="ds-home__logo" src="assets/diffsolid-logo.png" alt="DiffSolid" width="132" height="132" />
+
+<div class="ds-home__hero-main">
 
 <p class="ds-home__kicker">Simulation platform</p>
 <p class="ds-home__lead">
@@ -13,11 +15,26 @@ element stack — Python setup, CPU/GPU execution, end-to-end differentiation.
 </p>
 
 <div class="ds-home__actions">
-  <a class="ds-home__actions-primary" href="quickstart/">Quick Start</a>
-  <a href="install/">Install</a>
+  <a class="ds-home__actions-primary" href="install.md#request-access">Request access</a>
+  <a href="quickstart/">Quick Start</a>
+  <a href="install/">Install guide</a>
   <a href="api/">API</a>
 </div>
 
+</div>
+
+</div>
+
+<div class="ds-home__access">
+  <p class="ds-home__access-kicker">Getting the software</p>
+  <p class="ds-home__access-title">Install by email request — not on PyPI</p>
+  <p class="ds-home__access-text">
+    DiffSolid preview wheels are <strong>not publicly downloadable</strong>. To install,
+    email <a href="mailto:ChenlongZhao@sjtu.edu.cn">ChenlongZhao@sjtu.edu.cn</a>
+    with your name, affiliation, intended use, Python version, and OS. We send install
+    instructions after approval (typically within a few business days).
+  </p>
+  <a class="ds-home__access-link" href="install.md#request-access">Full install instructions →</a>
 </div>
 
 <p class="ds-home__meta">
@@ -40,10 +57,10 @@ Solid mechanics · Phase-field fracture · GPU solvers · JAX AD
   <span class="ds-tile__desc">Simulation setup, materials, solvers, and output.</span>
 </a>
 
-<a class="ds-tile" href="install/">
+<a class="ds-tile" href="install.md#request-access">
   <span class="ds-tile__label">Setup</span>
-  <span class="ds-tile__title">Installation</span>
-  <span class="ds-tile__desc">Package install and optional GPU backends.</span>
+  <span class="ds-tile__title">Request access</span>
+  <span class="ds-tile__desc">Email for a preview wheel; GPU setup after install.</span>
 </a>
 
 <a class="ds-tile" href="theory/formulations/">
@@ -76,6 +93,8 @@ quasi-static or explicit dynamic — with built-in constitutive models.
   <li><strong>Large-scale solves</strong> — GPU sparse backends (AMGCL, CUDSS) for 3D plasticity and nonlinear systems</li>
 </ul>
 
+<p class="ds-cap-block__link"><a href="quickstart/#example-1-finite-strain-j2-plasticity-fe-fp">Finite-strain plasticity →</a> · <a href="quickstart/#example-2-explicit-dynamics-linear-elastic-bar">Explicit dynamics →</a></p>
+
 </div>
 
 <div class="ds-cap-block">
@@ -95,7 +114,7 @@ degradation of elastic energy, and selectable damage evolution laws.
   <li><strong>Regional control</strong> — per-section degradation laws and active zones to limit where damage can evolve</li>
 </ul>
 
-<p class="ds-cap-block__link"><a href="quickstart/#example-1-quasi-static-staggered-fracture-strategy-s1">Phase-field quick start →</a></p>
+<p class="ds-cap-block__link"><a href="quickstart/#example-3-quasi-static-staggered-fracture-strategy-s1">Phase-field quick start →</a></p>
 
 </div>
 
@@ -118,7 +137,7 @@ Jacobians.
   <li><strong>Inverse problems</strong> — material parameters remain differentiable through the full nonlinear solve</li>
 </ul>
 
-<p class="ds-cap-block__link"><a href="quickstart/#example-3-custom-umat-user-defined-material">Custom UMAT example →</a></p>
+<p class="ds-cap-block__link"><a href="quickstart/#example-5-custom-umat-user-defined-material">Custom UMAT example →</a></p>
 
 </div>
 
@@ -126,8 +145,8 @@ Jacobians.
 
 </div>
 
-!!! info "Documentation only"
-    Public docs and examples. Install the Python package by [requesting wheel access](install.md#request-access) — wheels are not publicly linked.
+!!! info "Documentation site"
+    This repository publishes docs and examples only. The solver package is installed separately after [wheel access approval](install.md#request-access).
 
 ## Platform
 

@@ -356,15 +356,35 @@
   background: none !important;
 }
 
+.ds-home__hero-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.85rem 1rem;
+  align-items: center;
+  margin-bottom: 0.55rem;
+}
+
+@media (max-width: 560px) {
+  .ds-home__hero-row {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .ds-home__logo {
+    width: 7rem;
+  }
+}
+
 .ds-home__hero-main {
-  max-width: 34rem;
+  max-width: none;
 }
 
 .ds-home__logo {
   display: block;
-  width: 9.5rem;
+  width: 6.5rem;
   height: auto;
-  margin: 0 0 0.45rem;
+  margin: 0;
+  flex-shrink: 0;
 }
 
 .ds-home__kicker {
@@ -439,6 +459,63 @@
 .ds-home__actions-primary:hover {
   background: var(--ds-accent-hover) !important;
   color: #fff !important;
+}
+
+.ds-home__access {
+  margin: 0 0 0.55rem;
+  padding: 0.65rem 0.7rem;
+  background: var(--ds-accent-soft);
+  border: 1px solid color-mix(in srgb, var(--ds-accent) 28%, var(--ds-line));
+  border-left: 3px solid var(--ds-accent);
+  border-radius: 2px;
+}
+
+.ds-home__access-kicker {
+  margin: 0 0 0.2rem;
+  font-size: var(--ds-text-2xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ds-accent);
+}
+
+.ds-home__access-title {
+  margin: 0 0 0.3rem;
+  font-family: "Libre Baskerville", Georgia, serif;
+  font-size: var(--ds-text-sm);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ds-ink);
+}
+
+.ds-home__access-text {
+  margin: 0 0 0.35rem;
+  font-size: var(--ds-text-2xs);
+  line-height: 1.42;
+  color: var(--ds-ink-soft);
+}
+
+.ds-home__access-text a {
+  font-weight: 600;
+  color: var(--ds-accent);
+  text-decoration: none;
+}
+
+.ds-home__access-text a:hover {
+  color: var(--ds-accent-hover);
+  text-decoration: underline;
+}
+
+.ds-home__access-link {
+  display: inline-block;
+  font-size: var(--ds-text-2xs);
+  font-weight: 600;
+  color: var(--ds-accent);
+  text-decoration: none;
+}
+
+.ds-home__access-link:hover {
+  color: var(--ds-accent-hover);
 }
 
 .ds-home__meta {
