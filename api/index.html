@@ -48,10 +48,12 @@
         
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
       
     
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
     
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -621,56 +623,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="2.1 Construction and Mesh">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#simulation__init__namesimulation-dim3-ele_typehex8" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Simulation.__init__(name="simulation", dim=3, ele_type="HEX8")
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#simload_meshpath_or_mesh-ele_typenone" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        sim.load_mesh(path_or_mesh, ele_type=None)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#simadd_physicsphysics_descriptor" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        sim.add_physics(physics_descriptor)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#simadd_physical_groupname-indices" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        sim.add_physical_group(name, indices)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
         
           <li class="md-nav__item">
@@ -692,45 +644,6 @@
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="2.3 Steps and Analysis Drivers">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#simadd_stepnamenone-duration-dtnone-solver_overrides" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        sim.add_step(name=None, *, duration, dt=None, **solver_overrides)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#simadd_reference_pointname-coordsnone-ndofs1-labelsnone" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        sim.add_reference_point(name, *, coords=None, ndofs=1, labels=None)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#simadd_periodic_bcformulationauto-axesnone-eps_barnone-f_barnone" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        sim.add_periodic_bc(formulation="auto", axes=None, eps_bar=None, F_bar=None, ...)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -814,34 +727,6 @@
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="3.3 Damage and Fracture Dynamics">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#stepset_damage_evolutionfield-pde-integrator-eta-tau-rho_d-mu_d-lumped" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        step.set_damage_evolution(field=..., pde=..., integrator=..., eta=..., tau=..., rho_d=..., mu_d=..., lumped=...)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#stepset_fracture_dynamicsmechanics_integrator-coupling_mode-cfl_safety-integrator-scan_mode-drive_field_mode-irreversibility_mode-damage_subcycles-explicit" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        step.set_fracture_dynamics(mechanics_integrator=..., coupling_mode=..., cfl_safety=..., integrator=..., scan_mode=..., drive_field_mode=..., irreversibility_mode=..., damage_subcycles=..., explicit=...)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -1891,56 +1776,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="2.1 Construction and Mesh">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#simulation__init__namesimulation-dim3-ele_typehex8" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Simulation.__init__(name="simulation", dim=3, ele_type="HEX8")
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#simload_meshpath_or_mesh-ele_typenone" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        sim.load_mesh(path_or_mesh, ele_type=None)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#simadd_physicsphysics_descriptor" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        sim.add_physics(physics_descriptor)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#simadd_physical_groupname-indices" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        sim.add_physical_group(name, indices)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
         
           <li class="md-nav__item">
@@ -1962,45 +1797,6 @@
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="2.3 Steps and Analysis Drivers">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#simadd_stepnamenone-duration-dtnone-solver_overrides" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        sim.add_step(name=None, *, duration, dt=None, **solver_overrides)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#simadd_reference_pointname-coordsnone-ndofs1-labelsnone" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        sim.add_reference_point(name, *, coords=None, ndofs=1, labels=None)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#simadd_periodic_bcformulationauto-axesnone-eps_barnone-f_barnone" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        sim.add_periodic_bc(formulation="auto", axes=None, eps_bar=None, F_bar=None, ...)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -2084,34 +1880,6 @@
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="3.3 Damage and Fracture Dynamics">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#stepset_damage_evolutionfield-pde-integrator-eta-tau-rho_d-mu_d-lumped" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        step.set_damage_evolution(field=..., pde=..., integrator=..., eta=..., tau=..., rho_d=..., mu_d=..., lumped=...)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#stepset_fracture_dynamicsmechanics_integrator-coupling_mode-cfl_safety-integrator-scan_mode-drive_field_mode-irreversibility_mode-damage_subcycles-explicit" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        step.set_fracture_dynamics(mechanics_integrator=..., coupling_mode=..., cfl_safety=..., integrator=..., scan_mode=..., drive_field_mode=..., irreversibility_mode=..., damage_subcycles=..., explicit=...)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -4335,6 +4103,8 @@ Integer gauss orders also accepted (FEniCS-style).</p>
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -4347,6 +4117,46 @@ Integer gauss orders also accepted (FEniCS-style).</p>
       </main>
       
         <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../quickstart/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Quick Start">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Quick Start
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../theory/formulations/" class="md-footer__link md-footer__link--next" aria-label="Next: Theory">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Theory
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -4389,10 +4199,14 @@ Integer gauss orders also accepted (FEniCS-style).</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>
