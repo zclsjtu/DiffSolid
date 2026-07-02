@@ -82,6 +82,11 @@ nav:
       - Quasi-static mechanics: theory/formulations.md
       - Dynamic mechanics: theory/dynamic-mechanics.md
       - Phase-field fracture: theory/phase-field-fracture.md
+  - Gallery:
+      - Overview: gallery/index.md
+      - Phase-field fracture: gallery/phase-field-fracture.md
+      - Solid mechanics: gallery/solid-mechanics.md
+      - GPU solvers: gallery/gpu-solvers.md
   - Legal:
       - License: legal/license.md
       - Third-Party Notices: legal/third-party.md

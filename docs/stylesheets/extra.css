@@ -464,8 +464,8 @@
 }
 
 .ds-home__access {
-  margin: 0 0 0.55rem;
-  padding: 0.65rem 0.7rem;
+  margin: 0.55rem 0 0;
+  padding: 0.55rem 0.6rem;
   background: var(--ds-accent-soft);
   border: 1px solid color-mix(in srgb, var(--ds-accent) 28%, var(--ds-line));
   border-left: 3px solid var(--ds-accent);
@@ -693,4 +693,59 @@
 
 .md-search__input {
   font-size: var(--ds-text-xs);
+}
+
+/* Gallery — figure grid with lightbox-style links */
+
+.ds-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin: 0.75rem 0 1rem;
+}
+
+@media (max-width: 720px) {
+  .ds-gallery {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ds-gallery__item {
+  margin: 0;
+  padding: 0.45rem;
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-line);
+  border-radius: 3px;
+}
+
+.ds-gallery__item--wide {
+  grid-column: 1 / -1;
+}
+
+.ds-gallery__item a {
+  display: block;
+  line-height: 0;
+  border-radius: 2px;
+  overflow: hidden;
+  border: 1px solid var(--ds-line);
+  transition: border-color 0.15s ease;
+}
+
+.ds-gallery__item a:hover {
+  border-color: var(--ds-accent);
+}
+
+.ds-gallery__item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: var(--ds-code-bg);
+}
+
+.ds-gallery__item figcaption {
+  margin-top: 0.35rem;
+  font-size: var(--ds-text-2xs);
+  line-height: 1.35;
+  color: var(--ds-muted);
+  text-align: center;
 }

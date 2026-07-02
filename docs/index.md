@@ -69,6 +69,12 @@ Solid mechanics · Phase-field fracture · GPU solvers · JAX AD
   <span class="ds-tile__desc">Quasi-static, dynamic, and phase-field theory — pick a chapter.</span>
 </a>
 
+<a class="ds-tile" href="gallery/">
+  <span class="ds-tile__label">Figures</span>
+  <span class="ds-tile__title">Gallery</span>
+  <span class="ds-tile__desc">Benchmark visuals — fracture, necking, GPU solver scaling.</span>
+</a>
+
 </div>
 
 <section class="ds-capabilities" markdown="1">
