@@ -21,10 +21,6 @@ element stack — Python setup, CPU/GPU execution, end-to-end differentiation.
   <a href="api/">API</a>
 </div>
 
-</div>
-
-</div>
-
 <div class="ds-home__access">
   <p class="ds-home__access-kicker">Getting the software</p>
   <p class="ds-home__access-title">Install by email request — not on PyPI</p>
@@ -40,6 +36,10 @@ element stack — Python setup, CPU/GPU execution, end-to-end differentiation.
 <p class="ds-home__meta">
 Solid mechanics · Phase-field fracture · GPU solvers · JAX AD
 </p>
+
+</div>
+
+</div>
 
 </section>
 

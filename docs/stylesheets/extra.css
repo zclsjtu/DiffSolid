@@ -362,33 +362,31 @@
 
 .ds-home__hero-row {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 0.85rem 1rem;
-  align-items: center;
-  margin-bottom: 0.55rem;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: 0.75rem 1.1rem;
+  align-items: start;
 }
 
 @media (max-width: 560px) {
   .ds-home__hero-row {
     grid-template-columns: 1fr;
-    align-items: start;
   }
 
   .ds-home__logo {
-    width: 7rem;
+    width: 6.5rem;
   }
 }
 
 .ds-home__hero-main {
   max-width: none;
+  min-width: 0;
 }
 
 .ds-home__logo {
   display: block;
-  width: 6.5rem;
+  width: 7.5rem;
   height: auto;
   margin: 0;
-  flex-shrink: 0;
 }
 
 .ds-home__kicker {
