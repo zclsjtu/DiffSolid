@@ -1,11 +1,26 @@
-# DiffSolid Documentation
+<div class="ds-hero" markdown="1">
 
-Welcome to **DiffSolid** — a JAX-native finite element framework for nonlinear
-solid mechanics, phase-field fracture, and GPU-accelerated simulation.
+<p class="ds-hero__eyebrow">Computational Solid Mechanics · Phase-Field Fracture</p>
 
-!!! info "Public documentation"
-    This site documents the user API, installation, and theory. The solver
-    implementation is distributed as a proprietary package via GitHub Releases.
+<h1 class="ds-hero__title">DiffSolid</h1>
+
+<p class="ds-hero__subtitle">
+JAX-native differentiable finite element framework for nonlinear solid mechanics,
+GPU-accelerated sparse solvers, and validated phase-field fracture strategies (S1–S7).
+</p>
+
+<ul class="ds-hero__tags">
+  <li>JAX / AD</li>
+  <li>FEM</li>
+  <li>Phase-field</li>
+  <li>GPU (AMGCL · cuDSS)</li>
+</ul>
+
+</div>
+
+!!! note "Documentation scope"
+    This site covers installation, API, and theory. The solver implementation is
+    distributed as a proprietary package via GitHub Releases.
 
 <div class="grid cards" markdown>
 
@@ -39,7 +54,7 @@ solid mechanics, phase-field fracture, and GPU-accelerated simulation.
 
     Benchmark figures — content coming soon.
 
-    [:octicons-arrow-right-24: Gallery](../gallery/)
+    [:octicons-arrow-right-24: Gallery](https://github.com/zclsjtu/DiffSolid/tree/main/gallery)
 
 </div>
 
