@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/assets/diffsolid-logo.png" alt="DiffSolid" width="200"/>
+</p>
+
 # DiffSolid
 
 **JAX-native differentiable finite element framework** for nonlinear solid mechanics,
@@ -32,9 +36,9 @@ result = sim.solve(output_dir="results/")
 | Resource | Description |
 |----------|-------------|
 | [Documentation site](https://zclsjtu.github.io/DiffSolid/) | Install, API, theory, quick start |
-| [Install](docs/install.md) | Wheel install, GPU setup, AMGCL build |
+| [Install](docs/install.md) | Wheel access request, GPU setup, AMGCL build |
 | [API Reference](docs/api/index.md) | User-facing Python API |
-| [Quick Start](docs/quickstart.md) | S1 quasi-static and S3 explicit dynamics |
+| [Quick Start](docs/quickstart.md) | S1 quasi-static, S3 explicit dynamics, custom UMAT |
 | [Gallery](gallery/) | Benchmark figures (work in progress) |
 
 ---
@@ -43,15 +47,9 @@ result = sim.solve(output_dir="results/")
 
 This repository contains **documentation, examples, and gallery assets only**.
 
-The solver is distributed as a Python wheel via **GitHub Releases** on the private
-source repository (`DiffSolid-core`). See the [installation guide](docs/install.md).
-
-```bash
-pip install "https://github.com/zclsjtu/DiffSolid-core/releases/download/v0.1.0-dev.1/diffsolid-0.1.0.dev1-py3-none-any.whl"
-```
-
-> Preview wheels may include Python source inside the package. Compiled wheels without
-> source will be published when the public API stabilises.
+Preview wheels are distributed **on request** — see the
+[installation guide](docs/install.md#request-access) (email
+[ChenlongZhao@sjtu.edu.cn](mailto:ChenlongZhao@sjtu.edu.cn)).
 
 ---
 
@@ -60,9 +58,9 @@ pip install "https://github.com/zclsjtu/DiffSolid-core/releases/download/v0.1.0-
 API-only scripts (require an installed wheel):
 
 ```bash
-pip install <wheel-url>
 python examples/s1_quasi_static.py
 python examples/s3_explicit_dynamics.py
+python examples/custom_umat.py
 ```
 
 ---
@@ -98,5 +96,5 @@ See also [CITATION.cff](CITATION.cff).
 
 ## Contact
 
-For academic access, collaboration, or commercial licensing, open an issue or contact
-the maintainers via GitHub.
+For wheel access, collaboration, or licensing:
+[ChenlongZhao@sjtu.edu.cn](mailto:ChenlongZhao@sjtu.edu.cn)

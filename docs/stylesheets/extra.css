@@ -82,6 +82,23 @@
   font-weight: 700;
 }
 
+.md-header__button.md-logo img {
+  height: 1.85rem;
+  width: auto;
+}
+
+.md-header__title .md-header__ellipsis {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .md-tabs__link {
   font-family: "IBM Plex Sans", system-ui, sans-serif;
   font-size: var(--ds-text-2xs);
@@ -341,6 +358,13 @@
 
 .ds-home__hero-main {
   max-width: 34rem;
+}
+
+.ds-home__logo {
+  display: block;
+  width: 9.5rem;
+  height: auto;
+  margin: 0 0 0.45rem;
 }
 
 .ds-home__kicker {

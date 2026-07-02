@@ -4,8 +4,9 @@
 
 <div class="ds-home__hero-main">
 
+<img class="ds-home__logo" src="assets/diffsolid-logo.png" alt="DiffSolid" width="168" height="168" />
+
 <p class="ds-home__kicker">Simulation platform</p>
-<h1 class="ds-home__title">DiffSolid</h1>
 <p class="ds-home__lead">
 Nonlinear solid mechanics and phase-field fracture on a JAX-native finite
 element stack — Python setup, CPU/GPU execution, end-to-end differentiation.
@@ -126,7 +127,7 @@ Jacobians.
 </div>
 
 !!! info "Documentation only"
-    Public docs and examples. Install the Python package by [requesting wheel access](install/#request-access) — wheels are not publicly linked.
+    Public docs and examples. Install the Python package by [requesting wheel access](install.md#request-access) — wheels are not publicly linked.
 
 ## Platform
 
