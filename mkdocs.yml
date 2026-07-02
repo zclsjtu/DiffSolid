@@ -85,6 +85,7 @@ nav:
   - Gallery:
       - Overview: gallery/index.md
       - "Story: Borden → Kalthoff GPU": gallery/kalthoff-borden-gpu.md
+      - "Story: Quasi-static PF fracture": gallery/quasi-static-pf-fracture.md
       - Phase-field fracture: gallery/phase-field-fracture.md
       - Solid mechanics: gallery/solid-mechanics.md
       - GPU solvers: gallery/gpu-solvers.md

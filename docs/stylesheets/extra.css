@@ -785,3 +785,26 @@
   text-align: left;
   padding: 0 0.1rem;
 }
+
+.ds-gallery__pair {
+  position: relative;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+  padding-top: 0.65rem;
+}
+
+@media (max-width: 720px) {
+  .ds-gallery__pair {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ds-gallery__pair.ds-gallery__item--step {
+  padding-top: 0.65rem;
+}
+
+.ds-gallery__pair .ds-gallery__item {
+  margin: 0;
+}

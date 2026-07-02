@@ -13,6 +13,12 @@ curated figure sequence; click any panel for full resolution.
  <span class="ds-tile__desc">Damage evolution, Kalthoff morphology &amp; S3 velocity, explicit GPU scaling (4 panels).</span>
 </a>
 
+<a class="ds-tile" href="quasi-static-pf-fracture/">
+ <span class="ds-tile__label">Story · Quasi-static PF</span>
+ <span class="ds-tile__title">Quasi-static phase-field fracture</span>
+ <span class="ds-tile__desc">L-panel cohesive Miehe split (standard vs hybrid), PBC unit cells with one or two holes.</span>
+</a>
+
 </div>
 
 ## By topic
