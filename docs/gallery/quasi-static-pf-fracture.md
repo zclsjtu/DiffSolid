@@ -43,7 +43,8 @@ phase field both on **PBC**.
 
 ---
 
-**Setup.** Cohesive phase-field degradation with Miehe strain split; implicit staggered solves (AMGCL /
-hybrid CG–SPAI0). Periodic examples use consistent PBC on displacement and damage fields.
+**Setup.** Cohesive phase-field degradation; implicit staggered **VI-Newton** solves. L-panel pair
+compares Miehe vs. hybrid **stress decomposition**. Periodic examples use consistent PBC on
+displacement and damage fields.
 
 [← Gallery overview](index.md) · [Theory: phase-field fracture](../theory/phase-field-fracture.md)

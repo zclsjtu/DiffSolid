@@ -19,6 +19,12 @@ curated figure sequence; click any panel for full resolution.
  <span class="ds-tile__desc">L-panel cohesive fracture — Miehe vs hybrid stress split, VI-Newton; PBC cells with one or two holes.</span>
 </a>
 
+<a class="ds-tile" href="volumetric-locking/">
+ <span class="ds-tile__label">Story · Solid mechanics</span>
+ <span class="ds-tile__title">Volumetric locking</span>
+ <span class="ds-tile__desc">Cook's membrane convergence; axisymmetric necking — F-bar, F-bar-Patch, EAS vs standard elements.</span>
+</a>
+
 </div>
 
 ## By topic

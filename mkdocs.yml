@@ -86,6 +86,7 @@ nav:
       - Overview: gallery/index.md
       - "Story: Borden → Kalthoff GPU": gallery/kalthoff-borden-gpu.md
       - "Story: Quasi-static PF fracture": gallery/quasi-static-pf-fracture.md
+      - "Story: Volumetric locking": gallery/volumetric-locking.md
       - Phase-field fracture: gallery/phase-field-fracture.md
       - Solid mechanics: gallery/solid-mechanics.md
       - GPU solvers: gallery/gpu-solvers.md
