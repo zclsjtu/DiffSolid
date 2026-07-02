@@ -1,0 +1,6 @@
+# Site and GitHub configuration — edit once before first publish.
+github_user: zclsjtu
+public_repo: DiffSolid
+private_repo: DiffSolid-core
+public_site_url: https://zclsjtu.github.io/DiffSolid/
+preview_wheel_version: v0.1.0-dev.1

@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+title: DiffSolid
+message: "If you use this software, please cite it as below."
+type: software
+authors:
+  - name: DiffSolid developers
+repository-code: https://github.com/zclsjtu/DiffSolid
+url: https://zclsjtu.github.io/DiffSolid/
+license: Proprietary
+version: 0.1.0
+keywords:
+  - finite element method
+  - phase-field fracture
+  - JAX
+  - differentiable simulation
+  - GPU
+preferred-citation:
+  type: software
+  title: "DiffSolid: JAX-native differentiable solid mechanics and phase-field fracture"
+  authors:
+    - name: DiffSolid developers
+  year: 2026
+  url: https://github.com/zclsjtu/DiffSolid

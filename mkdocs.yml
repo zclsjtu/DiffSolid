@@ -1,0 +1,63 @@
+site_name: DiffSolid
+site_description: JAX-native differentiable solid mechanics and phase-field fracture
+site_url: https://zclsjtu.github.io/DiffSolid/
+repo_url: https://github.com/zclsjtu/DiffSolid
+repo_name: DiffSolid
+
+theme:
+  name: material
+  language: en
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search
+  - mermaid2
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Install: install.md
+  - Quick Start: quickstart.md
+  - API Reference: api/index.md
+  - Theory: theory/formulations.md
+  - Legal:
+      - License: legal/license.md
+      - Third-Party Notices: legal/third-party.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/zclsjtu/DiffSolid
