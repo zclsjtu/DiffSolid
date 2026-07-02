@@ -7,4 +7,5 @@ Place a minimal mesh at `meshes/bar.msh` or update paths in the scripts.
 ```bash
 python s1_quasi_static.py
 python s3_explicit_dynamics.py
+python custom_umat.py
 ```

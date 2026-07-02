@@ -5,8 +5,9 @@
 <p class="ds-home__kicker">Simulation Platform</p>
 <h1 class="ds-home__title">DiffSolid</h1>
 <p class="ds-home__lead">
-A JAX-native finite element environment for building, running, and differentiating
-nonlinear solid mechanics simulations on CPU and GPU.
+A JAX-native finite element platform for nonlinear solid mechanics and phase-field
+fracture — build models in Python, run on CPU or GPU, and differentiate through
+the full simulation stack.
 </p>
 
 <div class="ds-home__actions">
@@ -16,10 +17,11 @@ nonlinear solid mechanics simulations on CPU and GPU.
 </div>
 
 <ul class="ds-home__tags">
-  <li>Nonlinear FEM</li>
-  <li>Automatic differentiation</li>
+  <li>Solid mechanics</li>
+  <li>Phase-field fracture</li>
+  <li>Custom UMAT</li>
   <li>GPU solvers</li>
-  <li>Multi-physics workflows</li>
+  <li>JAX differentiation</li>
 </ul>
 
 </section>
@@ -52,19 +54,68 @@ nonlinear solid mechanics simulations on CPU and GPU.
 
 </div>
 
+<section class="ds-capabilities" markdown="1">
+
+<h2 class="ds-capabilities__heading">What the package covers</h2>
+
+<div class="ds-capabilities__grid">
+
+<div class="ds-cap-block">
+
+<h3 class="ds-cap-block__title">Solid mechanics</h3>
+<p class="ds-cap-block__lead">
+Nonlinear FE analysis for 3D, plane strain/stress, and axisymmetric models —
+quasi-static or explicit dynamic — with library materials or your own UMAT.
+</p>
+
+<ul class="ds-cap-block__list">
+  <li><strong>Formulations</strong> — small-strain and finite-strain kinematics; standard, B-bar, F-bar, F-bar patch, and EAS elements</li>
+  <li><strong>Analysis modes</strong> — implicit quasi-static equilibrium; explicit central-difference dynamics; Newton–Raphson with line search and arc-length continuation</li>
+  <li><strong>Built-in materials</strong> — linear and Neo-Hookean elasticity; J2 and finite-strain plasticity; viscoelasticity; FCC/BCC/HCP crystal plasticity; Mooney–Rivlin and Ogden hyperelastic potentials</li>
+  <li><strong>Custom constitutive laws</strong> — subclass <code>UserMaterial</code> or <code>UserPotential</code>; consistent tangents via JAX automatic differentiation</li>
+  <li><strong>Model setup</strong> — multi-material mesh sections, body forces, step-scoped Dirichlet/Neumann BCs, thickness for 2D models</li>
+  <li><strong>Large-scale solves</strong> — GPU sparse backends (AMGCL, CUDSS) for 3D plasticity and nonlinear systems</li>
+</ul>
+
+<p class="ds-cap-block__link"><a href="quickstart/#example-3-custom-umat-user-defined-material">Custom UMAT example →</a></p>
+
+</div>
+
+<div class="ds-cap-block">
+
+<h3 class="ds-cap-block__title">Phase field</h3>
+<p class="ds-cap-block__lead">
+Phase-field fracture coupled to solid mechanics — diffuse crack representation,
+degradation of elastic energy, and selectable damage evolution laws.
+</p>
+
+<ul class="ds-cap-block__list">
+  <li><strong>Fracture models</strong> — AT1/AT2 phase-field; cohesive-zone degradation; spectral, volumetric–deviatoric, and hybrid strain splits</li>
+  <li><strong>Coupling</strong> — staggered fixed-point (quasi-static) or one-pass (dynamic) mechanics–damage coupling with configurable driving force and history</li>
+  <li><strong>Damage PDEs</strong> — elliptic (Allen–Cahn type); parabolic viscous; pseudo-parabolic; inertial damage dynamics</li>
+  <li><strong>Strategy presets (S1–S7)</strong> — e.g. quasi-static staggered fracture (S1), explicit dynamic fracture with viscous damage (S3); validated combinations enforced at solve time</li>
+  <li><strong>Irreversibility &amp; solvers</strong> — variational inequality active-set Newton for damage; dedicated phase-field linear solvers</li>
+  <li><strong>Regional control</strong> — per-section degradation laws and active zones to limit where damage can evolve</li>
+</ul>
+
+<p class="ds-cap-block__link"><a href="quickstart/#example-1-quasi-static-staggered-fracture-strategy-s1">Phase-field quick start →</a></p>
+
+</div>
+
+</div>
+
+</section>
+
 </div>
 
 !!! info "Documentation only"
     Public docs and examples. Solver binaries ship via GitHub Releases under a proprietary license.
 
-## What you can do
+## Platform
 
-- **Build FE models** — load meshes, assign elements, boundary conditions, and loading steps through a unified Python API.
-- **Run nonlinear mechanics** — quasi-static and dynamic analysis with a library of constitutive models and element formulations.
-- **Couple multiple physics** — staggered and monolithic multi-field workflows from a single simulation manager.
-- **Scale on GPU** — optional sparse linear algebra backends for large 3D problems.
+- **Unified simulation API** — meshes, physics, steps, couplers, and output from one `Simulation` manager.
 - **Differentiate and calibrate** — JAX-native assembly supports gradient-based inverse problems and parameter identification.
-- **Post-process and export** — VTK output, checkpoints, and built-in post-processing hooks.
+- **Post-process and export** — VTK output, checkpoints, diagnostics, and built-in post-processing hooks.
 
 ## Architecture
 

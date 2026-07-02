@@ -1,6 +1,6 @@
 # DiffSolid Quick Start
 
-Minimal examples for the two most common phase-field fracture workflows.
+Worked examples for common simulation setups and custom constitutive models.
 
 ---
 
@@ -104,6 +104,90 @@ sim.solve(output_dir="results/", output_format="none")
 
 **Strategy ID:** S3 — `explicit_central_difference` + `parabolic_viscous` +
 `explicit_euler` + `stagger_one_pass`.
+
+---
+
+## Example 3 — Custom UMAT (user-defined material)
+
+Define your own constitutive model by subclassing `UserMaterial` and passing
+an instance to `SolidMechanics`. The framework assembles the weak form and
+builds the consistent tangent with JAX automatic differentiation.
+
+### Interface
+
+| Item | Meaning |
+|------|---------|
+| `kinematics` | `"strain"` → input symmetric strain `ε`, return Cauchy stress `σ`; `"deformation_gradient"` → input `F`, return PK1 stress `P` |
+| `state_fields` | Persistent Gauss-point variables, e.g. `{"eps_p": "tensor", "alpha": "scalar"}`; use `{}` if stateless |
+| `umat(eps_or_F, state, dt)` | Return `(stress, state_new)`; extra dict keys become output fields |
+
+Use **`jnp.*` / `jax.lax.*` only** inside `umat` (no Python `if` on traced arrays).
+
+### Stateless linear elasticity
+
+```python
+import jax.numpy as jnp
+import diffsolid as ds
+from diffsolid import UserMaterial
+
+
+class LinearElasticUMAT(UserMaterial):
+    kinematics = "strain"
+    state_fields = {}
+
+    def __init__(self, E: float, nu: float):
+        lam = E * nu / ((1 + nu) * (1 - 2 * nu))
+        mu = E / (2 * (1 + nu))
+        self.lam, self.mu = lam, mu
+
+    def umat(self, eps, state, dt):
+        dim = eps.shape[0]
+        sigma = self.lam * jnp.trace(eps) * jnp.eye(dim) + 2 * self.mu * eps
+        return sigma, state
+
+
+sim = ds.Simulation(name="umat_plate", dim=2, ele_type="QUAD4")
+sim.load_mesh("plate.msh")
+
+mat = LinearElasticUMAT(E=210e3, nu=0.3)
+sim.add_physics(ds.physics.SolidMechanics(material=mat))
+sim.set_linear_solver(ds.solvers.AMGCL(gpu=True))
+
+step = sim.add_step(name="stretch", duration=1.0, dt=0.05)
+step.add_dirichlet_bc(on="x == 0", components=["x", "y"], value=0.0)
+step.add_dirichlet_bc(on="x == 1", components=["x"], value=1e-3)
+
+sim.solve(output_dir="results/")
+```
+
+### Stateful UMAT (history variables)
+
+Declare `state_fields`, read/write them in `umat`, and return the updated dict:
+
+```python
+class J2PlasticityUMAT(UserMaterial):
+    kinematics = "strain"
+    state_fields = {"eps_p": "tensor", "alpha": "scalar"}
+
+    def __init__(self, E, nu, sigma_y, H):
+        self.lam = E * nu / ((1 + nu) * (1 - 2 * nu))
+        self.mu = E / (2 * (1 + nu))
+        self.sigma_y, self.H = sigma_y, H
+
+    def umat(self, eps, state, dt):
+        eps_p, alpha = state["eps_p"], state["alpha"]
+        dim = eps.shape[0]
+        eps_e = eps - eps_p
+        sigma = self.lam * jnp.trace(eps_e) * jnp.eye(dim) + 2 * self.mu * eps_e
+        # ... radial return (use jnp.where, not Python if) ...
+        return sigma, {"eps_p": eps_p_new, "alpha": alpha_new}
+```
+
+Use the same `Simulation` / `add_step` / `solve` workflow as built-in materials.
+Optional: request extra outputs in `step.add_output(...)` using names from
+`state_fields` or keys in the returned state dict.
+
+Runnable script: [examples/custom_umat.py](https://github.com/zclsjtu/DiffSolid/blob/main/examples/custom_umat.py).
 
 ---
 
