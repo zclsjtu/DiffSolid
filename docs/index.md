@@ -63,10 +63,10 @@ Solid mechanics · Phase-field fracture · GPU solvers · JAX AD
   <span class="ds-tile__desc">Email for a preview wheel; GPU setup after install.</span>
 </a>
 
-<a class="ds-tile" href="theory/formulations/">
+<a class="ds-tile" href="theory/">
   <span class="ds-tile__label">Theory</span>
   <span class="ds-tile__title">Formulations</span>
-  <span class="ds-tile__desc">Finite element and constitutive theory reference.</span>
+  <span class="ds-tile__desc">Quasi-static, dynamic, and phase-field theory — pick a chapter.</span>
 </a>
 
 </div>

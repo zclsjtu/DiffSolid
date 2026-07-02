@@ -170,6 +170,10 @@
   box-shadow: none;
 }
 
+.md-content__inner > article:has(.ds-home__grid):not(:has(.ds-home)) {
+  padding: 0.85rem 1rem 1.1rem;
+}
+
 .md-typeset {
   font-family: "Libre Baskerville", Georgia, serif;
   font-size: var(--ds-text-xs);

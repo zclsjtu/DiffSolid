@@ -77,7 +77,11 @@ nav:
   - Install: install.md
   - Quick Start: quickstart.md
   - API Reference: api/index.md
-  - Theory: theory/formulations.md
+  - Theory:
+      - Overview: theory/index.md
+      - Quasi-static mechanics: theory/formulations.md
+      - Dynamic mechanics: theory/dynamic-mechanics.md
+      - Phase-field fracture: theory/phase-field-fracture.md
   - Legal:
       - License: legal/license.md
       - Third-Party Notices: legal/third-party.md

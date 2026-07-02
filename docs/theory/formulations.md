@@ -1,22 +1,26 @@
-# Finite Element Formulations in diffsolid
+# Quasi-static solid mechanics
 
-**Version:** 2026-05
-**Scope:** 3D, plane-strain, plane-stress, axisymmetric solid mechanics; constitutive models; solvers
+**Version:** 2026-05 
+**Scope:** 3D, plane-strain, plane-stress, and axisymmetric **quasi-static** formulations; constitutive models; nonlinear and linear solvers.
+
+> **Related theory:** [Dynamic mechanics](dynamic-mechanics.md) · [Phase-field fracture](phase-field-fracture.md) · [Theory overview](index.md)
 
 ---
 
 ## 1. Introduction
 
-This document is the complete theoretical reference for diffsolid. It covers:
+This document covers quasi-static finite element formulations and shared infrastructure. For time-dependent solid mechanics and phase-field fracture, see the dedicated chapters linked above.
+
+Topics in this file:
 
 - **Finite element infrastructure** (§2–§3): notation, isoparametric mapping, quadrature, and displacement-gradient assembly.
-- **Formulations** (§4–§6): three-dimensional, two-dimensional, and axisymmetric solid mechanics under small-strain and finite-strain kinematics.
+- **Quasi-static formulations** (§4–§6): 3D, 2D, and axisymmetric solid mechanics under small-strain and finite-strain kinematics.
 - **Anti-locking and special methods** (§4.3–§4.4, §6.3–§6.4, §10–§13): F-bar, B-bar, plane-stress condensation, periodic BCs, EAS, and F-bar patch.
 - **Consistent tangent** (§7): automatic differentiation via `jax.jvp`.
 - **Boundary conditions** (§8): Dirichlet and Neumann.
 - **Post-processing** (§9): stress recovery, Hencky strain, VTK output.
-- **Constitutive models** (§14): elastic potentials, small-strain plasticity, finite-strain plasticity, viscoelasticity, crystal plasticity (FCC/BCC/HCP/HCP-GND), and phase-field fracture coupling.
-- **Solvers** (§15–§16): Newton–Raphson with line search, arc-length method, and linear solver backends.
+- **Constitutive models** (§14): elasticity, plasticity, viscoelasticity, crystal plasticity; brief phase-field degradation summary (full theory in [phase-field-fracture.md](phase-field-fracture.md)).
+- **Solvers** (§15–§16): Newton–Raphson, arc-length, linear backends.
 
 ---
 
@@ -1077,7 +1081,7 @@ The GND update is a mesh-level operation performed via a `post_step` hook regist
 
 ### 14.6 Phase-Field Fracture Coupling
 
-Phase-field fracture models couple the mechanics problem to a scalar damage field $d \in [0,1]$ through a degradation function $g(d)$.
+Phase-field fracture models couple the mechanics problem to a scalar damage field $d \in [0,1]$ through a degradation function $g(d)$. **Full theory** (damage PDEs, staggered coupling, strategy matrix): [Phase-field fracture](phase-field-fracture.md).
 
 **Degradation function:**
 
@@ -1280,6 +1284,8 @@ AMG coarsening uses the classical Ruge–Stüben algorithm. ILU(0), SPAI-0, and 
 ---
 
 ## Appendix: Explicit dynamics integrator routing
+
+See [Dynamic mechanics — §6](dynamic-mechanics.md#6-explicit-material-kernels-and-jax-scan-backends) for context.
 
 | Integrator | Backend | Typical use |
 |------------|---------|-------------|
