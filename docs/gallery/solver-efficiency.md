@@ -26,7 +26,8 @@ phase-field runs.
 
 ---
 
-**Setup.** 2D implicit study: staggered nonlinear solves with configurable sparse linear backends.
-GPU panel: explicit dynamics on triangular meshes from benchmark cases <code>n100k … n2000k</code>.
+**Setup.** 2D implicit study: same plane-strain elasticity benchmark; DiffSolid GPU runs on
+**NVIDIA H200**, FEniCSx baselines on **MPI×64 CPU** (Intel Xeon Gold 6530).
+GPU panel: explicit Kalthoff dynamics on H200; benchmark cases `n100k … n2000k`.
 
 [← Gallery overview](index.md)
