@@ -16,6 +16,7 @@ element stack — Python setup, CPU/GPU execution, end-to-end differentiation.
 
 <div class="ds-home__actions">
   <a class="ds-home__actions-primary" href="install.md#request-access">Request access</a>
+  <a href="download/">Download wheel</a>
   <a href="quickstart/">Quick Start</a>
   <a href="install/">Install guide</a>
   <a href="api/">API</a>
@@ -23,14 +24,14 @@ element stack — Python setup, CPU/GPU execution, end-to-end differentiation.
 
 <div class="ds-home__access">
   <p class="ds-home__access-kicker">Getting the software</p>
-  <p class="ds-home__access-title">Install by email request — not on PyPI</p>
+  <p class="ds-home__access-title">Email request → password download</p>
   <p class="ds-home__access-text">
-    DiffSolid preview wheels are <strong>not publicly downloadable</strong>. To install,
-    email <a href="mailto:ChenlongZhao@sjtu.edu.cn">ChenlongZhao@sjtu.edu.cn</a>
-    with your name, affiliation, intended use, Python version, and OS. We send install
-    instructions after approval (typically within a few business days).
+    DiffSolid is <strong>not on PyPI</strong>. Email
+    <a href="mailto:ChenlongZhao@sjtu.edu.cn">ChenlongZhao@sjtu.edu.cn</a>
+    for access; after approval we send a <strong>download password</strong> (and portal link).
+    Install with <code>pip install</code> on the downloaded wheel.
   </p>
-  <a class="ds-home__access-link" href="install.md#request-access">Full install instructions →</a>
+  <a class="ds-home__access-link" href="download/">Download wheel (approved users) →</a>
 </div>
 
 <p class="ds-home__meta">
@@ -55,6 +56,11 @@ Solid mechanics · Phase-field fracture · GPU solvers · JAX AD
   <span class="ds-tile__label">Reference</span>
   <span class="ds-tile__title">API</span>
   <span class="ds-tile__desc">Simulation setup, materials, solvers, and output.</span>
+</a>
+
+<a class="ds-tile" href="download/">
+  <span class="ds-tile__title">Download wheel</span>
+  <span class="ds-tile__desc">Password-protected preview wheel for approved users.</span>
 </a>
 
 <a class="ds-tile" href="install.md#request-access">

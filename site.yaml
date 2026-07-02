@@ -12,4 +12,5 @@ wheel_distribution:
   # Optional Google Form / Typeform for structured requests
   request_form_url: ""
   # After deploying dist-gate Cloudflare Worker (see DiffSolid-dev/dist-gate/)
+  # Example: https://diffsolid-download.your-account.workers.dev
   download_portal_url: ""

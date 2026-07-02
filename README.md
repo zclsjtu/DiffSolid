@@ -91,6 +91,7 @@ dynamics on H200-class hardware; implicit scaling benchmarked against **FEniCSx 
 | [Theory](https://zclsjtu.github.io/DiffSolid/theory/) | Quasi-static, dynamic, and phase-field formulations |
 | [API reference](https://zclsjtu.github.io/DiffSolid/api/) | User-facing Python API |
 | [Install / request access](https://zclsjtu.github.io/DiffSolid/install/#request-access) | Wheel by email — [ChenlongZhao@sjtu.edu.cn](mailto:ChenlongZhao@sjtu.edu.cn) |
+| [Download wheel](https://zclsjtu.github.io/DiffSolid/download/) | Password-protected preview wheel (approved users) |
 
 ---
 
@@ -122,19 +123,6 @@ python examples/custom_umat.py
 ```
 
 Place a mesh at `meshes/bar.msh` or edit paths in the scripts. Details: [examples/README.md](examples/README.md).
-
----
-
-## Architecture
-
-```mermaid
-flowchart LR
-  api[User API] --> sched[Scheduler]
-  sched --> eq[Weak forms]
-  sched --> mat[Materials / UMAT]
-  sched --> sol[Linear solvers]
-  sol --> gpu[GPU backends]
-```
 
 ---
 

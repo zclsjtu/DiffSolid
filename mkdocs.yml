@@ -75,6 +75,7 @@ extra_javascript:
 nav:
   - Home: index.md
   - Install: install.md
+  - Download wheel: download.md
   - Quick Start: quickstart.md
   - API Reference: api/index.md
   - Theory:

@@ -341,6 +341,20 @@
 
 .ds-home {
   font-family: "IBM Plex Sans", system-ui, sans-serif;
+  font-size: 0.875em;
+}
+
+.ds-home + .md-typeset h2,
+.md-content__inner > article:has(.ds-home) .md-typeset h2 {
+  font-size: var(--ds-text-2xs);
+  margin-top: 0.55rem;
+}
+
+.ds-home ~ .md-typeset,
+.md-content__inner > article:has(.ds-home) .md-typeset p,
+.md-content__inner > article:has(.ds-home) .md-typeset li {
+  font-size: var(--ds-text-2xs);
+  line-height: 1.35;
 }
 
 .ds-home__hero {
@@ -363,8 +377,8 @@
 
 .ds-home__hero-row {
   display: grid;
-  grid-template-columns: 7.5rem minmax(0, 1fr);
-  gap: 0.75rem 1.1rem;
+  grid-template-columns: 6.75rem minmax(0, 1fr);
+  gap: 0.65rem 1rem;
   align-items: start;
 }
 
@@ -385,7 +399,7 @@
 
 .ds-home__logo {
   display: block;
-  width: 7.5rem;
+  width: 6.75rem;
   height: auto;
   margin: 0;
 }
@@ -595,6 +609,7 @@
 
 .ds-capabilities {
   margin-bottom: 0.65rem;
+  font-size: 0.92em;
 }
 
 .ds-capabilities__heading {
@@ -895,4 +910,74 @@
   font-size: var(--ds-text-2xs);
   line-height: 1.35;
   color: var(--ds-muted);
+}
+
+/* Download wheel page */
+
+.ds-download__portal {
+  max-width: 22rem;
+  margin: 0.75rem 0 1rem;
+  padding: 0.65rem 0.7rem;
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-line);
+  border-radius: 4px;
+}
+
+.ds-download__portal--pending {
+  max-width: 32rem;
+}
+
+.ds-download__form {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.ds-download__label {
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  font-size: var(--ds-text-2xs);
+  font-weight: 600;
+  color: var(--ds-ink-soft);
+}
+
+.ds-download__input {
+  width: 100%;
+  padding: 0.4rem 0.45rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: var(--ds-text-xs);
+  border: 1px solid var(--ds-line-strong);
+  border-radius: 3px;
+  background: var(--ds-bg);
+  color: var(--ds-ink);
+  box-sizing: border-box;
+}
+
+.ds-download__submit {
+  justify-self: start;
+  padding: 0.35rem 0.65rem;
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  font-size: var(--ds-text-2xs);
+  font-weight: 600;
+  color: var(--ds-surface);
+  background: var(--ds-accent);
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.ds-download__submit:hover {
+  background: var(--ds-accent-hover);
+}
+
+.ds-download__hint,
+.ds-download__pending,
+.ds-download__alt {
+  margin: 0.5rem 0 0;
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  font-size: var(--ds-text-2xs);
+  line-height: 1.4;
+  color: var(--ds-muted);
+}
+
+.ds-download__alt {
+  margin-top: 0.35rem;
 }
