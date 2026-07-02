@@ -46,8 +46,8 @@
         
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+3:300,300i,400,400i,700,700i%7CIBM+Plex+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Source Sans 3";--md-code-font:"IBM Plex Mono"}</style>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,300i,400,400i,700,700i%7CIBM+Plex+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"IBM Plex Sans";--md-code-font:"IBM Plex Mono"}</style>
       
     
     
@@ -461,21 +461,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#phase-field-fracture-strategies" class="md-nav__link">
+  <a href="#phase-field-strategies-s1s7" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Phase-field fracture strategies
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#what-is-in-this-repository" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What is in this repository?
+        Phase-field strategies (S1–S7)
       
     </span>
   </a>
@@ -753,21 +742,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#phase-field-fracture-strategies" class="md-nav__link">
+  <a href="#phase-field-strategies-s1s7" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Phase-field fracture strategies
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#what-is-in-this-repository" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What is in this repository?
+        Phase-field strategies (S1–S7)
       
     </span>
   </a>
@@ -794,73 +772,74 @@
   
 
 
-<div class="ds-hero">
-<p class="ds-hero__eyebrow">Computational Solid Mechanics · Phase-Field Fracture</p>
-<h1 class="ds-hero__title" id="diffsolid">DiffSolid<a class="headerlink" href="#diffsolid" title="Permanent link">&para;</a></h1>
-<p class="ds-hero__subtitle">
-JAX-native differentiable finite element framework for nonlinear solid mechanics,
-GPU-accelerated sparse solvers, and validated phase-field fracture strategies (S1–S7).
+<div class="ds-home">
+<section class="ds-home__hero">
+<p class="ds-home__kicker">Differentiable Solid Mechanics</p>
+<h1 class="ds-home__title" id="diffsolid">DiffSolid<a class="headerlink" href="#diffsolid" title="Permanent link">&para;</a></h1>
+<p class="ds-home__lead">
+JAX-native finite element framework for nonlinear mechanics, GPU sparse solvers,
+and validated phase-field fracture workflows.
 </p>
-<ul class="ds-hero__tags">
-<li>JAX / AD</li>
+<div class="ds-home__actions">
+  <a href="quickstart/">Quick Start</a>
+  <a href="install/">Install</a>
+  <a href="api/">API</a>
+</div>
+<ul class="ds-home__tags">
+<li>JAX · AD</li>
 <li>FEM</li>
-<li>Phase-field</li>
-<li>GPU (AMGCL · cuDSS)</li>
+<li>Phase-field S1–S7</li>
+<li>AMGCL · cuDSS</li>
 </ul>
+</section>
+<div class="ds-home__grid">
+
+<a class="ds-tile" href="quickstart/">
+  <span class="ds-tile__label">Examples</span>
+  <span class="ds-tile__title">Quick Start</span>
+  <span class="ds-tile__desc">S1 quasi-static and S3 explicit dynamics.</span>
+</a>
+
+<a class="ds-tile" href="api/">
+  <span class="ds-tile__label">Reference</span>
+  <span class="ds-tile__title">API</span>
+  <span class="ds-tile__desc">Simulation, steps, materials, solvers.</span>
+</a>
+
+<a class="ds-tile" href="install/">
+  <span class="ds-tile__label">Setup</span>
+  <span class="ds-tile__title">Installation</span>
+  <span class="ds-tile__desc">Wheel, JAX GPU, AMGCL, cuDSS.</span>
+</a>
+
+<a class="ds-tile" href="theory/formulations/">
+  <span class="ds-tile__label">Theory</span>
+  <span class="ds-tile__title">Formulations</span>
+  <span class="ds-tile__desc">FE weak forms, constitutive models, solvers.</span>
+</a>
+
 </div>
-<div class="admonition note">
-<p class="admonition-title">Documentation scope</p>
-<p>This site covers installation, API, and theory. The solver implementation is
-distributed as a proprietary package via GitHub Releases.</p>
 </div>
-<div class="grid cards">
-<ul>
-<li>
-<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27zM5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M21.61 2.39S16.66.269 11 5.93c-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.55.56 1.37.74 2.12.46A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61m-7.07 7.07c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83s-2.05.78-2.83 0m-5.66 7.07-1.41-1.41zM6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22zM2 22h1.41l4.77-4.76-1.42-1.41L2 20.59zm0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76z"/></svg></span> <strong>Quick Start</strong></p>
-<hr />
-<p>Minimal S1 and S3 phase-field fracture examples.</p>
-<p><a href="quickstart/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"/></svg></span> Quick Start</a></p>
-</li>
-<li>
-<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21.5c-1.35-.85-3.8-1.5-5.5-1.5-1.65 0-3.35.3-4.75 1.05-.1.05-.15.05-.25.05-.25 0-.5-.25-.5-.5V6c.6-.45 1.25-.75 2-1 1.11-.35 2.33-.5 3.5-.5 1.95 0 4.05.4 5.5 1.5 1.45-1.1 3.55-1.5 5.5-1.5 1.17 0 2.39.15 3.5.5.75.25 1.4.55 2 1v14.6c0 .25-.25.5-.5.5-.1 0-.15 0-.25-.05-1.4-.75-3.1-1.05-4.75-1.05-1.7 0-4.15.65-5.5 1.5M12 8v11.5c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5V7c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5m1 3.5c1.11-.68 2.6-1 4.5-1 .91 0 1.76.09 2.5.28V9.23c-.87-.15-1.71-.23-2.5-.23q-2.655 0-4.5.84zm4.5.17c-1.71 0-3.21.26-4.5.79v1.69c1.11-.65 2.6-.99 4.5-.99 1.04 0 1.88.08 2.5.24v-1.5c-.87-.16-1.71-.23-2.5-.23m2.5 2.9c-.87-.16-1.71-.24-2.5-.24-1.83 0-3.33.27-4.5.8v1.69c1.11-.66 2.6-.99 4.5-.99 1.04 0 1.88.08 2.5.24z"/></svg></span> <strong>API Reference</strong></p>
-<hr />
-<p>Simulation manager, steps, materials, solvers, and outputs.</p>
-<p><a href="api/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"/></svg></span> API</a></p>
-</li>
-<li>
-<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 20h14v-2H5m14-9h-4V3H9v6H5l7 7z"/></svg></span> <strong>Installation</strong></p>
-<hr />
-<p>Wheel install, JAX GPU, AMGCL CUDA, and cuDSS.</p>
-<p><a href="install/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"/></svg></span> Install</a></p>
-</li>
-<li>
-<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 16V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2m-11-4 2.03 2.71L16 11l4 5H8M2 6v14a2 2 0 0 0 2 2h14v-2H4V6"/></svg></span> <strong>Gallery</strong></p>
-<hr />
-<p>Benchmark figures — content coming soon.</p>
-<p><a href="https://github.com/zclsjtu/DiffSolid/tree/main/gallery"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"/></svg></span> Gallery</a></p>
-</li>
-</ul>
+<div class="admonition info">
+<p class="admonition-title">Documentation only</p>
+<p>Public docs and examples. Solver binaries ship via GitHub Releases under a proprietary license.</p>
 </div>
-<hr />
 <h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>flowchart TB
-  api[Simulation API] --&gt; systems[MultiPhysics Scheduler]
-  systems --&gt; equations[Weak Forms]
-  systems --&gt; materials[UMAT Materials]
-  systems --&gt; solvers[Linear Nonlinear Dynamics]
-  solvers --&gt; gpu[AMGCL CUDA cuDSS JAX]
-  api --&gt; io[Mesh IO VTK Export]
+<div class="highlight"><pre><span></span><code>flowchart LR
+  api[API] --&gt; sched[Scheduler]
+  sched --&gt; eq[Weak forms]
+  sched --&gt; mat[Materials]
+  sched --&gt; sol[Solvers]
+  sol --&gt; gpu[GPU backends]
 </code></pre></div>
-<hr />
-<h2 id="phase-field-fracture-strategies">Phase-field fracture strategies<a class="headerlink" href="#phase-field-fracture-strategies" title="Permanent link">&para;</a></h2>
-<p>DiffSolid maps coupled mechanics–damage workflows to validated strategy IDs <strong>S1–S7</strong>:</p>
+<h2 id="phase-field-strategies-s1s7">Phase-field strategies (S1–S7)<a class="headerlink" href="#phase-field-strategies-s1s7" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
 <th>ID</th>
 <th>Mechanics</th>
 <th>Damage PDE</th>
-<th>Damage integrator</th>
+<th>Integrator</th>
 <th>Coupling</th>
 </tr>
 </thead>
@@ -870,58 +849,53 @@ distributed as a proprietary package via GitHub Releases.</p>
 <td>quasi_static</td>
 <td>elliptic</td>
 <td>implicit</td>
-<td>stagger_fixed_point</td>
+<td>stagger</td>
 </tr>
 <tr>
 <td>S2</td>
-<td>explicit_central_difference</td>
+<td>explicit CD</td>
 <td>elliptic</td>
 <td>implicit</td>
-<td>stagger_one_pass</td>
+<td>one_pass</td>
 </tr>
 <tr>
 <td>S3</td>
-<td>explicit_central_difference</td>
-<td>parabolic_viscous</td>
-<td>explicit_euler</td>
-<td>stagger_one_pass</td>
+<td>explicit CD</td>
+<td>parabolic</td>
+<td>explicit</td>
+<td>one_pass</td>
 </tr>
 <tr>
 <td>S4</td>
-<td>explicit_central_difference</td>
+<td>explicit CD</td>
 <td>inertial</td>
-<td>explicit_verlet</td>
-<td>stagger_one_pass</td>
+<td>verlet</td>
+<td>one_pass</td>
 </tr>
 <tr>
 <td>S5</td>
 <td>quasi_static</td>
-<td>parabolic_viscous</td>
+<td>parabolic</td>
 <td>implicit</td>
-<td>stagger_fixed_point</td>
+<td>stagger</td>
 </tr>
 <tr>
 <td>S6</td>
 <td>quasi_static</td>
-<td>pseudo_parabolic</td>
+<td>pseudo_par</td>
 <td>implicit</td>
-<td>stagger_fixed_point</td>
+<td>stagger</td>
 </tr>
 <tr>
 <td>S7</td>
-<td>explicit_central_difference</td>
-<td>pseudo_parabolic</td>
-<td>explicit_euler_tau</td>
-<td>stagger_one_pass</td>
+<td>explicit CD</td>
+<td>pseudo_par</td>
+<td>explicit</td>
+<td>one_pass</td>
 </tr>
 </tbody>
 </table>
-<p>See the <a href="api/#4-phase-field-fracture-strategies-s1s7">API reference</a> for configuration details.</p>
-<hr />
-<h2 id="what-is-in-this-repository">What is in this repository?<a class="headerlink" href="#what-is-in-this-repository" title="Permanent link">&para;</a></h2>
-<p>This public repository ships <strong>documentation and examples only</strong>. The numerical
-implementation is distributed as a proprietary Python package via GitHub Releases.</p>
-<p>For installation instructions, see <a href="install/">install.md</a>.</p>
+<p>Details: <a href="api/#4-phase-field-fracture-strategies-s1s7">API §4</a>.</p>
 
 
 
