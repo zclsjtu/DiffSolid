@@ -25,6 +25,12 @@ curated figure sequence; click any panel for full resolution.
  <span class="ds-tile__desc">Cook's membrane convergence; axisymmetric necking — F-bar, F-bar-Patch, EAS vs standard elements.</span>
 </a>
 
+<a class="ds-tile" href="solver-efficiency/">
+ <span class="ds-tile__label">Story · Performance</span>
+ <span class="ds-tile__title">Solver efficiency</span>
+ <span class="ds-tile__desc">2D implicit scaling (<code>fig_2d_all_solvers</code>) and explicit GPU efficiency on Kalthoff benchmarks.</span>
+</a>
+
 </div>
 
 ## By topic
