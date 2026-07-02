@@ -2,7 +2,7 @@
 
 A end-to-end case study on the same phase-field stack: quasi-static branching on an elliptic
 plate, dynamic Kalthoff-type impact with dense mesh closure, staggered **S3** coupling
-sensitivity, and explicit-dynamics **GPU efficiency** at production mesh sizes.
+sensitivity, and explicit-dynamics **GPU efficiency** on the strict Kalthoff benchmark.
 
 <div class="ds-gallery ds-gallery--story" markdown="1">
 
@@ -33,9 +33,9 @@ sensitivity, and explicit-dynamics **GPU efficiency** at production mesh sizes.
 <figure class="ds-gallery__item ds-gallery__item--wide ds-gallery__item--step">
   <span class="ds-gallery__step">4</span>
   <a href="../assets/stories/kalthoff-borden-gpu/04_gpu_efficiency.png" target="_blank" rel="noopener">
-    <img src="../assets/stories/kalthoff-borden-gpu/04_gpu_efficiency.png" alt="Explicit GPU efficiency for Kalthoff strict benchmark, mesh sizes n100 to n2000" loading="lazy" />
+    <img src="../assets/stories/kalthoff-borden-gpu/04_gpu_efficiency.png" alt="Explicit GPU efficiency for Kalthoff strict benchmark across case indices n100 to n2000" loading="lazy" />
   </a>
-  <figcaption><strong>GPU scaling.</strong> Explicit dynamics GPU efficiency on the strict Kalthoff benchmark — mesh sizes <code>n = 100 … 2000</code>.</figcaption>
+  <figcaption><strong>GPU scaling.</strong> Explicit dynamics GPU efficiency on the strict Kalthoff benchmark — benchmark cases <code>n100 … n2000</code>.</figcaption>
 </figure>
 
 </div>
