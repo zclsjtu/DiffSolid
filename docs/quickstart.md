@@ -6,7 +6,7 @@ Worked examples for common simulation setups and custom constitutive models.
 
 ## Prerequisites
 
-Install the package after [wheel access approval](install.md#request-access), then verify:
+Install the package after you [receive a preview wheel by email](install.md#request-preview-wheel), then verify:
 
 ```bash
 python -c "import diffsolid as ds; print(ds.__name__)"

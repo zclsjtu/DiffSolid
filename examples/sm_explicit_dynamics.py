@@ -1,4 +1,4 @@
-# Requires: pip install from approved wheel — see ../docs/install.md
+# Requires: pip install preview wheel from email — see ../docs/install.md
 
 """Explicit dynamics on a linear elastic bar (mechanics only)."""
 

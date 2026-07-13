@@ -102,32 +102,27 @@ pip install jax-cuda12-plugin jax-cuda12-pjrt
 
 ## 4. Installing DiffSolid
 
-DiffSolid is **not** published on PyPI. Preview wheels are distributed on request
-only — they are not publicly downloadable.
+DiffSolid is **not** published on PyPI. Preview wheels are distributed **by email
+on request** — not from this documentation site.
 
-### Request access
+### Request a preview wheel
 
-Send an email to **[ChenlongZhao@sjtu.edu.cn](mailto:ChenlongZhao@sjtu.edu.cn)** with:
+Email **[ChenlongZhao@sjtu.edu.cn](mailto:ChenlongZhao@sjtu.edu.cn)** with:
+
 - Your name and affiliation
 - Intended use (research, evaluation, collaboration, …)
 - Python version and OS
 
-We typically respond within a few business days. Approved users receive a **download password**
-(and portal link when enabled) by email.
+We review each request and reply when we can provide a wheel. Preview wheels may
+**include plain Python source** inside the package; we decide per request whether
+to distribute them.
 
-> **Preview wheels** may contain plain Python source inside the package. Do not
-> redistribute wheels or credentials. Compiled wheels without source will follow
-> when the API stabilises.
+> Compiled wheels without source may be offered later when the API stabilises.
+> Do not redistribute wheels you receive.
 
+### Install
 
-### Download wheel (password)
-
-After approval, you will receive a **portal link and access password** by email. The [Download wheel](download.md) page describes the install flow.
-
-
-### Install after approval
-
-Download the wheel via the portal, then install:
+After you receive a wheel by email:
 
 ```bash
 pip install /path/to/diffsolid-*.whl

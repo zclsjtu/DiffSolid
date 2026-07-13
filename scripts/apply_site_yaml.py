@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Inject site.yaml values into generated docs (download portal, install section)."""
+"""Inject site.yaml values into generated docs (install / download sections)."""
 
 from __future__ import annotations
 
@@ -38,32 +38,6 @@ def _contact_email(dist: dict[str, str]) -> str:
 
 def render_download_md(dist: dict[str, str]) -> str:
     contact = _contact_email(dist)
-    portal = dist.get("download_portal_url", "").strip()
-
-    if portal:
-        portal_block = f"""
-<div class="ds-download__portal" markdown="1">
-
-<form class="ds-download__form" method="post" action="{portal.rstrip('/')}/download">
-  <label class="ds-download__label" for="wheel-password">Access password</label>
-  <input class="ds-download__input" id="wheel-password" name="password" type="password" autocomplete="current-password" required />
-  <button class="ds-download__submit" type="submit">Download preview wheel</button>
-</form>
-
-<p class="ds-download__hint">The form opens the password-protected download service. Use the password from your approval email only.</p>
-
-<p class="ds-download__alt">Prefer the hosted portal? <a href="{portal}" target="_blank" rel="noopener">Open download page ↗</a></p>
-
-</div>
-"""
-    else:
-        portal_block = """
-<div class="ds-download__portal ds-download__portal--pending" markdown="1">
-
-<p class="ds-download__pending">The password download portal is enabled after your access request is approved. You will receive the portal URL and password by email.</p>
-
-</div>
-"""
 
     return f"""---
 title: Download wheel
@@ -71,15 +45,19 @@ title: Download wheel
 
 # Download wheel
 
-Preview wheels are **not on PyPI**. Approved users install via a **password-protected download** — credentials are sent by email after [access approval](install.md#request-access).
+Preview wheels are **not on PyPI** and **not publicly downloadable** from this site.
 
-{portal_block}
+<div class="ds-download__portal ds-download__portal--pending" markdown="1">
 
-## Before you download
+<p class="ds-download__pending">Email <a href="mailto:{contact}">{contact}</a> to request a preview wheel. We reply by email when distribution is appropriate — there is no automatic download here.</p>
 
-1. Email **[{contact}](mailto:{contact})** with your name, affiliation, intended use, Python version, and OS.
-2. After approval, use the password (and portal link, if provided) from our reply.
-3. Install locally:
+</div>
+
+## How it works
+
+1. **Email** **[{contact}](mailto:{contact})** with your name, affiliation, intended use, Python version, and OS.
+2. **We review** each request and decide whether to send a preview wheel (preview builds may include plain Python source).
+3. **Install** from the wheel we attach or link in our reply:
 
 ```bash
 pip install /path/to/diffsolid-*.whl
@@ -89,56 +67,40 @@ python -c "import diffsolid as ds; print('DiffSolid OK')"
 See [Install guide](install.md) for GPU setup and optional extras.
 
 !!! warning "Distribution terms"
-    Do not share passwords, portal links, or wheel files. Preview wheels may contain plain Python source; redistribution is not permitted.
+    Preview wheels are for your use only. Do not redistribute wheels or share them publicly.
 
-[← Request access](install.md#request-access)
+[← Install guide](install.md#request-preview-wheel)
 """
 
 
-def patch_install_portal(install_text: str, dist: dict[str, str]) -> str:
+def patch_install_wheel_section(install_text: str, dist: dict[str, str]) -> str:
     contact = _contact_email(dist)
-    portal = dist.get("download_portal_url", "").strip()
-
-    portal_section = ""
-    if portal:
-        portal_section = f"""
-### Download wheel (password)
-
-Approved users can download the latest preview wheel on the **[Download wheel](download.md)** page or directly at [{portal}]({portal}).
-
-Enter the access password from your approval email. Do not share the password or wheel file.
-"""
-    else:
-        portal_section = f"""
-### Download wheel (password)
-
-After approval, you will receive a **portal link and access password** by email. The [Download wheel](download.md) page describes the install flow.
-
-"""
+    form_url = dist.get("request_form_url", "").strip()
+    form_section = f"\nOr use the [request form]({form_url}).\n" if form_url else ""
 
     replacement = f"""## 4. Installing DiffSolid
 
-DiffSolid is **not** published on PyPI. Preview wheels are distributed on request
-only — they are not publicly downloadable.
+DiffSolid is **not** published on PyPI. Preview wheels are distributed **by email
+on request** — not from this documentation site.
 
-### Request access
+### Request a preview wheel
 
-Send an email to **[{contact}](mailto:{contact})** with:
+Email **[{contact}](mailto:{contact})** with:
+
 - Your name and affiliation
 - Intended use (research, evaluation, collaboration, …)
 - Python version and OS
 
-We typically respond within a few business days. Approved users receive a **download password**
-(and portal link when enabled) by email.
+We review each request and reply when we can provide a wheel. Preview wheels may
+**include plain Python source** inside the package; we decide per request whether
+to distribute them.
 
-> **Preview wheels** may contain plain Python source inside the package. Do not
-> redistribute wheels or credentials. Compiled wheels without source will follow
-> when the API stabilises.
+> Compiled wheels without source may be offered later when the API stabilises.
+> Do not redistribute wheels you receive.
+{form_section}
+### Install
 
-{portal_section}
-### Install after approval
-
-Download the wheel via the portal, then install:
+After you receive a wheel by email:
 
 ```bash
 pip install /path/to/diffsolid-*.whl
@@ -178,11 +140,10 @@ def main() -> None:
     (DOCS / "download.md").write_text(render_download_md(dist), encoding="utf-8")
     install_path = DOCS / "install.md"
     install_path.write_text(
-        patch_install_portal(install_path.read_text(encoding="utf-8"), dist),
+        patch_install_wheel_section(install_path.read_text(encoding="utf-8"), dist),
         encoding="utf-8",
     )
-    portal = dist.get("download_portal_url", "").strip() or "(email only — set download_portal_url in site.yaml)"
-    print(f"Applied site.yaml → download.md, install.md (portal: {portal})")
+    print(f"Applied site.yaml → download.md, install.md (contact: {_contact_email(dist)})")
 
 
 if __name__ == "__main__":
