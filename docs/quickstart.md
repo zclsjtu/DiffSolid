@@ -107,16 +107,26 @@ sim.load_mesh("bar.msh")
 steel = ds.materials.FractureElasticity(E=210e3, nu=0.3, split="spectral")
 solid = sim.add_physics(ds.physics.SolidMechanics(material=steel))
 
+# l0 = phase-field regularisation length ℓ (not mesh size h).
+# Mesh size h comes from the mesh; keep ℓ / h ≳ 2 typically.
 degrad = ds.materials.AT2_Degradation(Gc=2.7e-3, l0=0.01)
 pf = sim.add_physics(ds.physics.PhaseField(
     field="d",
     type=ds.physics.Fracture(
         degradation=degrad,
-        damage=ds.physics.DamageEvolution(pde="elliptic", integrator="implicit"),
+        damage=ds.physics.Elliptic(),  # or DamageEvolution(pde="elliptic", integrator="implicit")
+        driving="W_plus",
+        history="max",
     ),
 ))
 
-sim.set_coupler(ds.couplers.Staggered(max_iter=50, tol=1e-4))
+# Damage subproblem: VI-Newton (irreversibility d ∈ [d_old, 1]).
+# If pf_solver is omitted, the default is L-BFGS-B — not VI-Newton.
+sim.set_coupler(ds.couplers.Staggered(
+    max_iter=50,
+    tol=1e-4,
+    pf_solver=ds.solvers.VINewtonSolver(preset="elliptic"),
+))
 sim.set_linear_solver(ds.solvers.AMGCL(gpu=True, relaxation="chebyshev"))
 
 step = sim.add_step(name="load", duration=1.0, dt=0.01)
@@ -128,6 +138,11 @@ sim.solve(output_dir="results/", save_every=5)
 ```
 
 **Strategy ID:** S1 — `quasi_static` + `elliptic` + `implicit` + `stagger_fixed_point`.
+
+**Notes**
+
+- Phase-field length scale is `l0` on `AT1_Degradation` / `AT2_Degradation` / cohesive models. There is no separate `h=` API — mesh size `h` is defined by the mesh file.
+- For VI-Newton options (`preset`, inner `linear_solver`, tolerances), see [API → Couplers / Solvers](api/index.md#71-staggered).
 
 ---
 

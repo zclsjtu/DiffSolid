@@ -13,18 +13,27 @@ def main() -> None:
     steel = ds.materials.FractureElasticity(E=210e3, nu=0.3, split="spectral")
     sim.add_physics(ds.physics.SolidMechanics(material=steel))
 
+    # l0 = regularisation length ℓ (mesh size h comes from the mesh).
     degrad = ds.materials.AT2_Degradation(Gc=2.7e-3, l0=0.01)
     pf = sim.add_physics(
         ds.physics.PhaseField(
             field="d",
             type=ds.physics.Fracture(
                 degradation=degrad,
-                damage=ds.physics.DamageEvolution(pde="elliptic", integrator="implicit"),
+                damage=ds.physics.Elliptic(),
+                driving="W_plus",
+                history="max",
             ),
         )
     )
 
-    sim.set_coupler(ds.couplers.Staggered(max_iter=50, tol=1e-4))
+    sim.set_coupler(
+        ds.couplers.Staggered(
+            max_iter=50,
+            tol=1e-4,
+            pf_solver=ds.solvers.VINewtonSolver(preset="elliptic"),
+        )
+    )
     sim.set_linear_solver(ds.solvers.AMGCL(gpu=True, relaxation="chebyshev"))
 
     step = sim.add_step(name="load", duration=1.0, dt=0.01)

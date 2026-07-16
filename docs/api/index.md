@@ -397,8 +397,8 @@ Dedicated 2D r–z axisymmetric backend. Prefer the unified entry point
 pf = sim.add_physics(ds.physics.PhaseField(
     field="d",
     type=ds.physics.Fracture(
-        degradation=degrad,
-        damage=ds.physics.DamageEvolution(pde="elliptic", integrator="implicit"),
+        degradation=degrad,  # AT2_Degradation(Gc=..., l0=...) — l0 is ℓ, not mesh h
+        damage=ds.physics.Elliptic(),  # or DamageEvolution(pde="elliptic", integrator="implicit")
         driving="W_plus",
         history="max",
     ),
@@ -406,7 +406,8 @@ pf = sim.add_physics(ds.physics.PhaseField(
 ))
 ```
 
-Only `type="fracture"` (or `Fracture(...)`) is implemented.
+Only `type="fracture"` (or `Fracture(...)`) is implemented. The phase-field length
+scale is `l0` on the degradation object; mesh size `h` comes from the mesh.
 
 ### 5.4 `Fracture` / `PhaseFieldFracture`
 
