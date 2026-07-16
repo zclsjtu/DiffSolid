@@ -1216,11 +1216,11 @@ The global tangent stiffness matrix $\mathbf{K}$ is stored in CSR (Compressed Sp
 |---|---|---|---|
 | `jax_gpu_solver` | BCOO | GPU | BiCGSTAB, diagonal preconditioner |
 | `jax_solver` | BCOO | CPU | BiCGSTAB, diagonal preconditioner |
+| `amgx_solver` | CSR | GPU | NVIDIA AmgX AMG (**preferred** iterative GPU) |
+| `cudss_solver` | CSR | GPU | NVIDIA cuDSS direct solver |
 | `amgcl_solver` | CSR | CPU/GPU | Algebraic multigrid, Chebyshev smoother |
 | `umfpack_solver` | CSR | CPU | Direct sparse LU (`scipy.sparse.linalg.spsolve`) |
 | `petsc_solver` | CSR | CPU | PETSc KSP (BCGSL + ILU) |
-| `cudss_solver` | CSR | GPU | NVIDIA cuDSS direct solver |
-| `amgx_solver` | CSR | GPU | NVIDIA AmgX AMG |
 
 ### 16.2 JAX-Native Iterative Solvers
 
@@ -1242,9 +1242,15 @@ An optional diagonal preconditioner $\mathbf{M}^{-1} = \text{diag}(1/K_{ii})$ is
 
 For symmetric positive-definite systems (linear elasticity, phase-field Laplacian), the standard preconditioned CG method is available with the same convergence and preconditioner options as BiCGSTAB.
 
-### 16.3 AMGCL Algebraic Multigrid
+### 16.3 NVIDIA AmgX
 
-The AMGCL library (Demidov 2019) provides GPU-accelerated algebraic multigrid (AMG) preconditioners. Recommended configurations based on empirical benchmarking on this library:
+NVIDIA AmgX provides GPU algebraic multigrid. On current DiffSolid implicit benchmarks
+(H200), AmgX is the preferred iterative backend for large elasticity / plasticity systems,
+typically ahead of AMGCL CUDA and competitive with or better than cuDSS at large DOF.
+
+### 16.4 AMGCL Algebraic Multigrid
+
+The AMGCL library (Demidov 2019) provides GPU-accelerated algebraic multigrid (AMG) preconditioners (fallback when AmgX is unavailable). Recommended configurations based on empirical benchmarking on this library:
 
 | Problem type | Smoother | Krylov solver |
 |---|---|---|
