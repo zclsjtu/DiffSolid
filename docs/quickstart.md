@@ -40,7 +40,7 @@ sim.add_physics(ds.physics.SolidMechanics(
     geometry="3d",
     formulation="fbar",
 ))
-sim.set_linear_solver(ds.solvers.AMGCL(gpu=True))
+sim.set_linear_solver(ds.solvers.AMGx())
 
 step = sim.add_step(name="tension", duration=1.0, dt=0.02, line_search=True)
 step.add_dirichlet_bc(on="x == 0", components=["x", "y", "z"], value=0.0)
@@ -127,7 +127,7 @@ sim.set_coupler(ds.couplers.Staggered(
     tol=1e-4,
     pf_solver=ds.solvers.VINewtonSolver(preset="elliptic"),
 ))
-sim.set_linear_solver(ds.solvers.AMGCL(gpu=True, relaxation="chebyshev"))
+sim.set_linear_solver(ds.solvers.AMGx())
 
 step = sim.add_step(name="load", duration=1.0, dt=0.01)
 step.add_dirichlet_bc(on="x == 0", components=["x", "y"], value=0.0)
@@ -245,7 +245,7 @@ sim.load_mesh("plate.msh")
 
 mat = LinearElasticUMAT(E=210e3, nu=0.3)
 sim.add_physics(ds.physics.SolidMechanics(material=mat))
-sim.set_linear_solver(ds.solvers.AMGCL(gpu=True))
+sim.set_linear_solver(ds.solvers.AMGx())
 
 step = sim.add_step(name="stretch", duration=1.0, dt=0.05)
 step.add_dirichlet_bc(on="x == 0", components=["x", "y"], value=0.0)

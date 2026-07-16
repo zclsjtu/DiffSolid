@@ -102,7 +102,7 @@ quasi-static or explicit dynamic — with built-in constitutive models.
   <li><strong>Analysis modes</strong> — implicit quasi-static equilibrium; explicit central-difference dynamics; Newton–Raphson with line search and arc-length continuation</li>
   <li><strong>Built-in materials</strong> — linear and Neo-Hookean elasticity; J2 and finite-strain plasticity; viscoelasticity; FCC/BCC/HCP crystal plasticity; Mooney–Rivlin and Ogden hyperelastic potentials</li>
   <li><strong>Model setup</strong> — multi-material mesh sections, body forces, step-scoped Dirichlet/Neumann BCs, thickness for 2D models</li>
-  <li><strong>Large-scale solves</strong> — GPU sparse backends (AMGCL, CUDSS) for 3D plasticity and nonlinear systems</li>
+  <li><strong>Large-scale solves</strong> — GPU sparse backends (AmgX, cuDSS, AMGCL) for 3D plasticity and nonlinear systems</li>
 </ul>
 
 <p class="ds-cap-block__link"><a href="quickstart/#example-1-finite-strain-j2-plasticity-fe-fp">Finite-strain plasticity →</a> · <a href="quickstart/#example-2-explicit-dynamics-linear-elastic-bar">Explicit dynamics →</a></p>

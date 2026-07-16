@@ -47,7 +47,7 @@ Click a case for the full story; click any panel inside for full resolution.
   </span>
   <span class="ds-gallery-card__body">
     <span class="ds-gallery-card__title">Solver efficiency</span>
-    <span class="ds-gallery-card__desc">DiffSolid H200 vs FEniCSx CPU×64; explicit GPU throughput on Kalthoff benchmarks.</span>
+    <span class="ds-gallery-card__desc">DiffSolid AmgX on H200 vs FEniCSx CPU×64; explicit GPU throughput on Kalthoff benchmarks.</span>
   </span>
 </a>
 

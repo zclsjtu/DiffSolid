@@ -34,7 +34,7 @@ def main() -> None:
             pf_solver=ds.solvers.VINewtonSolver(preset="elliptic"),
         )
     )
-    sim.set_linear_solver(ds.solvers.AMGCL(gpu=True, relaxation="chebyshev"))
+    sim.set_linear_solver(ds.solvers.AMGx())
 
     step = sim.add_step(name="load", duration=1.0, dt=0.01)
     step.add_dirichlet_bc(on="x == 0", components=["x", "y"], value=0.0)

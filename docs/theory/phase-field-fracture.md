@@ -150,7 +150,7 @@ Worked API examples: [Quick Start — Phase-field fracture](../quickstart.md#pha
 
 Damage growth is **irreversible**: $d_{n+1} \ge d_n$ at every quadrature point / node. Elliptic damage problems are cast as **variational inequalities** solved with active-set Newton (VI solver).
 
-Mechanics uses standard Newton–Raphson (quasi-static) or explicit integration (dynamic). Phase-field systems often employ separate linear solvers (e.g. AMGCL) for the damage Laplacian.
+Mechanics uses standard Newton–Raphson (quasi-static) or explicit integration (dynamic). Phase-field systems often employ separate linear solvers (e.g. AmgX or AMGCL) for the damage Laplacian.
 
 ---
 

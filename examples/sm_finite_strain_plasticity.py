@@ -22,7 +22,7 @@ def main() -> None:
             formulation="fbar",
         )
     )
-    sim.set_linear_solver(ds.solvers.AMGCL(gpu=True))
+    sim.set_linear_solver(ds.solvers.AMGx())
 
     step = sim.add_step(name="tension", duration=1.0, dt=0.02, line_search=True)
     step.add_dirichlet_bc(on="x == 0", components=["x", "y", "z"], value=0.0)

@@ -8,7 +8,7 @@ gradient-based inverse design.
 
 - Quasi-static and explicit dynamics on JAX (CPU/GPU)
 - Phase-field fracture (AT1/AT2, cohesive; staggered S1–S7)
-- GPU sparse solvers (AMGCL CUDA, NVIDIA cuDSS)
+- GPU sparse solvers (**NVIDIA AmgX** preferred; cuDSS, AMGCL CUDA)
 - Gradient-based inverse / calibration workflows
 - Public docs, Quick Start, theory chapters, and gallery benchmarks
 

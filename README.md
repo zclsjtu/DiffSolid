@@ -30,7 +30,7 @@ gradient-based inverse design.**
 ---
 
 Problems are set up in Python; assembly and solvers run on **JAX** with optional **GPU**
-backends (AMGCL, cuDSS). The stack supports quasi-static and explicit dynamics, staggered
+backends (AmgX, cuDSS, AMGCL). The stack supports quasi-static and explicit dynamics, staggered
 multi-physics coupling, and gradient-based inverse problems.
 
 ```python
@@ -76,8 +76,8 @@ result = sim.solve(output_dir="results/")
 </tr>
 </table>
 
-**Solvers & performance** — GPU sparse linear algebra (AMGCL CUDA, NVIDIA cuDSS); explicit
-dynamics on H200-class hardware; implicit scaling benchmarked against **FEniCSx (64-core CPU)**.
+**Solvers & performance** — GPU sparse linear algebra (**NVIDIA AmgX** preferred; cuDSS, AMGCL CUDA);
+explicit dynamics on H200-class hardware; implicit scaling benchmarked against **FEniCSx (64-core CPU)**.
 
 ---
 
@@ -101,7 +101,7 @@ Curated benchmark figure sequences (visualisation only — no solver source):
 - [Dynamic fracture](https://zclsjtu.github.io/DiffSolid/gallery/dynamic-fracture/) — Borden branching through Kalthoff GPU scaling
 - [Quasi-static PF fracture](https://zclsjtu.github.io/DiffSolid/gallery/quasi-static-pf-fracture/) — L-panel and periodic unit cells
 - [Volumetric locking](https://zclsjtu.github.io/DiffSolid/gallery/volumetric-locking/) — Cook membrane and axisymmetric necking
-- [Solver efficiency](https://zclsjtu.github.io/DiffSolid/gallery/solver-efficiency/) — H200 vs FEniCSx CPU scaling
+- [Solver efficiency](https://zclsjtu.github.io/DiffSolid/gallery/solver-efficiency/) — AmgX on H200 vs FEniCSx CPU scaling
 
 → [Full gallery index](https://zclsjtu.github.io/DiffSolid/gallery/)
 

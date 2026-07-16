@@ -70,7 +70,7 @@ import diffsolid as ds
 sim = ds.Simulation(name="case", dim=3, ele_type="HEX8")
 sim.load_mesh("mesh.msh")
 sim.add_physics(ds.physics.SolidMechanics(material=mat))
-sim.set_linear_solver(ds.solvers.AMGCL(gpu=True))
+sim.set_linear_solver(ds.solvers.AMGx())
 
 step = sim.add_step(name="load", duration=1.0, dt=0.01)
 step.add_dirichlet_bc(on="x == 0", components=["x", "y", "z"], value=0.0)
@@ -510,7 +510,7 @@ sim.set_coupler(ds.couplers.Staggered(
     stagger_damage_accel="off",                   # or "aitken"
     mech_solver=ds.solvers.NewtonSolver(...),
     pf_solver=ds.solvers.VINewtonSolver(preset="elliptic"),
-    pf_linear_solver=ds.solvers.AMGCL(gpu=True),
+    pf_linear_solver=ds.solvers.AMGx(),
     driving_force_fn=None,
     mech_single_linear=False,
     at2_history_mode=False,
@@ -557,13 +557,18 @@ Namespace: `ds.solvers`
 
 | Class | Role |
 |-------|------|
-| `AMGCL(gpu=True, relaxation="chebyshev", solver_type="fgmres", ...)` | Iterative AMG; **recommended for 3D** |
+| `AMGx(...)` | NVIDIA AmgX AMG — **preferred GPU iterative solver** |
 | `CUDSS(reorder="amd")` | GPU direct sparse solver |
+| `AMGCL(gpu=True, relaxation="chebyshev", solver_type="fgmres", ...)` | Iterative AMG (CUDA extension) |
 | `UMFPACK()` | CPU direct (default fallback) |
 | `SciPy()` | CPU SciPy backend |
-| `AMGx(...)` | NVIDIA AmgX (optional) |
 | `BiCGSTAB(tol=..., maxiter=...)` | JAX iterative (VI inner solves) |
 | `CG(tol=..., maxiter=...)` | JAX CG for SPD systems |
+
+**AmgX notes:**
+
+- Preferred for large implicit elasticity / plasticity on NVIDIA GPUs (H100/H200 class).
+- Requires AmgX + pyamgx (optional GPU extra); see Install guide.
 
 **AMGCL notes:**
 
@@ -576,8 +581,9 @@ Namespace: `ds.solvers`
 
 | Problem | Default |
 |---------|---------|
-| 3D plasticity, necking, arc-length | `CUDSS(reorder="amd")` |
-| 3D elastic / large PF elliptic systems | `AMGCL(gpu=True, relaxation="chebyshev")` |
+| Large 2D/3D elastic / PF elliptic (GPU) | `AMGx()` |
+| 3D plasticity, necking, arc-length | `CUDSS(reorder="amd")` or `AMGx()` |
+| GPU without AmgX installed | `AMGCL(gpu=True, relaxation="chebyshev")` |
 | 2D moderate DOF | `CUDSS` or `UMFPACK` |
 | Explicit dynamics | No per-step linear solve |
 

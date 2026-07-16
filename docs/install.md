@@ -274,11 +274,11 @@ PETSc is not installed via pip. Use conda-forge:
 conda install -c conda-forge petsc=3.23 petsc4py openmpi -y
 ```
 
-### NVIDIA AmgX / pyamgx (optional)
+### NVIDIA AmgX / pyamgx (**preferred GPU iterative backend**)
 
-Only required if you explicitly use the AmgX backend. See the
-[pyamgx documentation](https://pyamgx.readthedocs.io/). AMGCL, cuDSS, and JAX iterative
-solvers do not depend on AmgX.
+Recommended for large implicit elasticity and plasticity on NVIDIA GPUs (H100/H200).
+Install AmgX + pyamgx; see the [pyamgx documentation](https://pyamgx.readthedocs.io/).
+cuDSS (direct) and AMGCL CUDA remain available alternatives when AmgX is not installed.
 
 ---
 

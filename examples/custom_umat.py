@@ -29,7 +29,7 @@ def main() -> None:
 
     mat = LinearElasticUMAT(E=210e3, nu=0.3)
     sim.add_physics(ds.physics.SolidMechanics(material=mat))
-    sim.set_linear_solver(ds.solvers.AMGCL(gpu=True))
+    sim.set_linear_solver(ds.solvers.AMGx())
 
     step = sim.add_step(name="stretch", duration=1.0, dt=0.05)
     step.add_dirichlet_bc(on="x == 0", components=["x", "y"], value=0.0)
