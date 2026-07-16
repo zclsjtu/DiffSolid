@@ -1,23 +1,31 @@
 cff-version: 1.2.0
-title: DiffSolid
+title: "DiffSolid: JAX-native differentiable finite elements for solid mechanics and phase-field fracture"
 message: "If you use this software, please cite it as below."
 type: software
 authors:
-  - name: DiffSolid developers
+  - family-names: Zhao
+    given-names: Chenlong
+    email: ChenlongZhao@sjtu.edu.cn
+    affiliation: Shanghai Jiao Tong University
 repository-code: https://github.com/zclsjtu/DiffSolid
 url: https://zclsjtu.github.io/DiffSolid/
 license: Proprietary
 version: 0.1.0
+date-released: "2026-07-16"
 keywords:
   - finite element method
   - phase-field fracture
   - JAX
   - differentiable simulation
   - GPU
+  - solid mechanics
+  - inverse design
 preferred-citation:
   type: software
-  title: "DiffSolid: JAX-native differentiable solid mechanics and phase-field fracture"
+  title: "DiffSolid: JAX-native differentiable finite elements for solid mechanics and phase-field fracture"
   authors:
-    - name: DiffSolid developers
+    - family-names: Zhao
+      given-names: Chenlong
+  version: 0.1.0
   year: 2026
   url: https://github.com/zclsjtu/DiffSolid

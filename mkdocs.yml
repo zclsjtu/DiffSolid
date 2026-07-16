@@ -1,5 +1,8 @@
-site_name: DiffSolid
-site_description: JAX-native differentiable solid mechanics and phase-field fracture
+site_name: DiffSolid — Differentiable Finite Elements with JAX
+site_description: >
+  DiffSolid is a JAX-native differentiable finite-element framework
+  for nonlinear solid mechanics, phase-field fracture, GPU computing,
+  and gradient-based inverse design.
 site_url: https://zclsjtu.github.io/DiffSolid/
 repo_url: https://github.com/zclsjtu/DiffSolid
 repo_name: DiffSolid
@@ -73,7 +76,7 @@ extra_javascript:
   - javascripts/katex.js
 
 nav:
-  - Home: index.md
+  - DiffSolid: index.md
   - Install: install.md
   - Download wheel: download.md
   - Quick Start: quickstart.md

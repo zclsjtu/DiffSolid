@@ -1,12 +1,13 @@
+# DiffSolid
+
+**DiffSolid is a JAX-native differentiable finite-element framework for
+nonlinear solid mechanics, phase-field fracture, GPU computing, and
+gradient-based inverse design.**
+
 <p align="center">
   <a href="https://zclsjtu.github.io/DiffSolid/">
     <img src="docs/assets/diffsolid-logo.png" alt="DiffSolid" width="168"/>
   </a>
-</p>
-
-<p align="center">
-  <strong>JAX-native differentiable finite elements</strong><br/>
-  Nonlinear solid mechanics · phase-field fracture · GPU solvers
 </p>
 
 <p align="center">
@@ -28,7 +29,6 @@
 
 ---
 
-**DiffSolid** is a simulation platform for nonlinear solid mechanics and phase-field fracture.
 Problems are set up in Python; assembly and solvers run on **JAX** with optional **GPU**
 backends (AMGCL, cuDSS). The stack supports quasi-static and explicit dynamics, staggered
 multi-physics coupling, and gradient-based inverse problems.
@@ -98,12 +98,10 @@ dynamics on H200-class hardware; implicit scaling benchmarked against **FEniCSx 
 
 Curated benchmark figure sequences (visualisation only — no solver source):
 
-| Case | Topic |
-|------|--------|
-| [Dynamic fracture](https://zclsjtu.github.io/DiffSolid/gallery/dynamic-fracture/) | Borden branching, Kalthoff impact, S3 coupling, GPU scaling |
-| [Quasi-static PF fracture](https://zclsjtu.github.io/DiffSolid/gallery/quasi-static-pf-fracture/) | L-panel cohesive fracture, PBC unit cells |
-| [Volumetric locking](https://zclsjtu.github.io/DiffSolid/gallery/volumetric-locking/) | Cook's membrane; axisymmetric necking (F-bar / EAS) |
-| [Solver efficiency](https://zclsjtu.github.io/DiffSolid/gallery/solver-efficiency/) | H200 vs FEniCSx CPU×64; explicit GPU throughput |
+- [Dynamic fracture](https://zclsjtu.github.io/DiffSolid/gallery/dynamic-fracture/) — Borden branching through Kalthoff GPU scaling
+- [Quasi-static PF fracture](https://zclsjtu.github.io/DiffSolid/gallery/quasi-static-pf-fracture/) — L-panel and periodic unit cells
+- [Volumetric locking](https://zclsjtu.github.io/DiffSolid/gallery/volumetric-locking/) — Cook membrane and axisymmetric necking
+- [Solver efficiency](https://zclsjtu.github.io/DiffSolid/gallery/solver-efficiency/) — H200 vs FEniCSx CPU scaling
 
 → [Full gallery index](https://zclsjtu.github.io/DiffSolid/gallery/)
 
@@ -116,12 +114,9 @@ Scripts under [`examples/`](examples/) use the public `import diffsolid as ds` A
 ```bash
 python examples/sm_finite_strain_plasticity.py
 python examples/sm_explicit_dynamics.py
-python examples/s1_quasi_static.py
-python examples/s3_explicit_dynamics.py
-python examples/custom_umat.py
 ```
 
-Place a mesh at `meshes/bar.msh` or edit paths in the scripts. Details: [examples/README.md](examples/README.md).
+Place a mesh at `meshes/bar.msh` or edit paths in the scripts. Details: [`examples/README.md`](examples/README.md).
 
 ---
 
@@ -140,11 +135,13 @@ Implementation is **not open source**. Use is subject to the [license](docs/lega
 ## Citation
 
 ```bibtex
-@software{diffsolid2026,
-  title  = {DiffSolid: JAX-native differentiable solid mechanics and phase-field fracture},
-  author = {DiffSolid developers},
-  year   = {2026},
-  url    = {https://github.com/zclsjtu/DiffSolid}
+@software{zhao_diffsolid_2026,
+  author  = {Zhao, Chenlong},
+  title   = {DiffSolid: JAX-native differentiable finite elements
+             for solid mechanics and phase-field fracture},
+  version = {0.1.0},
+  year    = {2026},
+  url     = {https://github.com/zclsjtu/DiffSolid}
 }
 ```
 

@@ -1,3 +1,9 @@
+# DiffSolid
+
+**DiffSolid is a JAX-native differentiable finite-element framework for
+nonlinear solid mechanics, phase-field fracture, GPU computing, and
+gradient-based inverse design.**
+
 <div class="ds-home" markdown="1">
 
 <section class="ds-home__hero">
