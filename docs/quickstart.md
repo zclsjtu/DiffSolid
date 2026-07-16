@@ -40,7 +40,12 @@ sim.add_physics(ds.physics.SolidMechanics(
     geometry="3d",
     formulation="fbar",
 ))
-sim.set_linear_solver(ds.solvers.AMGx())
+sim.set_solver(
+    mech=ds.solvers.nonlinear.Newton(
+        linear_solver=ds.solvers.linear.AMGCL(gpu=True),
+        line_search=True,
+    ),
+)
 
 step = sim.add_step(name="tension", duration=1.0, dt=0.02, line_search=True)
 step.add_dirichlet_bc(on="x == 0", components=["x", "y", "z"], value=0.0)
@@ -107,27 +112,20 @@ sim.load_mesh("bar.msh")
 steel = ds.materials.FractureElasticity(E=210e3, nu=0.3, split="spectral")
 solid = sim.add_physics(ds.physics.SolidMechanics(material=steel))
 
-# l0 = phase-field regularisation length ℓ (not mesh size h).
-# Mesh size h comes from the mesh; keep ℓ / h ≳ 2 typically.
 degrad = ds.materials.AT2_Degradation(Gc=2.7e-3, l0=0.01)
 pf = sim.add_physics(ds.physics.PhaseField(
     field="d",
     type=ds.physics.Fracture(
         degradation=degrad,
-        damage=ds.physics.Elliptic(),  # or DamageEvolution(pde="elliptic", integrator="implicit")
-        driving="W_plus",
-        history="max",
+        damage=ds.physics.DamageEvolution(pde="elliptic", integrator="implicit"),
     ),
 ))
 
-# Damage subproblem: VI-Newton (irreversibility d ∈ [d_old, 1]).
-# If pf_solver is omitted, the default is L-BFGS-B — not VI-Newton.
-sim.set_coupler(ds.couplers.Staggered(
-    max_iter=50,
-    tol=1e-4,
-    pf_solver=ds.solvers.VINewtonSolver(preset="elliptic"),
-))
-sim.set_linear_solver(ds.solvers.AMGx())
+mech = ds.solvers.nonlinear.Newton(
+    linear_solver=ds.solvers.linear.AMGCL(gpu=True, relaxation="chebyshev"),
+)
+pf_solver = ds.solvers.nonlinear.LBFGS()  # default PF energy minimizer
+sim.stagger(mech, pf_solver, max_iter=50, tol=1e-4)
 
 step = sim.add_step(name="load", duration=1.0, dt=0.01)
 step.add_dirichlet_bc(on="x == 0", components=["x", "y"], value=0.0)
@@ -138,11 +136,6 @@ sim.solve(output_dir="results/", save_every=5)
 ```
 
 **Strategy ID:** S1 — `quasi_static` + `elliptic` + `implicit` + `stagger_fixed_point`.
-
-**Notes**
-
-- Phase-field length scale is `l0` on `AT1_Degradation` / `AT2_Degradation` / cohesive models. There is no separate `h=` API — mesh size `h` is defined by the mesh file.
-- For VI-Newton options (`preset`, inner `linear_solver`, tolerances), see [API → Couplers / Solvers](api/index.md#71-staggered).
 
 ---
 
@@ -245,7 +238,7 @@ sim.load_mesh("plate.msh")
 
 mat = LinearElasticUMAT(E=210e3, nu=0.3)
 sim.add_physics(ds.physics.SolidMechanics(material=mat))
-sim.set_linear_solver(ds.solvers.AMGx())
+sim.set_solver(linear=ds.solvers.linear.AMGCL(gpu=True))
 
 step = sim.add_step(name="stretch", duration=1.0, dt=0.05)
 step.add_dirichlet_bc(on="x == 0", components=["x", "y"], value=0.0)

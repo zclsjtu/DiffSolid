@@ -12,8 +12,21 @@ The API is organised in two layers:
 
 | Layer | Import path | Intended use |
 |-------|-------------|--------------|
-| **Facade (primary)** | `ds.Simulation`, `ds.physics`, `ds.materials`, `ds.solvers`, … | Standard simulations — **start here** |
+| **Facade (primary)** | `ds.Simulation`, `ds.mesh`, `ds.physics`, `ds.materials`, `ds.solvers.linear` / `ds.solvers.nonlinear`, … | Standard simulations — **start here** |
 | **Extended user API** | `ds.post`, `ds.inverse`, `ds.io`, top-level `ds.Mesh`, … | Post-processing, inverse problems, mesh I/O |
+
+### Recommended import map
+
+| Namespace | Role |
+|-----------|------|
+| `ds.Simulation` | Main entry: mesh, physics, steps, `solve` |
+| `ds.mesh` | Mesh construction / I/O helpers |
+| `ds.physics` / `ds.materials` / `ds.couplers` | Physics, constitutive, coupling |
+| `ds.solvers.linear` | Inner `A x = b` (AMGx, CUDSS, AMGCL, …) |
+| `ds.solvers.nonlinear` | Outer Newton / VI / L-BFGS (`Newton`, `VINewton`, `LBFGS`) |
+| `ds.amplitudes` / `ds.constraints` / `ds.post` | Loads, BCs, post-processing |
+
+Compatibility aliases: `ds.linear_solvers` → `ds.solvers.linear`, `ds.nonlinear_solvers` → `ds.solvers.nonlinear` (deprecated mixed: `ds.api_solvers`).
 
 Sections 1–16 cover the facade and extended user API. Theory is in [formulations.md](../theory/formulations.md).
 
@@ -70,11 +83,25 @@ import diffsolid as ds
 sim = ds.Simulation(name="case", dim=3, ele_type="HEX8")
 sim.load_mesh("mesh.msh")
 sim.add_physics(ds.physics.SolidMechanics(material=mat))
-sim.set_linear_solver(ds.solvers.AMGx())
+sim.set_solver(
+    mech=ds.solvers.nonlinear.Newton(
+        linear_solver=ds.solvers.linear.AMGCL(gpu=True),
+        tol=1e-8,
+        rel_tol=1e-8,
+        max_iter=30,
+        line_search=True,
+    ),
+)
 
 step = sim.add_step(name="load", duration=1.0, dt=0.01)
 step.add_dirichlet_bc(on="x == 0", components=["x", "y", "z"], value=0.0)
 result = sim.solve(output_dir="results/")
+```
+
+Short form (default Newton controls, linear backend only)::
+
+```python
+sim.set_solver(linear=ds.solvers.linear.AMGCL(gpu=True))
 ```
 
 For phase-field fracture, add `PhaseField` physics, a coupler, and step-level
@@ -117,13 +144,14 @@ Registers a named node group for `@name` location selectors in boundary conditio
 
 | Method | Description |
 |--------|-------------|
-| `set_coupler(coupler)` | Multi-physics coupling (`Staggered`, `FractureCoupling`, …) |
-| `set_linear_solver(solver)` | Default linear backend for Newton solves |
-| `set_dynamics_solver(solver)` | `ExplicitDynamicsSolver` or `ImplicitDynamicsSolver` descriptor |
-| `set_pf_solver(solver)` | Phase-field nonlinear solver override |
-| `set_pf_linear_solver(solver)` | Linear backend for VI/Newton phase-field solves |
+| `set_coupler(...)` / `stagger(...)` | Coupler; short form `sim.stagger(mech, pf, max_iter=…)` |
+| `set_solver(*, mech=, pf=, linear=, dynamics=)` | **Preferred** — mech/pf are peers; `nonlinear=` aliases `mech=` |
+| `set_linear_solver(solver)` | Thin wrapper → `set_solver(linear=…)` |
+| `set_dynamics_solver(solver)` | Thin wrapper → `set_solver(dynamics=…)` |
+| `set_pf_solver(solver)` | Thin wrapper → `set_solver(pf=…)` |
+| `set_pf_linear_solver(solver)` | Thin wrapper → `set_solver(pf_linear=…)` |
 | `set_phase_field_solver(...)` | Combined PF solver + linear backend shorthand |
-| `set_newton_options(rtol=..., atol=..., max_iter=..., line_search=...)` | Global Newton tolerances |
+| `set_newton_options(rtol=..., atol=..., max_iter=..., line_search=...)` | Overlay Newton controls (same store as `nonlinear=`) |
 | `set_arc_length_solver(psi=..., Delta_l=..., tol=..., mode="displacement")` | Crisfield arc-length for limit-point problems |
 | `set_adaptive_stepping(enabled=True, dt_min=..., dt_max=..., ...)` | Quasi-static adaptive load increments |
 | `set_stagger_adaptive_stepping(dt_min=..., dt_max=..., ...)` | Adaptive increment for staggered PF |
@@ -397,8 +425,8 @@ Dedicated 2D r–z axisymmetric backend. Prefer the unified entry point
 pf = sim.add_physics(ds.physics.PhaseField(
     field="d",
     type=ds.physics.Fracture(
-        degradation=degrad,  # AT2_Degradation(Gc=..., l0=...) — l0 is ℓ, not mesh h
-        damage=ds.physics.Elliptic(),  # or DamageEvolution(pde="elliptic", integrator="implicit")
+        degradation=degrad,
+        damage=ds.physics.DamageEvolution(pde="elliptic", integrator="implicit"),
         driving="W_plus",
         history="max",
     ),
@@ -406,8 +434,7 @@ pf = sim.add_physics(ds.physics.PhaseField(
 ))
 ```
 
-Only `type="fracture"` (or `Fracture(...)`) is implemented. The phase-field length
-scale is `l0` on the degradation object; mesh size `h` comes from the mesh.
+Only `type="fracture"` (or `Fracture(...)`) is implemented.
 
 ### 5.4 `Fracture` / `PhaseFieldFracture`
 
@@ -502,21 +529,29 @@ Namespace: `ds.couplers`
 
 Alternating minimization for quasi-static and one-pass dynamic fracture.
 
+**Preferred:** field solvers are peers; pass them in coupling order::
+
 ```python
-sim.set_coupler(ds.couplers.Staggered(
-    max_iter=50,
-    tol=1e-4,
-    stagger_dd_criterion="positive_increment",  # or "abs_max"
-    stagger_damage_accel="off",                   # or "aitken"
-    mech_solver=ds.solvers.NewtonSolver(...),
-    pf_solver=ds.solvers.VINewtonSolver(preset="elliptic"),
-    pf_linear_solver=ds.solvers.AMGx(),
-    driving_force_fn=None,
-    mech_single_linear=False,
-    at2_history_mode=False,
-))
+mech = ds.solvers.nonlinear.Newton(
+    linear_solver=ds.solvers.linear.AMGx(profile="fracture", block_size=3),
+    tol=1e-8, line_search=True,
+)
+pf = ds.solvers.nonlinear.VINewton(
+    linear_solver=ds.solvers.linear.AMGx(profile="phase_field_vi"),
+    preset="elliptic",
+)
+sim.stagger(mech, pf, max_iter=50, tol=1e-4)
 ```
 
+Equivalently register solvers on the simulation and keep the coupler thin::
+
+```python
+sim.set_solver(mech=mech, pf=pf)
+sim.stagger(max_iter=50, tol=1e-4)
+```
+
+`set_coupler(mech, pf, …)` is the same as `stagger`.  Full
+`ds.couplers.Staggered(...)` descriptors and keyword aliases still work.
 **Driving force `H`:**
 
 | Configuration | Behaviour |
@@ -551,24 +586,52 @@ Staggered coupling for slip Allen–Cahn + mechanics. Used with
 
 ## 8. Solver Descriptors
 
-Namespace: `ds.solvers`
+Preferred namespaces under **`ds.solvers`**:
 
-### 8.1 Linear Solvers
+| Namespace | Role |
+|-----------|------|
+| `ds.solvers.linear` | Inner `A x = b` backends (AMGCL, CUDSS, AmgX, …) |
+| `ds.solvers.nonlinear` | Outer iterations (`Newton`, `VINewton`, `LBFGS`, dynamics) |
+
+**Mechanics single-field**::
+
+```python
+sim.set_solver(
+    mech=ds.solvers.nonlinear.Newton(
+        linear_solver=ds.solvers.linear.AMGx(profile="elasticity", block_size=3),
+        tol=1e-8, rel_tol=1e-8, max_iter=30, line_search=True,
+    ),
+)
+```
+
+**Coupled fracture** — solvers are peers; coupler takes them in coupling order::
+
+```python
+mech = ds.solvers.nonlinear.Newton(
+    linear_solver=ds.solvers.linear.AMGx(profile="fracture", block_size=3),
+)
+pf = ds.solvers.nonlinear.VINewton(
+    linear_solver=ds.solvers.linear.AMGx(profile="phase_field_vi"),
+    preset="elliptic",
+)
+sim.stagger(mech, pf, max_iter=50, tol=1e-4)
+```
+
+Compatibility: `ds.linear_solvers` / `ds.nonlinear_solvers` alias the same objects;
+`ds.api_solvers` is a deprecated mixed re-export.  Low-level implementations live
+via the compatibility aliases above.
+
+### 8.1 Linear Solvers (`ds.solvers.linear`)
 
 | Class | Role |
 |-------|------|
-| `AMGx(...)` | NVIDIA AmgX AMG — **preferred GPU iterative solver** |
+| `AMGCL(gpu=True, relaxation="chebyshev", solver_type="fgmres", ...)` | Iterative AMG; **recommended for 3D** |
 | `CUDSS(reorder="amd")` | GPU direct sparse solver |
-| `AMGCL(gpu=True, relaxation="chebyshev", solver_type="fgmres", ...)` | Iterative AMG (CUDA extension) |
 | `UMFPACK()` | CPU direct (default fallback) |
 | `SciPy()` | CPU SciPy backend |
+| `AMGx(...)` | NVIDIA AmgX (optional) |
 | `BiCGSTAB(tol=..., maxiter=...)` | JAX iterative (VI inner solves) |
 | `CG(tol=..., maxiter=...)` | JAX CG for SPD systems |
-
-**AmgX notes:**
-
-- Preferred for large implicit elasticity / plasticity on NVIDIA GPUs (H100/H200 class).
-- Requires native NVIDIA AmgX (`libamgxsh.so`); set `AMGX_LIBRARY` or `AMGX_HOME` — see Install guide. No pyamgx.
 
 **AMGCL notes:**
 
@@ -581,26 +644,25 @@ Namespace: `ds.solvers`
 
 | Problem | Default |
 |---------|---------|
-| Large 2D/3D elastic / PF elliptic (GPU) | `AMGx()` |
-| 3D plasticity, necking, arc-length | `CUDSS(reorder="amd")` or `AMGx()` |
-| GPU without AmgX installed | `AMGCL(gpu=True, relaxation="chebyshev")` |
+| 3D plasticity, necking, arc-length | `CUDSS(reorder="amd")` |
+| 3D elastic / large PF elliptic systems | `AMGCL(gpu=True, relaxation="chebyshev")` |
 | 2D moderate DOF | `CUDSS` or `UMFPACK` |
 | Explicit dynamics | No per-step linear solve |
 
-### 8.2 Nonlinear Solvers
+### 8.2 Nonlinear Solvers (`ds.solvers.nonlinear`)
 
 | Class | Role |
 |-------|------|
-| `NewtonSolver(linear_solver=..., tol=..., rel_tol=..., max_iter=...)` | Newton–Raphson for mechanics / elliptic residuals |
-| `LBFGSSolver(maxiter=..., gtol=..., ftol=...)` | Energy minimisation for PF |
-| `VINewtonSolver(preset="elliptic", linear_solver=..., ...)` | VI active-set PF with irreversibility |
+| `Newton(linear_solver=..., tol=..., rel_tol=..., max_iter=..., line_search=...)` | Newton–Raphson for mechanics / elliptic residuals |
+| `LBFGS(maxiter=..., gtol=..., ftol=...)` | Energy minimisation for PF |
+| `VINewton(preset="elliptic", linear_solver=..., ...)` | VI active-set PF with irreversibility |
 
 **VI presets:** `"elliptic"`, `"parabolic"`, `"hyperbolic"`, `"pff_miehe"`.
 
 Key VI options: `vi_reduced_space`, `vi_fast_jax_linear`, `vi_fullspace_block_elim`,
 `line_search`, `vi_lbfgs_fallback`.
 
-Aliases: `Newton = NewtonSolver`, `LBFGS = LBFGSSolver`.
+Long aliases: `NewtonSolver = Newton`, `LBFGSSolver = LBFGS`, `VINewtonSolver = VINewton`.
 
 ### 8.3 Dynamics Solver Descriptors
 
@@ -609,7 +671,17 @@ Aliases: `Newton = NewtonSolver`, `LBFGS = LBFGSSolver`.
 | `ExplicitDynamicsSolver(damping=0.0)` | Pure mechanics explicit integration |
 | `ImplicitDynamicsSolver(linear_solver=..., beta=0.25, gamma=0.5, ...)` | Newmark-beta implicit |
 
-Set via `sim.set_dynamics_solver(...)` or step `dynamics="explicit"` / `"implicit"`.
+Set via `sim.set_solver(dynamics=...)` / `set_dynamics_solver(...)` or step
+`dynamics="explicit"` / `"implicit"`.
+
+### Appendix — legacy names
+
+| Old | Prefer |
+|-----|--------|
+| `ds.linear_solvers.*` | `ds.solvers.linear.*` |
+| `ds.nonlinear_solvers.*` | `ds.solvers.nonlinear.*` |
+| `ds.api_solvers` | `ds.solvers` |
+| `sim.set_linear_solver(...)` | `sim.set_solver(linear=...)` or full `nonlinear=Newton(...)` |
 
 ---
 
@@ -731,7 +803,7 @@ Returned by `sim.solve()`. Subclasses `dict` — legacy `result["u"]` still work
 
 ## 12. Mesh I/O and Checkpoints
 
-Exported at package root (`ds.*`):
+Preferred namespace: **`ds.mesh`** (also still exported at package root).
 
 | Function | Description |
 |----------|-------------|
@@ -906,6 +978,10 @@ Removed keys raise `ValueError` with a migration table.
 | Physics-level BC methods | Step-level `add_dirichlet_bc` / `add_bc` |
 | `set_field_evolution`, `set_phase_field` | `set_damage_evolution` |
 | `Staggered(strain_split=...)` | `FractureElasticity(split=...)` on material |
+| `ds.linear_solvers` / `ds.nonlinear_solvers` | `ds.solvers.linear` / `ds.solvers.nonlinear` |
+| `ds.solvers.AMGx` / `ds.solvers.VINewtonSolver` (flat) | `ds.solvers.linear.AMGx` / `ds.solvers.nonlinear.VINewton` |
+| `sim.set_coupler(ds.couplers.Staggered(mech, pf, …))` | `sim.stagger(mech, pf, …)` |
+| `sim.set_linear_solver(...)` only | Prefer `sim.set_solver(mech=Newton(linear_solver=…))` |
 
 ---
 
