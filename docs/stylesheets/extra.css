@@ -14,12 +14,12 @@
   --ds-accent-hover: #134559;
   --ds-accent-soft: #e8f2f6;
   --ds-code-bg: #f0eeea;
-  --ds-text-2xs: 0.625rem;
-  --ds-text-xs: 0.6875rem;
-  --ds-text-sm: 0.75rem;
-  --ds-text-md: 0.8125rem;
-  --ds-text-lg: 0.875rem;
-  --ds-text-xl: 0.9375rem;
+  --ds-text-2xs: 0.59375rem;
+  --ds-text-xs: 0.65625rem;
+  --ds-text-sm: 0.71875rem;
+  --ds-text-md: 0.78125rem;
+  --ds-text-lg: 0.84375rem;
+  --ds-text-xl: 0.90625rem;
   --md-default-bg-color: var(--ds-bg);
   --md-default-fg-color: var(--ds-ink);
   --md-primary-fg-color: var(--ds-ink);
@@ -41,12 +41,12 @@
   --ds-accent-hover: #8ecfe3;
   --ds-accent-soft: #1a2830;
   --ds-code-bg: #1c1f24;
-  --ds-text-2xs: 0.625rem;
-  --ds-text-xs: 0.6875rem;
-  --ds-text-sm: 0.75rem;
-  --ds-text-md: 0.8125rem;
-  --ds-text-lg: 0.875rem;
-  --ds-text-xl: 0.9375rem;
+  --ds-text-2xs: 0.59375rem;
+  --ds-text-xs: 0.65625rem;
+  --ds-text-sm: 0.71875rem;
+  --ds-text-md: 0.78125rem;
+  --ds-text-lg: 0.84375rem;
+  --ds-text-xl: 0.90625rem;
 }
 
 [data-md-color-scheme="default"] .md-header {
