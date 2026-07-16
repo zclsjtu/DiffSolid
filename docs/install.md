@@ -1,22 +1,32 @@
 # DiffSolid Installation Guide
 
-This document describes how to install DiffSolid, configure JAX on NVIDIA GPUs, build
-the optional AMGCL CUDA extension, and verify linear solver backends.
+DiffSolid is **not on PyPI**. Preview wheels are sent **by email on request**.
+This page covers install, JAX GPU setup, and the linear-solver backends you will
+actually use.
+
+**Recommended path for most users**
+
+1. Request and install a preview wheel ([§3](#3-get-diffsolid)).
+2. Confirm JAX sees a CUDA device ([§4](#4-python-and-jax-gpu)).
+3. Install **NVIDIA AmgX** (preferred GPU iterative solver) and **cuDSS** (direct) ([§5](#5-gpu-linear-solvers)).
+4. Run the smoke test ([§7](#7-verification)).
+
+AMGCL CUDA is an optional fallback and usually requires a **source** tree to build
+([§6](#6-source-licensees-amgcl-cuda-extension)).
 
 ---
 
 ## Table of Contents
 
 1. [System Requirements](#1-system-requirements)
-2. [Package Layout](#2-package-layout)
-3. [Python Environment](#3-python-environment)
-4. [Installing DiffSolid](#4-installing-diffsolid)
-5. [AMGCL Header Dependency](#5-amgcl-header-dependency)
-6. [Building the AMGCL CUDA Extension](#6-building-the-amgcl-cuda-extension)
-7. [Optional Backends](#7-optional-backends)
-8. [Verification](#8-verification)
-9. [Troubleshooting](#9-troubleshooting)
-10. [Dependency Reference](#10-dependency-reference)
+2. [What You Need](#2-what-you-need)
+3. [Get DiffSolid](#3-get-diffsolid)
+4. [Python and JAX GPU](#4-python-and-jax-gpu)
+5. [GPU Linear Solvers](#5-gpu-linear-solvers)
+6. [Source Licensees: AMGCL CUDA Extension](#6-source-licensees-amgcl-cuda-extension)
+7. [Verification](#7-verification)
+8. [Troubleshooting](#8-troubleshooting)
+9. [Dependency Reference](#9-dependency-reference)
 
 ---
 
@@ -24,68 +34,89 @@ the optional AMGCL CUDA extension, and verify linear solver backends.
 
 | Component | Minimum | Recommended |
 |-----------|---------|-------------|
-| GPU | NVIDIA Turing (compute capability ≥ 7.5) | Ampere, Ada, or Hopper class |
-| GPU memory | 16 GB | 32 GB or more for large 3D problems |
+| GPU | NVIDIA Turing (compute capability ≥ 7.5) | Ampere, Ada, or Hopper (H100/H200) |
+| GPU memory | 16 GB | 32 GB+ for large 3D problems |
 | NVIDIA driver | ≥ 525 (CUDA 12.x capable) | Latest production driver |
-| CUDA toolkit | 12.4+ | Match JAX CUDA 12 wheels |
+| CUDA toolkit | 12.4+ (needed to **build** AmgX / AMGCL) | Match JAX CUDA 12 wheels |
 | OS | Ubuntu 20.04+, RHEL 8+ | Ubuntu 22.04 LTS |
 | Host compiler | GCC 11–13 for `nvcc` | GCC 12 or 13 |
 | Python | 3.10 | 3.10 or 3.11 |
 
-**Note on GCC 14.** CUDA 12.x officially supports GCC ≤ 13. If only GCC 14 is available,
-the provided build script passes `-allow-unsupported-compiler`; compilation usually
-succeeds but is not guaranteed on all platforms.
+**Note on GCC 14.** CUDA 12.x officially supports GCC ≤ 13. Building AmgX or the
+AMGCL extension with GCC 14 may require `-allow-unsupported-compiler` and is not
+guaranteed.
+
+CPU-only installs work for small examples, but large implicit / GPU solver paths
+expect an NVIDIA GPU.
 
 ---
 
-## 2. Package Layout
+## 2. What You Need
 
-```
-DiffSolid/
-├── diffsolid/                  # Python package
-├── ext/diffsolid_amgcl_cuda/   # CUDA extension source (must be rebuilt per machine)
-├── third_party/amgcl/          # AMGCL headers (header-only)
-├── pyproject.toml
-├── requirements.txt
-├── INSTALL.md
-├── API.md
-└── scripts/check_install.py
-```
+| Audience | What you receive | Typical next steps |
+|----------|------------------|--------------------|
+| Preview users | Email wheel (`.whl`) | `pip install` → JAX GPU → AmgX + cuDSS |
+| Source licensees | Private source tree | Editable install → optional AMGCL CUDA build → AmgX + cuDSS |
 
-The compiled extension artifact under `ext/diffsolid_amgcl_cuda/build/` is
-**machine-specific** and must not be copied between servers. Rebuild on each target
-system.
-
-Full conda environment specifications are available to source licensees on request.
+| Backend | Role | How you get it |
+|---------|------|----------------|
+| **NVIDIA AmgX** | **Preferred** GPU iterative (AMG) for large elasticity / plasticity | Build/install [NVIDIA AmgX](https://github.com/NVIDIA/AMGX); set `AMGX_LIBRARY` — **no pyamgx** |
+| **cuDSS** | GPU **direct** sparse solver | `pip install diffsolid[gpu]` or CuPy + nvmath + nvidia-cudss |
+| **AMGCL CUDA** | GPU iterative **fallback** when AmgX is unavailable | Prebuilt in some wheels, or build from source ([§6](#6-source-licensees-amgcl-cuda-extension)) |
+| UMFPACK / SciPy / JAX Krylov | CPU or JAX-only fallbacks | Bundled with DiffSolid / SciPy / JAX |
 
 ---
 
-## 3. Python Environment
+## 3. Get DiffSolid
 
-### Option A — Minimal pip install (CPU or GPU JAX)
+### Request a preview wheel {#request-preview-wheel}
+
+Email **[ChenlongZhao@sjtu.edu.cn](mailto:ChenlongZhao@sjtu.edu.cn)** with:
+
+- Your name and affiliation
+- Intended use (research, evaluation, collaboration, …)
+- Python version and OS
+
+We review each request and reply when we can provide a wheel. Preview wheels may
+**include plain Python source** inside the package; we decide per request whether
+to distribute them. See also [Download](download.md).
+
+!!! warning "Distribution terms"
+    Preview wheels are for your use only. Do not redistribute them.
+    DiffSolid is not published on PyPI and is not downloadable from this site.
+
+### Install the wheel
+
+```bash
+pip install /path/to/diffsolid-*.whl
+python -c "import diffsolid as ds; print('DiffSolid OK', ds.__version__)"
+```
+
+Optional extras (after the core wheel is installed):
+
+```bash
+pip install "diffsolid[gpu]"    # CuPy, nvmath, cuDSS  — not AmgX
+pip install "diffsolid[viz]"    # PyVista, VTK
+pip install "diffsolid[mesh]"   # gmsh helpers
+```
+
+`[gpu]` does **not** install AmgX. AmgX is a native library you install separately
+([§5.1](#51-nvidia-amgx-preferred-gpu-iterative)).
+
+### Developer editable install (source licensees only)
 
 ```bash
 cd /path/to/DiffSolid-core
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -U pip
 pip install -e .
-pip install -r requirements.txt   # pins JAX, CuPy, cuDSS, etc.
+pip install -e ".[gpu]"
+python scripts/check_install.py
 ```
 
-### Option B — Conda environment (recommended for GPU HPC)
+---
 
-```bash
-cd /path/to/DiffSolid-core-dev
-conda env create -f environment.yml
-conda activate diffsolid    # or the name defined in environment.yml
-cd ../DiffSolid
-pip install -e .
-```
+## 4. Python and JAX GPU
 
-### JAX GPU support
-
-After installing JAX, confirm device visibility:
+Use a dedicated virtualenv or conda env. After DiffSolid (and JAX) are installed:
 
 ```bash
 python -c "import jax; print(jax.devices())"
@@ -96,85 +127,135 @@ If only CPU devices appear:
 
 ```bash
 pip install jax-cuda12-plugin jax-cuda12-pjrt
+python -c "import jax; print(jax.devices())"
 ```
+
+DiffSolid enables `jax_enable_x64` on import. Keep a CUDA-12-compatible JAX stack
+(see [§9](#9-dependency-reference)).
 
 ---
 
-## 4. Installing DiffSolid
+## 5. GPU Linear Solvers
 
-DiffSolid is **not** published on PyPI. Preview wheels are distributed **by email
-on request** — not from this documentation site.
+Facade usage (after `import diffsolid as ds` and building a `Simulation`):
 
-### Request a preview wheel
-
-Email **[ChenlongZhao@sjtu.edu.cn](mailto:ChenlongZhao@sjtu.edu.cn)** with:
-
-- Your name and affiliation
-- Intended use (research, evaluation, collaboration, …)
-- Python version and OS
-
-We review each request and reply when we can provide a wheel. Preview wheels may
-**include plain Python source** inside the package; we decide per request whether
-to distribute them.
-
-> Compiled wheels without source may be offered later when the API stabilises.
-> Do not redistribute wheels you receive.
-
-### Install
-
-After you receive a wheel by email:
-
-```bash
-pip install /path/to/diffsolid-*.whl
-python -c "import diffsolid as ds; print('DiffSolid OK')"
+```python
+sim.set_linear_solver(ds.solvers.AMGx())                          # preferred iterative
+sim.set_linear_solver(ds.solvers.CUDSS(reorder="amd"))            # direct
+sim.set_linear_solver(ds.solvers.AMGCL(gpu=True, relaxation="chebyshev"))  # fallback
 ```
 
-Optional extras (after the core wheel is installed):
+### 5.1 NVIDIA AmgX (preferred GPU iterative)
+
+Recommended for large implicit elasticity and plasticity on NVIDIA GPUs
+(H100/H200 class). DiffSolid loads AmgX with **ctypes** from `libamgxsh.so`.
+There is **no pyamgx** dependency.
+
+#### Build and install AmgX
+
+Requires a CUDA toolkit and a supported host compiler (GCC ≤ 13 recommended).
 
 ```bash
-pip install diffsolid[gpu]    # CuPy, nvmath, cuDSS
-pip install diffsolid[viz]    # PyVista, VTK
-pip install diffsolid[mesh]   # gmsh mesh generation helpers
+git clone --recursive https://github.com/NVIDIA/AMGX.git
+cd AMGX && mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX="$HOME/opt/amgx-install"
+cmake --build . -j"$(nproc)"
+cmake --install .
 ```
 
-### Developer editable install (source licensees only)
+If CMake cannot find CUDA, set `CUDA_TOOLKIT_ROOT_DIR` / `CMAKE_CUDA_COMPILER`
+to your toolkit (or use the `nvcc` from `conda install -c conda-forge cuda-nvcc`).
 
-If you have been granted access to the private source repository:
+#### Point DiffSolid at the library
+
+Put these in your shell profile (or job script) before running DiffSolid:
 
 ```bash
-cd /path/to/DiffSolid-core
-pip install -e .
-python scripts/check_install.py
+export AMGX_LIBRARY="$HOME/opt/amgx-install/lib/libamgxsh.so"
+# equivalent: export AMGX_HOME="$HOME/opt/amgx-install"
+export LD_LIBRARY_PATH="$HOME/opt/amgx-install/lib:${LD_LIBRARY_PATH}"
 ```
+
+Verify the file exists:
+
+```bash
+test -f "$AMGX_LIBRARY" && echo "AmgX library OK"
+```
+
+#### Use AmgX
+
+```python
+sim.set_linear_solver(ds.solvers.AMGx())
+```
+
+### 5.2 cuDSS (GPU direct)
+
+Use when you want a robust **direct** sparse solve (plasticity, necking, stiff
+systems). Installed via pip — no separate native build beyond the NVIDIA wheels:
+
+```bash
+pip install "diffsolid[gpu]"
+# or: pip install cupy-cuda12x nvmath-python nvidia-cudss-cu12
+```
+
+```python
+sim.set_linear_solver(ds.solvers.CUDSS(reorder="amd"))
+```
+
+### 5.3 PETSc (optional)
+
+Not required for the default GPU path. Via conda-forge:
+
+```bash
+conda install -c conda-forge petsc=3.23 petsc4py openmpi -y
+```
+
+### 5.4 AMGCL CUDA (fallback)
+
+Use when AmgX is not installed. Prefer Chebyshev relaxation for 3D elasticity /
+plasticity:
+
+```python
+sim.set_linear_solver(
+    ds.solvers.AMGCL(gpu=True, relaxation="chebyshev", solver_type="fgmres")
+)
+```
+
+Wheel recipients: try the smoke test first. If `AMGCL_CUDA_AVAILABLE` is false,
+either use AmgX/cuDSS or obtain a source build ([§6](#6-source-licensees-amgcl-cuda-extension)).
 
 ---
 
----
+## 6. Source Licensees: AMGCL CUDA Extension
 
-## 5. AMGCL Header Dependency
+Skip this section if you only have a preview wheel and AmgX/cuDSS already work.
 
-AMGCL is a header-only C++ library used by the CUDA extension. Clone it into
-`third_party/amgcl/`:
+### Package layout (source tree)
+
+```
+DiffSolid-core/
+├── diffsolid/                  # Python package
+├── ext/diffsolid_amgcl_cuda/   # CUDA extension (rebuild per machine)
+├── third_party/amgcl/          # AMGCL headers (header-only)
+├── pyproject.toml
+├── requirements.txt
+├── INSTALL.md
+└── scripts/check_install.py
+```
+
+The compiled `.so` under `ext/diffsolid_amgcl_cuda/build/` is **machine-specific** —
+do not copy it between servers.
+
+### AMGCL headers
 
 ```bash
 git clone --depth 1 https://github.com/ddemidov/amgcl.git \
     /path/to/DiffSolid-core/third_party/amgcl
-```
-
-Verify:
-
-```bash
 test -f /path/to/DiffSolid-core/third_party/amgcl/amgcl/amg.hpp && echo OK
 ```
 
-If GitHub is unreachable, copy the `third_party/amgcl/` directory from an existing
-installation (~2 MB, platform-independent).
-
----
-
-## 6. Building the AMGCL CUDA Extension
-
-### Prerequisites
+### Build prerequisites
 
 | Dependency | Source | Purpose |
 |------------|--------|---------|
@@ -184,8 +265,6 @@ installation (~2 MB, platform-independent).
 | `cmake` ≥ 3.18 | pip or conda | Build system |
 | `CUDA::cusparse` | CUDA toolkit | Sparse linear algebra |
 
-Install build dependencies:
-
 ```bash
 conda install -c conda-forge cuda-nvcc libboost-headers cmake -y
 pip install pybind11
@@ -194,7 +273,7 @@ pip install pybind11
 ### Build
 
 ```bash
-conda activate diffsolid
+conda activate diffsolid   # or your env name
 bash /path/to/DiffSolid-core/ext/diffsolid_amgcl_cuda/build_diffsolid_amgcl_cuda.sh
 ```
 
@@ -213,7 +292,7 @@ PYTHONPATH=/path/to/DiffSolid-core/ext/diffsolid_amgcl_cuda/build \
 
 ### CUDA architecture flags
 
-Edit `CMakeLists.txt` if the target GPU is not covered by default architectures:
+Edit `CMakeLists.txt` if your GPU is not covered by the default architectures:
 
 | GPU family | `sm` version |
 |------------|--------------|
@@ -221,8 +300,6 @@ Edit `CMakeLists.txt` if the target GPU is not covered by default architectures:
 | Ampere (RTX 30xx, A100) | 80, 86 |
 | Ada Lovelace (RTX 40xx, RTX 6000 Ada) | 89 |
 | Hopper (H100, H200) | 90 |
-
-Example:
 
 ```cmake
 set(CMAKE_CUDA_ARCHITECTURES "75;80;86;89;90" CACHE STRING "...")
@@ -249,74 +326,18 @@ Rebuild with the correct `CMAKE_CUDA_ARCHITECTURES` for your GPU.
 
 ---
 
-## 7. Optional Backends
+## 7. Verification
 
-### cuDSS (direct GPU sparse solver)
-
-Required for plasticity, necking, and other problems where a robust direct solve is
-preferred:
+### Import check
 
 ```bash
-pip install cupy-cuda12x nvmath-python nvidia-cudss-cu12
-```
-
-Facade usage:
-
-```python
-sim.set_linear_solver(ds.solvers.CUDSS(reorder="amd"))
-```
-
-### PETSc (optional)
-
-PETSc is not installed via pip. Use conda-forge:
-
-```bash
-conda install -c conda-forge petsc=3.23 petsc4py openmpi -y
-```
-
-### NVIDIA AmgX (**preferred GPU iterative backend**)
-
-Recommended for large implicit elasticity and plasticity on NVIDIA GPUs (H100/H200).
-DiffSolid loads AmgX directly via **ctypes** (`libamgxsh.so`) — **no pyamgx**.
-
-1. Build and install [NVIDIA AmgX](https://github.com/NVIDIA/AMGX) (CUDA toolkit required):
-
-```bash
-git clone --recursive https://github.com/NVIDIA/AMGX.git
-cd AMGX && mkdir build && cd build
-cmake .. -DCMAKE_BUILD_TYPE=Release \
-  -DCMAKE_INSTALL_PREFIX="$HOME/opt/amgx-install"
-cmake --build . -j"$(nproc)"
-cmake --install .
-```
-
-2. Point DiffSolid at the shared library (and keep it on the dynamic linker path):
-
-```bash
-export AMGX_LIBRARY="$HOME/opt/amgx-install/lib/libamgxsh.so"
-# alternatively: export AMGX_HOME="$HOME/opt/amgx-install"
-export LD_LIBRARY_PATH="$HOME/opt/amgx-install/lib:${LD_LIBRARY_PATH}"
-```
-
-3. Use the facade:
-
-```python
-sim.set_linear_solver(ds.solvers.AMGx())
-```
-
-cuDSS (direct) and AMGCL CUDA remain available when AmgX is not installed.
-
----
-
-## 8. Verification
-
-### Package import
-
-```bash
-python scripts/check_install.py
+python -c "import diffsolid as ds; print('DiffSolid OK', ds.__version__)"
+# source trees: python scripts/check_install.py
 ```
 
 ### Linear solver smoke test
+
+Requires `AMGX_LIBRARY` (and `LD_LIBRARY_PATH`) for AmgX, and `[gpu]` extras for cuDSS.
 
 ```bash
 python - <<'EOF'
@@ -339,44 +360,60 @@ def check(name, x):
 print("=== Linear solver verification ===")
 
 try:
-    from diffsolid.solvers.linear.amgcl_gpu import amgcl_solve, AMGCL_CUDA_AVAILABLE
-    if AMGCL_CUDA_AVAILABLE:
-        check("AMGCL CUDA", amgcl_solve(A, b, tol=1e-10))
-    else:
-        print("  [SKIP] AMGCL CUDA extension not built")
-except Exception as e:
-    print(f"  [ERROR] AMGCL: {e}")
-
-try:
-    from diffsolid.solvers.linear.cudss import cudss_solve
-    check("cuDSS", cudss_solve(A, b))
-except Exception as e:
-    print(f"  [ERROR] cuDSS: {e}")
-
-try:
     from diffsolid.solvers.linear.amgx import amgx_solve
     check("AmgX", amgx_solve(A, b, {"tolerance": 1e-10}))
 except Exception as e:
     print(f"  [SKIP/ERROR] AmgX (set AMGX_LIBRARY): {e}")
 
+try:
+    from diffsolid.solvers.linear.cudss import cudss_solve
+    check("cuDSS", cudss_solve(A, b))
+except Exception as e:
+    print(f"  [SKIP/ERROR] cuDSS (pip install diffsolid[gpu]): {e}")
+
+try:
+    from diffsolid.solvers.linear.amgcl_gpu import amgcl_solve, AMGCL_CUDA_AVAILABLE
+    if AMGCL_CUDA_AVAILABLE:
+        check("AMGCL CUDA", amgcl_solve(A, b, tol=1e-10))
+    else:
+        print("  [SKIP] AMGCL CUDA extension not built / not on PYTHONPATH")
+except Exception as e:
+    print(f"  [SKIP/ERROR] AMGCL: {e}")
+
 print("=== Done ===")
 EOF
 ```
 
-### Regression tests (development workspace)
-
-```bash
-cd ../DiffSolid-dev
-pytest tests/test_fracture_dynamics_s3_scan.py -q
-```
+A healthy GPU install should show **AmgX OK** and ideally **cuDSS OK**. AMGCL may
+remain SKIPPED without a source build — that is fine if AmgX works.
 
 ---
 
-## 9. Troubleshooting
+## 8. Troubleshooting
+
+### AmgX: `ImportError` / cannot find `libamgxsh.so`
+
+```bash
+# Confirm the shared library
+ls -l "$AMGX_LIBRARY"
+# or
+ls -l "$AMGX_HOME/lib/libamgxsh.so"
+
+# Ensure the dynamic linker can resolve dependencies
+export LD_LIBRARY_PATH="$(dirname "$AMGX_LIBRARY"):${LD_LIBRARY_PATH}"
+```
+
+Rebuild AmgX if the library is missing. DiffSolid does **not** use pyamgx.
+
+### AmgX: CUDA / driver mismatch at load time
+
+Match the AmgX build CUDA toolkit to a driver that supports that toolkit.
+Re-run the smoke test after fixing `LD_LIBRARY_PATH`.
 
 ### `AMGCL_CUDA_AVAILABLE = False`
 
-The extension `.so` is missing or not on `PYTHONPATH`. Rebuild Section 6 and confirm:
+The extension `.so` is missing or not importable. Prefer AmgX, or rebuild
+[§6](#6-source-licensees-amgcl-cuda-extension) and confirm:
 
 ```bash
 ls ext/diffsolid_amgcl_cuda/build/diffsolid_amgcl_cuda*.so
@@ -388,7 +425,6 @@ Match CuPy to your CUDA major version:
 
 ```bash
 pip install cupy-cuda12x   # CUDA 12.x
-pip install cupy-cuda11x   # CUDA 11.x
 ```
 
 ### JAX sees only CPU
@@ -406,40 +442,42 @@ pip install nvmath-python nvidia-cudss-cu12
 
 ### Double-precision
 
-DiffSolid enables `jax_enable_x64` on import. Ensure your JAX build supports 64-bit
-floating point on GPU.
+DiffSolid enables `jax_enable_x64` on import. Ensure your JAX build supports
+64-bit floating point on GPU.
 
 ---
 
-## 10. Dependency Reference
+## 9. Dependency Reference
 
 ### Core Python packages (pip)
 
 | Package | Typical version | Role |
 |---------|-----------------|------|
 | `jax`, `jaxlib` | 0.6.x | Core AD and JIT |
-| `jax-cuda12-plugin` | 0.6.x | GPU backend |
+| `jax-cuda12-plugin`, `jax-cuda12-pjrt` | 0.6.x | GPU backend |
 | `numpy` | 2.2.x | Host numerics |
 | `scipy` | 1.15.x | Sparse linear algebra |
 | `meshio` | 5.3.x | Mesh I/O |
-| `gmsh` | 4.14.x | Mesh generation |
+| `gmsh` | 4.14.x | Mesh generation (`[mesh]`) |
 | `h5py` | 3.15.x | HDF5 / XDMF |
 | `matplotlib` | 3.10.x | Plotting |
 
-### GPU solver packages
+### GPU solver packages / libraries
 
-| Package | Role |
-|---------|------|
-| `cupy-cuda12x` | GPU arrays; AMGCL zero-copy path |
-| `nvmath-python`, `nvidia-cudss-cu12` | cuDSS direct solver |
-| `pybind11` | AMGCL CUDA extension build |
+| Component | Role | Install |
+|-----------|------|---------|
+| **NVIDIA AmgX** (`libamgxsh.so`) | Preferred GPU iterative AMG | Build from [NVIDIA/AMGX](https://github.com/NVIDIA/AMGX); set `AMGX_LIBRARY` |
+| `cupy-cuda12x` | GPU arrays; cuDSS / AMGCL support | `diffsolid[gpu]` |
+| `nvmath-python`, `nvidia-cudss-cu12` | cuDSS direct solver | `diffsolid[gpu]` |
+| `pybind11` + CUDA toolkit | AMGCL CUDA extension build | Source licensees only |
 
-### Third-party source
+### Third-party source (source trees / some wheels)
 
-| Component | Location |
-|-----------|----------|
+| Component | Location / notes |
+|-----------|------------------|
 | AMGCL headers | `third_party/amgcl/` |
-| CUDA extension | `ext/diffsolid_amgcl_cuda/` |
+| AMGCL CUDA extension | `ext/diffsolid_amgcl_cuda/` |
+| NVIDIA AmgX | **Not** redistributed — user-installed native library |
 
-For pinned versions used in production, see `requirements.txt` and
-`../DiffSolid-dev/environment.yml`.
+Pinned versions for a given release are listed in the wheel metadata /
+`requirements.txt` of the package you received.
