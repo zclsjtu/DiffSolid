@@ -568,7 +568,7 @@ Namespace: `ds.solvers`
 **AmgX notes:**
 
 - Preferred for large implicit elasticity / plasticity on NVIDIA GPUs (H100/H200 class).
-- Requires AmgX + pyamgx (optional GPU extra); see Install guide.
+- Requires native NVIDIA AmgX (`libamgxsh.so`); set `AMGX_LIBRARY` or `AMGX_HOME` — see Install guide. No pyamgx.
 
 **AMGCL notes:**
 

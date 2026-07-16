@@ -38,7 +38,7 @@ The following are **not** redistributed inside DiffSolid wheels:
 - NVIDIA CUDA toolkit runtime (pulled via user environment)
 - cuDSS, cuBLAS, cuSPARSE (NVIDIA EULA)
 - PETSc / petsc4py (optional, user-built)
-- pyamgx / NVIDIA AmgX (optional)
+- NVIDIA AmgX / `libamgxsh.so` (optional native library; ctypes binding)
 
 ## AMGCL attribution
 

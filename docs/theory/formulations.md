@@ -1244,9 +1244,11 @@ For symmetric positive-definite systems (linear elasticity, phase-field Laplacia
 
 ### 16.3 NVIDIA AmgX
 
-NVIDIA AmgX provides GPU algebraic multigrid. On current DiffSolid implicit benchmarks
-(H200), AmgX is the preferred iterative backend for large elasticity / plasticity systems,
-typically ahead of AMGCL CUDA and competitive with or better than cuDSS at large DOF.
+NVIDIA AmgX provides GPU algebraic multigrid. DiffSolid binds AmgX through
+ctypes to `libamgxsh.so` (set `AMGX_LIBRARY` or `AMGX_HOME`). On current
+implicit benchmarks (H200), AmgX is the preferred iterative backend for large
+elasticity / plasticity systems, typically ahead of AMGCL CUDA and competitive
+with or better than cuDSS at large DOF.
 
 ### 16.4 AMGCL Algebraic Multigrid
 
@@ -1259,12 +1261,11 @@ The AMGCL library (Demidov 2019) provides GPU-accelerated algebraic multigrid (A
 
 AMG coarsening uses the classical Ruge–Stüben algorithm. ILU(0), SPAI-0, and block-size variants were found to be slower or less robust on typical finite-element matrices arising from this library and are not recommended.
 
-### 16.4 Solver Selection Guidelines
+### 16.5 Solver Selection Guidelines
 
-- **Small problems** ($< 10^5$ DOFs): `Cudss` (direct, robust).
-- **Large problems** on GPU ($10^5$–$10^7$ DOFs): `amgcl_solver` with Chebyshev+FGMRES for plasticity, Chebyshev+CG for elasticity.
-- **JAX-only environments** (no C++ extensions): `jax_gpu_solver` or `jax_solver`.
-
+- **Small problems** ($< 10^5$ DOFs): `CUDSS` (direct, robust).
+- **Large problems** on GPU ($10^5$–$10^7$ DOFs): `AMGx()` preferred; `AMGCL(gpu=True, ...)` as fallback when AmgX is unavailable.
+- **JAX-only environments** (no C++ extensions / no AmgX): JAX BiCGSTAB/CG backends.
 
 ---
 

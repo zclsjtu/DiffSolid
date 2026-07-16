@@ -274,11 +274,37 @@ PETSc is not installed via pip. Use conda-forge:
 conda install -c conda-forge petsc=3.23 petsc4py openmpi -y
 ```
 
-### NVIDIA AmgX / pyamgx (**preferred GPU iterative backend**)
+### NVIDIA AmgX (**preferred GPU iterative backend**)
 
 Recommended for large implicit elasticity and plasticity on NVIDIA GPUs (H100/H200).
-Install AmgX + pyamgx; see the [pyamgx documentation](https://pyamgx.readthedocs.io/).
-cuDSS (direct) and AMGCL CUDA remain available alternatives when AmgX is not installed.
+DiffSolid loads AmgX directly via **ctypes** (`libamgxsh.so`) — **no pyamgx**.
+
+1. Build and install [NVIDIA AmgX](https://github.com/NVIDIA/AMGX) (CUDA toolkit required):
+
+```bash
+git clone --recursive https://github.com/NVIDIA/AMGX.git
+cd AMGX && mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX="$HOME/opt/amgx-install"
+cmake --build . -j"$(nproc)"
+cmake --install .
+```
+
+2. Point DiffSolid at the shared library (and keep it on the dynamic linker path):
+
+```bash
+export AMGX_LIBRARY="$HOME/opt/amgx-install/lib/libamgxsh.so"
+# alternatively: export AMGX_HOME="$HOME/opt/amgx-install"
+export LD_LIBRARY_PATH="$HOME/opt/amgx-install/lib:${LD_LIBRARY_PATH}"
+```
+
+3. Use the facade:
+
+```python
+sim.set_linear_solver(ds.solvers.AMGx())
+```
+
+cuDSS (direct) and AMGCL CUDA remain available when AmgX is not installed.
 
 ---
 
@@ -326,6 +352,12 @@ try:
     check("cuDSS", cudss_solve(A, b))
 except Exception as e:
     print(f"  [ERROR] cuDSS: {e}")
+
+try:
+    from diffsolid.solvers.linear.amgx import amgx_solve
+    check("AmgX", amgx_solve(A, b, {"tolerance": 1e-10}))
+except Exception as e:
+    print(f"  [SKIP/ERROR] AmgX (set AMGX_LIBRARY): {e}")
 
 print("=== Done ===")
 EOF
